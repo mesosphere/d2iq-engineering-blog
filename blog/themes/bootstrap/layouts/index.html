@@ -1,0 +1,37 @@
+{{ define "main" }}
+
+    <!-- Page Header -->
+    <header class="intro-header" style="background-image: url('{{ .Site.BaseURL }}{{ .Site.Params.defaultHeaderImage }}')">
+     <div class="container">
+       <div class="row">
+         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+           <div class="site-heading">
+             <h1>{{ .Site.Title }}</h1>
+             <hr class="small">
+             {{ with .Site.Params.Description }}<span class="subheading">{{ . }}</span>{{ end }}
+           </div>
+         </div>
+       </div>
+     </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          {{ $numPosts := or .Site.Params.PostSummariesFrontPage 4 }}
+          {{ range first $numPosts (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+              {{ .Render "summary"  }}
+          {{ end }}
+          <!-- Pager -->
+          <ul class="pager">
+            <li class="next">
+              <a href="{{ .Site.BaseURL }}/posts/">Older Posts &rarr;</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+{{ end }}
+

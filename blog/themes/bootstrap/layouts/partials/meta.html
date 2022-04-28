@@ -1,0 +1,16 @@
+{{ if .Params.Date }}
+    <span><span class="fa fa-calendar"></span>
+    <time datetime="{{ dateFormat (.Site.Params.DateForm | default "Mon, Jan 2, 2006") .Date }}">
+        {{ dateFormat (.Site.Params.DateForm | default "Mon, Jan 2, 2006") .Date }}
+        </time>
+    </span>
+{{ end }}
+
+{{ if .Params.categories }}
+{{ $len := len .Params.categories }}
+<span class="meta-tags">
+  <span class="fa fa-tags"></span>
+  <span>
+{{ range $index, $category := .Params.categories }}{{ if  (gt $index 0) }} / {{ end }}{{.}}{{ end }}
+</span></span>
+{{ end }}

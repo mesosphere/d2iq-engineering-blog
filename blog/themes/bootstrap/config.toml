@@ -1,0 +1,22 @@
+[params]
+  DateForm = "January 2, 2006"
+  Description = "Your Blog Description"
+  DescriptionMeta = "Your Blog Description"
+  Author = "Your Name"
+  postSummariesFrontPage = 5
+  defaultHeaderImage = "/images/bg.png"
+  mainSections = ["posts"]
+  copyright = "Created with ♥ by <a href='/about/'>Your Name</a>. All content is the property of <Your Name> and <Site Url>. This blog, its content, and opinions are my own."
+
+# Allow HTML to be included from Markdown files
+[markup.goldmark.renderer]
+  unsafe = true
+
+[[menu.main]]
+  name ="Home"
+  url = "/"
+  weight = 1
+[[menu.main]]
+  name = "Posts"
+  url = "/posts/"
+  weight = 2
