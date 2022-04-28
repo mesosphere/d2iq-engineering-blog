@@ -1,14 +1,42 @@
-| julferts@mesosphere.com | dkp, kommander |
+---
+author: julferts@d2iq.com
+title: Deploying Production clusters at D2iQ
+date: 2022-06-01
+draft: true
+---
 
-# Deploying Production clusters using DKP
-Qui dolore non laboris do irure aliqua dolor cillum magna mollit qui ut sint voluptate. Labore nulla occaecat aliquip irure est amet magna aute ipsum magna amet tempor esse in esse labore. Do aliqua commodo eiusmod aute dolore excepteur consequat non exercitation nostrud ad dolor incididunt qui magna. Est adipisicing duis adipisicing quis ipsum aute velit excepteur dolor occaecat voluptate mollit Lorem ut cillum anim occaecat.
+Deploying cluster with DKP is easy but in common production environments the Cluster must fit into the existing ecosystem respecting permissions and user-roles, dealing with docker registry authentication or using a special certificate issuer
+
+# What means production cluster
+With this post we want to explain how a DKP cluster can be created in a repoducable way that is using SSO instead of static credentials, ensuring to not run into rate limiting for docker hub pulls or ACME based certificate requests.
 
 
-## asdfalskdjh aslkdjfhasldf
-Lorem duis ex anim quis et consequat minim tempor. Aute dolore labore fugiat duis consequat adipisicing proident quis mollit. Occaecat nisi aliqua cillum esse ex culpa pariatur qui excepteur irure.
+# DKP on AWS
+We consider AWS is being used in this example. Although most things will definitely work on other clouds or on-prem but in detail permissions and configs might be slightly different. You would also need IAM permissions to do the exact same thing in our account.
 
-Lorem consequat ex aliquip enim ad ullamco cillum tempor enim commodo enim exercitation ex nostrud reprehenderit. Voluptate dolor fugiat nisi voluptate minim aute ex irure officia deserunt esse mollit ad. Nulla veniam ex qui anim tempor esse laborum nisi ut minim duis ipsum mollit excepteur occaecat sit. Ullamco occaecat tempor incididunt laborum dolor nisi aliquip dolore exercitation fugiat do culpa sunt qui magna. Pariatur minim aliqua labore minim reprehenderit dolore voluptate aliqua aute. Non officia dolore ea velit pariatur non aliquip nisi fugiat adipisicing proident consequat et.
+## Shared bootstrap cluster
+In many case using the `dkp` cli with its build-in bootstrap cluster is the easiest way to deploy DKP 2.x clusters but when it comes to the ability to reproduce things or not depending on an operators machine when it comes to huge initial clusters we will use EKS [^1]. This reduces the dependency on the operators machine to an extremely low level.
 
-Sit et sint ullamco magna sit ad exercitation veniam qui quis qui in nulla adipisicing incididunt. Ad ut officia proident ad adipisicing id in quis deserunt consectetur anim. Fugiat magna laborum ut esse esse id fugiat laborum non aliquip eiusmod dolor. Nulla nulla sunt amet nostrud veniam et occaecat consequat. Laboris magna cupidatat enim elit laborum occaecat tempor quis do aliqua fugiat. Minim adipisicing sit in laborum labore nostrud mollit mollit nisi enim commodo. Est qui amet culpa deserunt est voluptate enim mollit ad id aliqua elit consectetur ut consectetur adipisicing do. Esse occaecat labore ut commodo tempor occaecat nisi.
+## Konvoy Image Builder
+We expect a custom image ID is known and being provided as an ami-id to the followin commands. Whenever `<AMI>` is mentioned we consider a KIB image to be provided.
+Please consult the [Image Builder Docs](https://docs.d2iq.com/dkp/konvoy/2.2/image-builder/) for more details.
 
-Esse qui culpa ipsum laborum tempor elit occaecat quis anim duis irure fugiat dolore ex eu in pariatur. Consequat ullamco magna consequat eu esse est ipsum aute. Dolor incididunt anim laboris duis anim velit occaecat ad culpa et consequat ex Lorem est. Do dolore deserunt est adipisicing culpa eu consectetur in laboris quis anim nostrud irure et nisi cillum duis. Eu proident tempor adipisicing proident cillum tempor cupidatat Lorem pariatur laboris consectetur.
+## Terraform
+We'll use Terraform[^2] to maintain the IAM Policy, Role and Instance Profiles. Alternatives could be simple AWS-CLI usage or Cloudformation templates but for us the easiest way maintaining clusters with multiple operators is using Terraform as it gives us out of the box shared state and locking mechanisms[^3]
+
+## Authentication
+D2iQ uses Onelogin as its SSO provider but any OIDC Identity provider[^4] will work. In many cases using Google as Identity provider is the simplest solution [^5]
+
+
+# Getting things started
+Before we spawn the cluster some foundation needs to be done. Like described above we'll be using terraform for that.
+
+
+## AWS IAM policy, role and instance profiles
+
+
+[^1]: Amazon Elastic Kubernetes Service is a managed Kubernetes cluster by AWS https://aws.amazon.com/eks/
+[^2]: https://terraform.io
+[^3]: https://www.terraform.io/language/settings/backends/s3
+[^4]: https://en.wikipedia.org/wiki/List_of_OAuth_providers
+[^5]: https://developers.google.com/identity/protocols/oauth2/openid-connect
