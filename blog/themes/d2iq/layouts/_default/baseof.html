@@ -2,10 +2,9 @@
 <html>
     {{- partial "head.html" . -}}
     <body>
-        {{- partial "header.html" . -}}
-        <div id="content">
-        {{- block "main" . }}{{- end }}
-        </div>
-        {{- partial "footer.html" . -}}
+      {{- partial "header.html" . -}}
+      {{- block "main" . }}{{- end }}
+
+
     </body>
 </html>
