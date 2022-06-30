@@ -1,7 +1,0 @@
-baseURL = 'https://engineering.d2iq.com/'
-title = 'D2iQ Engineering Blog'
-Description = 'Insides from D2iQ Engineers'
-theme = "d2iq"
-languageCode = "en-us"
-
-contentDir = "../content"
