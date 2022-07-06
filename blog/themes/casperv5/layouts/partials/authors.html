@@ -1,0 +1,46 @@
+{{ $pageAuthors := slice }}
+{{ if reflect.IsSlice .Params.authors }}
+  {{ $pageAuthors = $pageAuthors | append .Params.authors }}
+{{ end }}
+{{ if eq (len $pageAuthors) 0 }}
+  {{ $pageAuthors = $pageAuthors | append "D2iQ Ninja" }}
+{{ end }}
+
+{{ $authors := dict }}
+{{ $authorNames := slice }}
+{{ range $authorName := $pageAuthors }}
+  {{ $author := index site.Data.authors $authorName }}
+  {{ if ne $author nil }}
+    {{ $authors = merge $authors (dict $authorName $author) }}
+    {{ $authorNames = $authorNames | append $author.name }}
+  {{ else }}
+    {{ $authors = merge $authors (dict $authorName nil) }}
+    {{ $authorNames = $authorNames | append $authorName }}
+  {{ end }}
+{{ end }}
+
+
+<ul class="author-list">
+{{ range $authorName := $pageAuthors }}
+  {{ $author := index $authors $authorName}}
+  <li class="author-list-item">
+    {{ if $author.avatar }}
+    <a href="{{ "/authors/" | relLangURL }}{{ $authorName | urlize }}" class="author-avatar">
+      <img class="author-profile-image" src="{{ $author.avatar | relURL }}" alt="{{ $author.name }}" />
+    </a>
+    {{else}}
+      <a href="{{ "/authors/" | relLangURL }}{{ $authorName | urlize }}" class="author-avatar author-profile-image">{{ partial "icon" "author" }}</a>
+    {{ end }}
+  </li>
+{{ end }}
+</ul>
+
+<div class="article-byline-meta">
+  <h4 class="author-name">{{ range $i, $authorName := $pageAuthors }}{{ $author := index $authors $authorName}}{{ if $i }}, {{ end }}<a href="{{ "/authors/" | relLangURL }}{{ $authorName | urlize }}">{{ $author.name }}</a>{{ end }}</h4>
+  <div class="byline-meta-content">
+    <time class="byline-meta-date" datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "Jan 2, 2006" }}</time>
+    {{ if .ReadingTime }}
+      <span class="byline-reading-time"><span class="bull">&bull;</span> {{ .ReadingTime }} min read</span>
+    {{ end }}
+  </div>
+</div>

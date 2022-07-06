@@ -1,0 +1,57 @@
+{{/*  This is a partial file used to generate a post "card"
+which templates loop over to generate a list of posts.  */}}
+
+<article class="post-card post{{ range $tag := .page.Params.tags }} post-{{ $tag | urlize }}{{ end }}{{ if .isHome }}{{ if eq .index 0 }} post-card-large{{ else if le .index 2}} dynamic{{ end }}{{ end }}">
+
+  {{ if isset .page.Params "feature_image" }}
+    <a class="post-card-image-link" href="{{ .page.RelPermalink }}">
+      {{ $featureImage := .page.Resources.GetMatch .page.Params.feature_image }}
+      {{ $featureImageSmall := $featureImage.Resize "300x webp" }}
+      {{ $featureImageMedium := $featureImage.Resize "600x webp" }}
+      {{ $featureImageLarge := $featureImage.Resize "1000x webp" }}
+      {{ $featureImageXLarge := $featureImage.Resize "2000x webp" }}
+      <img class="post-card-image"
+        srcset="{{ $featureImageSmall.RelPermalink }} 300w,
+            {{ $featureImageMedium.RelPermalink }} 600w,
+            {{ $featureImageLarge.RelPermalink }} 1000w,
+            {{ $featureImageXLarge.RelPermalink }} 2000w"
+        sizes="(max-width: 1000px) 400px, 800px"
+        src="{{ $featureImageMedium.RelPermalink }}"
+        alt="{{ .page.Params.feature_image_alt | default .page.Title }}"
+        loading="lazy"
+      />
+    </a>
+  {{ end }}
+
+  <div class="post-card-content">
+    <header class="post-card-header">
+      <div class="post-card-tags">
+        {{ with .page.Params.tags }}
+          {{ $primaryTag := (index . 0) }}
+          <span class="post-card-primary-tag">
+            <a href="{{ "/tags/" | relLangURL }}{{ $primaryTag | urlize }}">{{ $primaryTag }}</a>
+          </span>
+        {{ end }}
+        {{ if (eq .page.Params.featured true) }}
+          <span class="post-card-featured">{{ partial "icon" "fire" }} Featured</span>
+        {{ end }}
+      </div>
+      <h2 class="post-card-title">
+        <a class="post-card-content-link" href="{{ .page.RelPermalink }}">{{ .page.Title }}</a>
+      </h2>
+    </header>
+    {{ if isset .page.Params "excerpt" }}
+      <p class="post-card-excerpt">{{ .page.Params.excerpt }}</p>
+    {{ end }}
+
+    <footer class="post-card-meta">
+      <time class="post-card-meta-date" datetime="{{ .page.PublishDate.Format "2006-01-02" }}">{{ .page.PublishDate.Format "Jan 2, 2006" }}</time>
+      {{ if .page.ReadingTime }}
+        <span class="sep">—</span>
+        <span class="post-card-meta-length">{{ .page.ReadingTime }} min read</span>
+      {{ end }}
+    </footer>
+
+  </div>
+
+</article>

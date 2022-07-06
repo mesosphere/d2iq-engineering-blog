@@ -1,5 +1,5 @@
 ---
-authors: ["julferts", "jimmidyson"]
+author: julferts
 title: RIP Data - B-4 Discovered
 date: 2022-06-01
 featured: true

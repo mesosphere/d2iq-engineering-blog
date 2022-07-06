@@ -1,0 +1,21 @@
+{{ $featureImage := index . "image" }}
+{{ $featureImageSmall := $featureImage.Resize "300x webp" }}
+{{ $featureImageMedium := $featureImage.Resize "600x webp" }}
+{{ $featureImageLarge := $featureImage.Resize "1000x webp" }}
+{{ $featureImageXLarge := $featureImage.Resize "2000x webp" }}
+<figure class="article-image">
+  {{/*  This is a responsive image, it loads different sizes depending on device
+  https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433  */}}
+  <img
+    srcset="{{ $featureImageSmall.RelPermalink }} 300w,
+        {{ $featureImageMedium.RelPermalink }} 600w,
+        {{ $featureImageLarge.RelPermalink }} 1000w,
+        {{ $featureImageXLarge.RelPermalink }} 2000w"
+    sizes="(min-width: 1400px) 1400px, 92vw"
+    src="{{ $featureImageXLarge.RelPermalink }}"
+    alt="{{ index  . "alt" | default (index . "page_title") }}"
+  />
+  {{ if ne (index . "caption") "" }}
+    <figcaption>{{ index . "caption" }}</figcaption>
+  {{ end }}
+</figure>
