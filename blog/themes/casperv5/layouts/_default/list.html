@@ -1,0 +1,25 @@
+{{ define "body_class" }}tag-template tag-{{ .Title | urlize }}{{ end }} {{
+define "main" }}
+<main id="site-main" class="site-main outer">
+  <div class="inner posts">
+    <div class="post-feed">
+      <section class="post-card post-card-large">
+        <div class="post-card-content">
+          <div class="post-card-content-link">
+            <header class="post-card-header">
+              <h2 class="post-card-title">{{ .Title }}</h2>
+            </header>
+            <div class="post-card-excerpt">
+              A collection of {{ len .Pages }} posts.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {{ range .Pages }} {{ $page := dict "page" . }} {{ partial
+      "post_card.html" $page }} {{ end }}
+    </div>
+  </div>
+</main>
+
+{{ partial "icon-data" . }} {{ end }}

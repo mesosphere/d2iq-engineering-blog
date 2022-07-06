@@ -1,7 +1,22 @@
 baseURL = 'https://engineering.d2iq.com/'
-title = 'D2iQ Engineering Blog'
+title = 'D2iQ Engineering'
 Description = 'Insides from D2iQ Engineers'
-theme = "d2iq"
+theme = "casperv5"
 languageCode = "en-us"
 
 contentDir = "../content"
+
+[taxonomies]
+  author = "authors"
+  tag = "tags"
+
+[module]
+  [module.imports]
+    path = "github.com/hugo-mods/icons"
+
+[Params]
+  favicon = "images/D2iQ_Logo_Color-RGB.svg"
+  # logo = "images/D2iQ_Logo_Color-RGB.svg"
+
+  [Params.social]
+    twitter = "d2iq_eng"

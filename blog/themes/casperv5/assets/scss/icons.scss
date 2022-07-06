@@ -1,0 +1,13 @@
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -.125em;
+  color: var(--ghost-accent-color);
+  fill: currentColor;
+}
+
+.author-avatar .icon {
+  object-fit: cover;
+  height: 100%;
+  width: 100%
+}

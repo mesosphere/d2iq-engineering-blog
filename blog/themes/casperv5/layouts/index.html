@@ -1,0 +1,14 @@
+{{ define "body_class" }}tag-template{{ end }} {{ define "main" }}
+<main id="site-main" class="site-main outer">
+  <div class="inner posts">
+    <div class="post-feed">
+      {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+      {{ range $i, $p := $pages }}
+        {{ $page := dict "page" $p "index" $i "isHome" true}}
+        {{ partial "post_card.html" $page }}
+      {{ end }}
+    </div>
+  </div>
+</main>
+
+{{ partial "icon-data" . }} {{ end }}
