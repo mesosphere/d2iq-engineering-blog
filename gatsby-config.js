@@ -1,15 +1,8 @@
 module.exports = {
   siteMetadata: {
     title: `D2iQ Engineering Blog`,
-    author: {
-      name: `D2iQ`,
-      summary: ``,
-    },
     description: `The engineering blog for D2iQ.`,
     siteUrl: `https://www.d2iq.com/`,
-    social: {
-      twitter: `d2iq_eng`,
-    },
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -125,8 +118,17 @@ module.exports = {
       },
     },
     `gatsby-plugin-react-helmet`,
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data`,
+      },
+    },
+    `gatsby-transformer-yaml`,
   ],
+  mapping: {
+    // 3. map author to author.yaml
+    "MarkdownRemark.frontmatter.author": `AuthorYaml`,
+  },
 }
