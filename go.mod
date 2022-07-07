@@ -1,4 +1,4 @@
-module github.com/mesosphere/d2iq-engineering-blog/blog
+module github.com/mesosphere/d2iq-engineering-blog
 
 go 1.18
 

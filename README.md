@@ -5,5 +5,5 @@ Just a techblog test repo for showcasing
 For development use `-F` as it will show posts with future dates
 
 ```
-hugo serve -D -F -s blog
+hugo serve -D -F
 ```

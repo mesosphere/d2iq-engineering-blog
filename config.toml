@@ -4,8 +4,6 @@ Description = 'Insides from D2iQ Engineers'
 theme = "casperv5"
 languageCode = "en-us"
 
-contentDir = "../content"
-
 [taxonomies]
   author = "authors"
   tag = "tags"
