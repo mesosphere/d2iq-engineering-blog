@@ -20,6 +20,22 @@ ignoreErrors = ["error-disable-taxonomy"]
   author = "authors"
   tag = "tags"
 
+[markup]
+  [markup.highlight]
+    anchorLineNos = true
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = ''
+    hl_inline = false
+    lineAnchors = ''
+    lineNoStart = 1
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = true
+    noHl = false
+    style = 'monokai'
+    tabWidth = 2
+
 [module]
   [module.imports]
     path = "github.com/hugo-mods/icons"
