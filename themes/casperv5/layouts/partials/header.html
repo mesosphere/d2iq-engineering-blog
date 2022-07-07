@@ -3,7 +3,7 @@
     <div class="gh-head-brand">
       <a
         class="gh-head-logo{{ if not $.Site.Params.logo }} no-image{{ end }}"
-        href="{{ $.Site.BaseURL }}"
+        href="/"
       >
         {{ if $.Site.Params.logo }}
           {{ $logoAsset := resources.Get $.Site.Params.logo}}
