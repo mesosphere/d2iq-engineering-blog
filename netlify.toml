@@ -6,5 +6,46 @@
   HUGO_VERSION = "0.101.0"
   HUGO_ENV = "production"
   HUGO_ENABLEGITINFO = "true"
-  NODE_VERSION = "18.4.0"
+  NODE_VERSION = "16.15.1"
   NODE_ENV = "development"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = '''
+      default-src 'self';
+      script-src 'self' https://code.jquery.com/;
+      style-src 'self' 'unsafe-inline';
+      object-src 'none';
+      base-uri 'self';
+      connect-src 'self';
+      font-src 'self';
+      frame-src 'self';
+      img-src 'self';
+      manifest-src 'self';
+      media-src 'self';
+      worker-src 'none';
+      frame-ancestors 'none';
+    '''
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+  # optional, fails build when a category is below a threshold
+  [plugins.inputs.thresholds]
+    performance = 0.9
+    accessibility = 0.9
+    best-practices = 0.9
+    seo = 0.9
+    pwa = 0
+
+  # optional, deploy the lighthouse report to a path under your site
+  [plugins.inputs]
+    output_path = "reports/lighthouse.html"
+
+[[plugins]]
+  package = "netlify-plugin-hugo-cache-resources"
