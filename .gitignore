@@ -1,6 +1,5 @@
 node_modules
-public/
-/blog/resources/_gen/
+/public/
 /resources/_gen/
 /assets/jsconfig.json
 hugo_stats.json

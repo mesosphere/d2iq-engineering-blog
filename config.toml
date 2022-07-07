@@ -4,7 +4,17 @@ Description = 'Insides from D2iQ Engineers'
 theme = "casperv5"
 languageCode = "en-us"
 
-contentDir = "../content"
+copyright = "© {{ YEAR }} D2iQ, Inc. All Rights Reserved."
+enableEmoji = true
+enableGitInfo = true
+enableRobotsTXT = true
+removePathAccents = true
+disableKinds = [ "taxonomy" ]
+ignoreErrors = ["error-disable-taxonomy"]
+
+[permalinks]
+  posts = '/blog/:slug/'
+  tags = '/blog/tags/:slug/'
 
 [taxonomies]
   author = "authors"

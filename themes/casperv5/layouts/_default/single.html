@@ -10,7 +10,7 @@
           {{ with .Params.tags }}
             {{ $primaryTag := (index . 0) }}
             <span class="post-card-primary-tag">
-              <a href="{{ "/tags/" | relLangURL }}{{ $primaryTag | urlize }}">{{ $primaryTag }}</a>
+              <a href="{{ "/blog/tags/" | relLangURL }}{{ $primaryTag | urlize }}">{{ $primaryTag }}</a>
             </span>
           {{ end }}
           {{ if (eq .Params.featured true) }}

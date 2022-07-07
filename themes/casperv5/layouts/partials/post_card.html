@@ -29,7 +29,7 @@ which templates loop over to generate a list of posts.  */}}
         {{ with .page.Params.tags }}
           {{ $primaryTag := (index . 0) }}
           <span class="post-card-primary-tag">
-            <a href="{{ "/tags/" | relLangURL }}{{ $primaryTag | urlize }}">{{ $primaryTag }}</a>
+            <a href="{{ "/blog/tags/" | relLangURL }}{{ $primaryTag | urlize }}">{{ $primaryTag }}</a>
           </span>
         {{ end }}
         {{ if (eq .page.Params.featured true) }}
