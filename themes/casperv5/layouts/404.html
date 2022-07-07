@@ -1,0 +1,21 @@
+{{ define "main" }}
+<section class="outer error-content">
+  <div class="inner">
+    <section class="error-message">
+      <h1 class="error-code">404</h1>
+      <p class="error-description">Page not found...</p>
+      <a class="error-link" href="/">Go to the front page →</a>
+    </section>
+  </div>
+</section>
+
+<aside class="read-more-wrap outer">
+  <div class="read-more inner">
+    {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+    {{ range $i, $p := first 10 $pages }}
+      {{ $page := dict "page" $p}}
+      {{ partial "post_card.html" $page }}
+    {{ end }}
+  </div>
+</aside>
+{{ end }}
