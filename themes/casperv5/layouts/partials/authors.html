@@ -24,12 +24,21 @@
 {{ range $authorName := $pageAuthors }}
   {{ $author := index $authors $authorName}}
   <li class="author-list-item">
-    {{ if $author.avatar }}
-    <a href="{{ "/authors/" | relLangURL }}{{ $authorName | urlize }}" class="author-avatar">
-      <img class="author-profile-image" src="{{ $author.avatar | relURL }}" alt="{{ $author.name }}" />
-    </a>
-    {{else}}
-      <a href="{{ "/authors/" | relLangURL }}{{ $authorName | urlize }}" class="author-avatar author-profile-image">{{ partial "icon" "author" }}</a>
+    {{ with resources.GetMatch (printf "images/authors/%s.jpg" $authorName) }}
+      {{ with .Resize (printf "%dx%d webp" .Width .Height) }}
+        <a href="{{ "/authors/" | relLangURL }}{{ $authorName | urlize }}" class="author-avatar">
+          <img class="author-profile-image" src="{{ .RelPermalink }}" alt="{{ $author.name }}" />
+        </a>
+      {{ end }}
+    {{ else }}
+      {{ $gravatarURL := printf "https://www.gravatar.com/avatar/%s?d=404" (lower $author.email | md5) }}
+      {{ with resources.GetRemote $gravatarURL }}
+        <a href="{{ "/authors/" | relLangURL }}{{ $authorName | urlize }}" class="author-avatar">
+          <img class="author-profile-image" src="{{ .RelPermalink }}" alt="{{ $author.name }}" />
+        </a>
+      {{ else }}
+        <a href="{{ "/authors/" | relLangURL }}{{ $authorName | urlize }}" class="author-avatar author-profile-image">{{ partial "icon" (dict "label" $author.name "name" "author") }}</a>
+      {{ end }}
     {{ end }}
   </li>
 {{ end }}
