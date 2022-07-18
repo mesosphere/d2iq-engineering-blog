@@ -17,3 +17,5 @@
   {{ $favicon := resources.Get $.Site.Params.favicon}}
   <link rel="icon" type="image/svg+xml" href="{{ $favicon.RelPermalink }}" sizes="any">
 {{ end }}
+
+{{ partial "seo.html" . }}
