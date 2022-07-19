@@ -20,4 +20,14 @@
 {{ end }}
 
 {{ partial "seo.html" . }}
+
+{{ with resources.GetRemote "https://cdn.jsdelivr.net/gh/scottjehl/picturefill@3.0.2/dist/picturefill.js" }}
+  {{ with . | minify | fingerprint "sha512" }}
+    <script>
+      // Picture element HTML5 shiv
+      document.createElement( "picture" );
+    </script>
+    <script src="{{ .RelPermalink }}"  integrity="{{ .Data.Integrity }}" async></script>
+  {{ end }}
+{{ end }}
 </head>

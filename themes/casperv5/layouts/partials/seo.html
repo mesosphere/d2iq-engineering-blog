@@ -13,6 +13,6 @@
 <meta property="og:description" content="{{ .Description | default (.Params.excerpt | default .Summary) }}" />
 {{ $page := . }}
 {{ with .Params.feature_image }}
-  {{ $cardImage := ($page.Resources.GetMatch .).Fill "120x120 webp" }}
+  {{ $cardImage := ($page.Resources.GetMatch .).Fill "144x144 webp" }}
   <meta property="og:image" content="{{ $cardImage.Permalink }}" />
 {{ end }}

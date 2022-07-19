@@ -16,7 +16,6 @@ which templates loop over to generate a list of posts.  */}}
             {{ $featureImageLarge.RelPermalink }} 1000w,
             {{ $featureImageXLarge.RelPermalink }} 2000w"
         sizes="(max-width: 1000px) 400px, 800px"
-        src="{{ $featureImageMedium.RelPermalink }}"
         alt="{{ .page.Params.feature_image_alt | default .page.Title }}"
         loading="lazy"
       />

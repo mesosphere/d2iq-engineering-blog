@@ -12,7 +12,6 @@
         {{ $featureImageLarge.RelPermalink }} 1000w,
         {{ $featureImageXLarge.RelPermalink }} 2000w"
     sizes="(min-width: 1400px) 1400px, 92vw"
-    src="{{ $featureImageXLarge.RelPermalink }}"
     alt="{{ index  . "alt" | default (index . "page_title") }}"
   />
   {{ if ne (index . "caption") "" }}

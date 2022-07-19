@@ -16,8 +16,8 @@
     crossorigin="anonymous">
   </script>
   {{ $jQueryPlugins := resources.Get "js/lib/jquery.fitvids.js" }}
-  {{ $js := slice $jQueryPlugins | resources.Concat "js/bundle.js" | minify | fingerprint "sha512" }}
-  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+  {{ $jQueryPlugins = slice $jQueryPlugins | resources.Concat "js/jquery-plugins.js" | minify | fingerprint "sha512" }}
+  <script src="{{ $jQueryPlugins.RelPermalink }}" integrity="{{ $jQueryPlugins.Data.Integrity }}"></script>
   <script>
   $(document).ready(function () {
       // Mobile Menu Trigger
