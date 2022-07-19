@@ -6,10 +6,10 @@ which templates loop over to generate a list of posts.  */}}
   {{ if isset .page.Params "feature_image" }}
     <a class="post-card-image-link" href="{{ .page.RelPermalink }}">
       {{ $featureImage := .page.Resources.GetMatch .page.Params.feature_image }}
-      {{ $featureImageSmall := $featureImage.Resize "300x webp" }}
-      {{ $featureImageMedium := $featureImage.Resize "600x webp" }}
-      {{ $featureImageLarge := $featureImage.Resize "1000x webp" }}
-      {{ $featureImageXLarge := $featureImage.Resize "2000x webp" }}
+      {{ $featureImageSmall := $featureImage.Fill "300x150 webp" }}
+      {{ $featureImageMedium := $featureImage.Fill "600x300 webp" }}
+      {{ $featureImageLarge := $featureImage.Fill "1000x500 webp" }}
+      {{ $featureImageXLarge := $featureImage.Fill "2000x1000 webp" }}
       <img class="post-card-image"
         srcset="{{ $featureImageSmall.RelPermalink }} 300w,
             {{ $featureImageMedium.RelPermalink }} 600w,
