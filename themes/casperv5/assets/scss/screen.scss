@@ -711,6 +711,10 @@ body:not(.gh-head-open) .gh-burger:hover .gh-burger-inner::after {
     font-weight: 600;
     letter-spacing: -0.005em;
     line-height: 1;
+    
+    a {
+        color: var(--color-secondary-text);
+    }
 }
 
 .post-card-featured {
