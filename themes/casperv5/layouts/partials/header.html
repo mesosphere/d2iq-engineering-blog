@@ -10,11 +10,13 @@
           <img src="{{ $logoAsset.RelPermalink }}" alt="{{ $.Site.Title }}" />
         {{ else }} {{ $.Site.Title }} {{ end }}
       </a>
+      {{ if $.Site.Menus.main }}
       <a class="gh-burger" role="button">
         <div class="gh-burger-box">
           <div class="gh-burger-inner"></div>
         </div>
       </a>
+      {{ end }}
     </div>
     <div class="gh-head-menu">
       <ul class="nav">

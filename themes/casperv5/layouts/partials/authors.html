@@ -2,7 +2,7 @@
 {{ if reflect.IsSlice .Params.authors }}
   {{ $pageAuthors = $pageAuthors | append .Params.authors }}
 {{ end }}
-{{ if eq (len $pageAuthors) 0 }}
+{{ if not $pageAuthors }}
   {{ $pageAuthors = $pageAuthors | append "D2iQ Ninja" }}
 {{ end }}
 
