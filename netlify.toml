@@ -14,7 +14,7 @@
   [headers.values]
     Content-Security-Policy = '''
       default-src 'self';
-      script-src 'self' https://code.jquery.com/;
+      script-src 'self' https://code.jquery.com/ https://cdnjs.cloudflare.com/;
       style-src 'self' 'unsafe-inline';
       object-src 'none';
       base-uri 'self';
