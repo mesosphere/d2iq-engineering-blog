@@ -4,10 +4,10 @@ title: "Managing Kubernetes In Multiple Cloud Environments"
 slug: managing-multi-cloud-kubernetes
 date: 2022-07-07T15:49:54+01:00
 featured: true
-tags: []
+tags: ["Multicluster", "Multicloud", "Hybrid Cloud"]
 excerpt: Learn how to manage Kubernetes across multiple cloud providers with DKP.
 description: Learn how to manage Kubernetes across multiple cloud providers with DKP.
-feature_image: feature.png
+feature_image: multiple-clouds.jpg
 ---
 
 # Intro

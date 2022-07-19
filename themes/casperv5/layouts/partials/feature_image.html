@@ -1,8 +1,8 @@
 {{ $featureImage := index . "image" }}
-{{ $featureImageSmall := $featureImage.Resize "300x webp" }}
-{{ $featureImageMedium := $featureImage.Resize "600x webp" }}
-{{ $featureImageLarge := $featureImage.Resize "1000x webp" }}
-{{ $featureImageXLarge := $featureImage.Resize "2000x webp" }}
+{{ $featureImageSmall := $featureImage.Fill "300x150 webp" }}
+{{ $featureImageMedium := $featureImage.Fill "600x300 webp" }}
+{{ $featureImageLarge := $featureImage.Fill "1000x500 webp" }}
+{{ $featureImageXLarge := $featureImage.Fill "2000x1000 webp" }}
 <figure class="article-image">
   {{/*  This is a responsive image, it loads different sizes depending on device
   https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433  */}}
