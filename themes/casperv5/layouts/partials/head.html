@@ -34,4 +34,13 @@
     <script src="{{ .RelPermalink }}"  integrity="{{ .Data.Integrity }}" async></script>
   {{ end }}
 {{ end }}
+
+{{ if (findRE "<pre" .Content 1) }}
+  {{ with resources.Get "js/clipboard.js" | minify | fingerprint "sha512" }}
+    <script src="{{ .RelPermalink }}"  integrity="{{ .Data.Integrity }}" async></script>
+  {{ end }}
+  {{ with resources.Get "scss/clipboard.scss" | toCSS $sassOptions | postCSS $postCSSOptions | fingerprint "sha512" }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" />
+  {{ end }}
+{{ end }}
 </head>
