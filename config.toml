@@ -46,3 +46,15 @@ ignoreErrors = ["error-disable-taxonomy"]
 
   [Params.social]
     twitter = "d2iq_eng"
+
+[privacy]
+  [privacy.googleAnalytics]
+    anonymizeIP = true
+    respectDoNotTrack = true
+    useSessionStorage = true
+  [privacy.twitter]
+    enableDNT = true
+  [privacy.vimeo]
+    enableDNT = true
+  [privacy.youtube]
+    privacyEnhanced = true
