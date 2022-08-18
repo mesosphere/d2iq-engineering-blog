@@ -12,6 +12,9 @@ removePathAccents = true
 disableKinds = [ "taxonomy" ]
 ignoreErrors = ["error-disable-taxonomy"]
 
+[security.exec]
+  osEnv = ['.*']
+
 [permalinks]
   posts = '/blog/:slug/'
   tags = '/blog/tags/:slug/'
