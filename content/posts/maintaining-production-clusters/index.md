@@ -3,11 +3,11 @@ authors: ["julferts"]
 title: "Maintaining DKP Production Clusters"
 slug: maintaining-production-clusters
 date: 2022-08-18T10:29:12+02:00
-featured: true
+featured: false
 tags: ["Multicluster", "Scale", "Big Clusters"]
 excerpt: Tweaks and customisations to run and maintain production grade clusters with DKP.
 description: Tweaks and customisations to run and maintain production grade clusters with DKP.
-feature_image: multiple-clouds.jpg
+feature_image: feature.png
 ---
 
 # Intro
