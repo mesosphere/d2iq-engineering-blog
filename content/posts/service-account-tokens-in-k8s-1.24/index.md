@@ -8,7 +8,7 @@ slug: service-account-tokens-in-kubernetes-v1.24
 feature_image: who-are-you.jpg
 excerpt: |
   With Kubernetes v1.24, non-expiring service account tokens are no longer auto-generated.
-  This blog post will highlight what this means in practice and what to do if you rely on non-expiring
+  This blog post highlights what this means in practice, and what to do if you rely on non-expiring
   service account tokens.
 description: |
   With Kubernetes v1.24, non-expiring service account tokens are no longer auto-generated. Learn what
@@ -18,7 +18,7 @@ description: |
 ## What is a service account token?
 
 Service accounts are a critical part of Kubernetes, providing an identity for processes that run in a pod. To provide
-that identity to a pod, a service account token is mounted into each pod by default, although this can be disabled via
+that identity to a pod, a service account token is mounted into each pod by default. You can disable this feature via
 both [service account][disable sa token] and [pod][disable pod sa token] configuration.
 
 A process can authenticate to the Kubernetes API server by using the service account token as a
@@ -27,13 +27,13 @@ A process can authenticate to the Kubernetes API server by using the service acc
 `--service-account-key-file` flag. Note that multiple keys and files can be provided here which allows for multiple
 issuers and/or signing key rotation.
 
-Once the token is verified, the API server extracts the identity from the token and applies the configured [RBAC][rbac]
+After the token is verified, the API server extracts the identity from the token and applies the configured [RBAC][rbac]
 policy to the request.
 
 ## What does a service account token look like?
 
-Let's take a look at a service account token in a running pod. If you don't have a cluster handy, let's spin up a
-cluster with [KinD][kind]. First, let's use a v1.24 cluster and see what a token mounted into a pod looks like:
+Let's take a look at a service account token in a running pod. If you don't have a cluster handy, spin up a
+cluster with [KinD][kind]. First, use a v1.24 cluster and see what a token mounted into a pod looks like:
 
 ```bash
 $ kind create cluster --name=sa-token-demo-v1.24 --image kindest/node:v1.24.3
@@ -50,8 +50,9 @@ $ kubectl --context kind-sa-token-demo-v1.24 run \
 eyJhbGciOiJSUzI1NiIsImtpZCI6IndNVTRHT3N1cVBuRmpQYXI3TmFaWlRFbU5sYzJJX1c3NWZhRURiTEI3ZEkifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjkyNDQ1NzQxLCJpYXQiOjE2NjA5MDk3NDEsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0IiwicG9kIjp7Im5hbWUiOiJidXN5Ym94IiwidWlkIjoiZDgyMmJhNWYtNDI5MC00YmNhLTk0Y2UtZjNiYzBkY2EyZTM2In0sInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJkZWZhdWx0IiwidWlkIjoiODIwOGZmNTYtMGE2Ny00N2JiLTgxNzUtYTE5ODQyM2RhY2Y4In0sIndhcm5hZnRlciI6MTY2MDkxMzM0OH0sIm5iZiI6MTY2MDkwOTc0MSwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6ZGVmYXVsdCJ9.HYpdLtzZfJYSlI7UQpT1rT_2LbZpP33-PDcQe_9MtuCjRUnexEQUlBN7_VdXIRMEhHEM3MxiHmTjUFmLo_vW0o_6ovTG8d32iudCUpXUJ0cQ0oV6qti8QAHBBP-4GFH2x6vGu1awk3kp20ahIfdS3q56e4p7mmjKlZPsUTdHWBqgff84O1u5yrG5gDM02QkedPLBB-6DmNFpGDoy8GXOMr145Iai_2HkWsumY9Ol2lXR7uHBqy85K4P9mhwRK_BfKmiCiV99Tcr6wgbBlywOQdVwWVnB6eoNzdLm4tXt2ZD5xRKiD54yNIoPWUiA_0-R8fPXcsjsLPPHAqVNjW4Hxg
 ```
 
-The token is a `JSON Web Token` (`JWT`), encoded as base64 as specified in the [JWT RFC][jwt rfc]. For simplicity, let's
-decode it using [`jwt.io`][jwt.io] and see what's inside the token payload:
+The token is a `JSON Web Token` (`JWT`), encoded as base64 as specified in the [JWT RFC][jwt rfc]. [`jwt.io`][jwt.io]
+is a useful tool to decode JWT. If we paste in the encoded JWT and inspect the token payload, it will look similar to the
+following:
 
 ```json
 {
@@ -139,8 +140,8 @@ Again, let's decode it using [`jwt.io`][jwt.io] and see what's inside the token 
 ```
 
 Notice no expiry or audience, among other missing info we noted above. Also note the
-`kubernetes.io/serviceaccount/secret.name` claim, indicating this was mounted from a secret - unlike the token we
-inspected from Kubernetes v1.24 above which as we just discussed comes from a projected volume instead of a secret
+`kubernetes.io/serviceaccount/secret.name` claim, indicating this was mounted from a secret. This is unlike the token we
+inspected from Kubernetes v1.24 above which, as we just discussed, comes from a projected volume instead of a secret
 volume.
 
 ## What's changed in Kubernetes v1.24?
@@ -148,10 +149,10 @@ volume.
 Even with time-bound tokens being mounted into pods via volume projection, every service account also had a non-expiring
 token generated into a secret by the token controller. These tokens generally would not be used when running pods thanks
 to the default projected volume token, so the service account token secret would rarely be used. In Kubernetes v1.24, a
-small but potentially very important feature was enabled by default: `LegacyServiceAccountTokenNoAutoGeneration`
-(interestingly this never went through an alpha stage btw, presumably because the risk of a negative impact was deemed
-negligible). With this feature now enabled, non-expiring service account tokens are no longer implicitly generated for
-every service account.
+small but potentially very important feature was enabled by default: `LegacyServiceAccountTokenNoAutoGeneration`.
+Interestingly, this feature never went through an alpha stage, presumably because the risk of a negative impact was
+deemed negligible). With this feature now enabled, non-expiring service account tokens are no longer implicitly
+generated for every service account.
 
 Let's take a look at the difference between Kubernetes v1.23 and v1.24. First in v1.24:
 
@@ -177,10 +178,10 @@ default-token-hvs55         kubernetes.io/service-account-token   3      66m
 sa-token-demo-token-28rqk   kubernetes.io/service-account-token   3      5s
 ```
 
-No longer do we have service account token secrets created by default in Kubernetes v1.24. This has an effect on
-scalabilty as well as security because this reduces the number of resources in the API server (a mostly redundant secret
-per service account), as well as reducing the load produced by the token controller running in the
-`kube-controller-manager` now not needing to generate these tokens.
+We no longer have service account token secrets created by default in Kubernetes v1.24. This has an effect on scalabilty
+as well as security because this reduces the number of resources in the API server (a mostly redundant secret per
+service account), and reduces the load produced by the token controller running in the `kube-controller-manager`
+because it doesn't need to generate these tokens.
 
 ## How does this affect you?
 
@@ -207,8 +208,8 @@ secret/explicit-sa-token created
 
 Note that the service account referenced by `kubernetes.io/service-account.name` annotation must exist. If you want to
 be really careful, you can also specify the `kubernetes.io/service-account.uid` annotation to match the service account
-you want to create a token secret for (if you don't do this then the token controller will fill this for you when it
-populates the token secret).
+you want to create a token secret for. If you don't do this, then the token controller will fill this for you when it
+populates the token secret.
 
 And let's look at the secret:
 
