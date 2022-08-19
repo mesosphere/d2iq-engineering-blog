@@ -769,7 +769,7 @@ body:not(.gh-head-open) .gh-burger:hover .gh-burger-inner::after {
     max-width: 720px;
     font-size: 1.6rem;
     line-height: 1.5;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     word-break: break-word;
 }
@@ -779,7 +779,7 @@ body:not(.gh-head-open) .gh-burger:hover .gh-burger-inner::after {
 }
 
 .post-card:not(.post-card-large):not(.post-card-full):not(.dynamic):not(.no-image) .post-card-excerpt {
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 4;
 }
 
 :is(.tag-template, .author-template) .post-card-excerpt {
