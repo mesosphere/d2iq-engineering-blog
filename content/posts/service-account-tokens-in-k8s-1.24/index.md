@@ -103,7 +103,7 @@ the token using the private key specified in the `--service-account-private-key-
 expiration time - they are valid forever.
 
 In Kubernetes v1.12 (many moons ago), `TokenRequestProjection` feature was enabled by default (it graduated to beta -
-see [here][feature-stages] for details of feature graduation). This allowed users to request an audience and time bound
+see [here][feature stages] for details of feature graduation). This allowed users to request an audience and time bound
 token to be created and mounted into a pod at a specified path via a [projected volume][projected volume]. By adding an
 expiration to the token, this increased security as any tokens that are leaked will be rejected after they expire. The
 projected tokens are automatically refreshed in the pods when they near expiry by the kubelet via the `TokenRequest`
