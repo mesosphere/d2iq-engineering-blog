@@ -118,7 +118,7 @@ Please be sure that all exported variables are valid. The “HCLOUD_SSH_KEY” n
 See DKP release notes to validate which Kubernetes versions are supported.
 
 These environment variables define that a cluster with 3 control-planes with “cpx31” flavor and 3 workers with “cpx31” flavor in region “fsn1” will be created. Your SSH key can be used to login as user “root”. 
-As default Ubuntu 20.04 is used as base image. It’s recommended to use your own base image if you run clusters in production!
+A default Ubuntu 20.04 is used as a base image, but it is recommended to use your own base image if you run clusters in production!
 
 The variable “CLUSTER_NAME” defines the namespace of the DKP workspace where the cluster should be created. Please note that workspace name and namespace name can be different. You can get both via the dkp cli:
 
