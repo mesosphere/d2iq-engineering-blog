@@ -37,7 +37,7 @@ Since 2021 a datacenter in Ashburn, Virginia is also available to run workload i
 For more information, see https://www.hetzner.com/
 
 ## Prerequisites / Environment
-To start with the deployment of your first cluster at Hetzner Cloud we need the following tools and informations:
+To start with the deployment of your first cluster at Hetzner Cloud you need the following tools and informations:
 * DKP command line tool (version 2.2+)
 * Running DKP Enterprise (to attach the Hetzner cluster)
   * Create Workspace (see https://docs.d2iq.com/dkp/2.3/workspaces#id-(v2.4)Workspaces-CreateaWorkspace)
@@ -52,7 +52,7 @@ To start with the deployment of your first cluster at Hetzner Cloud we need the 
 The generated API token will be used for the cluster creation and lifecycle process. 
 
 ## Deploy Hetzner CAPI provider
-Hetzner is not part of DKP's provided CAPI provider so need to deploy the CAPI provider to your centralized DKP Enterprise CAPI controller first. 
+Hetzner is not part of DKP's provided CAPI provider so need you to deploy the CAPI provider to your centralized DKP Enterprise CAPI controller first. 
 NOTE: It’s possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster, you have to move the CAPI components to the deployed cluster later to make it “self managed”.
 
 First, export the kubeconfig for our DKP Enterprise cluster where our CAPI controller is running:
