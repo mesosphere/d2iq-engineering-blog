@@ -303,7 +303,7 @@ For any further help, visit https://docs.cilium.io/en/v1.10/gettinghelp
 ````
 
 In this example we’re using Helm to add the Cilium Helm chart repository and deploy the Cilium Helm chart to our newly created Kubernetes cluster.
-Please be sure that your “helm upgrade” command uses the kubeconfig file of the target cluster. Otherwise you could damage your DKP Enterprise cluster.
+Please be sure that your “helm upgrade” command uses the kubeconfig file of the target cluster. Otherwise, you could damage your DKP Enterprise cluster.
 
 Validate the running pods after the helm chart was successfully.
 
