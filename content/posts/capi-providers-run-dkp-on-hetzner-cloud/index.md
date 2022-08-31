@@ -51,7 +51,7 @@ We’ll use the generated API token for the cluster creation and lifecycle proce
 Hetzner is not part of DKP's provided CAPI provider so need to deploy the CAPI provider to your centralized DKP Enterprise CAPI controller first. 
 NOTE: It’s also possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster you have to move the CAPI components to the deployed cluster later to make it “self managed”.
 
-First of all we need to export the kubeconfig for our DKP Enterprise cluster where our CAPI controller is running:
+First, export the kubeconfig for our DKP Enterprise cluster where our CAPI controller is running:
 
 ````
 $ export KUBECONFIG=./dkp.conf
