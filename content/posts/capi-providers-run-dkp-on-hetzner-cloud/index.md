@@ -305,7 +305,7 @@ Please be sure that your “helm upgrade” command uses the kubeconfig file of 
 Validate the running pods after the helm chart was successfully.
 
 ````
-$ get po -A --kubeconfig ${CLUSTER_NAME}.kubeconfig |grep calico
+$ kubectl get po -A --kubeconfig ${CLUSTER_NAME}.kubeconfig |grep calico
 calico-system     calico-kube-controllers-7d6749878f-6nxlv                  0/1     Pending   0          26s
 calico-system     calico-node-lrpdm                                         0/1     Running   0          26s
 calico-system     calico-typha-6ccd5d454d-r4mls                             1/1     Running   0          26s
