@@ -11,7 +11,7 @@ feature_image: hetzner.png
 # Run DKP on Hetzner with Cluster API (CAPI)
 
 The D2iQ Kubernetes Platform (DKP) makes your operational life easier. Instead of wasting time researching the CNCF landscape for the right tools to solve your enterprise requirements,  and struggling with the implementation and lifecycle, you can use a fully curated, integrated and supported Day 2 ready, out of the box platform.
-The supported CAPI providers bring in an easy to use integrated under the hood infrastructure as code approach with the headache around the development and lifecycle of infrastructure as code automation. The product supports the following providers out of the box:
+DKP supported CAPI infrastructures provide an easy to use infrastructure-as-code approach that eliminates the headache around the complexity of the development and lifecycle challenges of Kubernetes. DKP supports the following infrastructure providers out of the box:
 * AKS
 * AWS
 * Azure
@@ -28,19 +28,23 @@ This blog post shows you the needed steps to run DKP on Hetzner Cloud by using t
 Kubernetes Cluster API (CAPI) is an official sub project from Kubernetes. The goal of CAPI is to provide a modular framework for deployment and lifecycle management of Kubernetes clusters. At a glance CAPI provides a declarative API and a toolset (for example clusterctl) to create and manage Kubernetes cluster as a Kubernetes object. 
 A big benefit of CAPI is the large number of infrastructure providers (24+). This provider brings in all the required integrations for the infrastructure and handles the infrastructure as code lifecycle. The user did not need to think about infrastructure topics like how virtual machines are provisioned or how to create a nat gateway. Just define how many masters/workers, with flavor, with operating system and CAPI will deploy the cluster. 
 
+For more information, see the official CAPI documentation: https://cluster-api.sigs.k8s.io/
+
 ## What is Hetzner?
 Outside of Germany / DACH Hetzner is not very popular. Hetzner was founded 1997 in Germany and the portfolio is focused around colocation, bare metal server (as a service) and Hetzner Cloud. Hetzner Cloud provides a very easy to use self service offering around virtual machines (based on KVM), network, (block-) storage, and LoadBalancer. For automation approaches there are cli tools, Terraform modules and a CAPI provider available.
 Since 2021 a datacenter in Ashburn, Virginia is also available to run workload in the United States of America.
+
+For more information, see https://www.hetzner.com/
 
 ## Prerequisites / Environment
 To start with the deployment of your first cluster at Hetzner Cloud we need the following tools and informations:
 * DKP command line tool (version 2.2+)
 * Running DKP Enterprise (to attach the Hetzner cluster)
-  * Create Workspace
+  * Create Workspace (see https://docs.d2iq.com/dkp/2.3/workspaces#id-(v2.4)Workspaces-CreateaWorkspace)
 * kubectl command line tool (see https://kubernetes.io/docs/tasks/tools/)
 * helm command line tool (see https://helm.sh/docs/intro/install/)
 * Clusterctl command line tool (see https://cluster-api.sigs.k8s.io/user/quick-start.html#install-clusterctl)
-* Hetzner account
+* Hetzner account (see https://www.hetzner.com/)
   * Create a project
   * Upload your SSH public key
   * Generate a readwrite API token for the project
@@ -49,7 +53,7 @@ We’ll use the generated API token for the cluster creation and lifecycle proce
 
 ## Deploy Hetzner CAPI provider
 Hetzner is not part of DKP's provided CAPI provider so need to deploy the CAPI provider to your centralized DKP Enterprise CAPI controller first. 
-NOTE: It’s also possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster you have to move the CAPI components to the deployed cluster later to make it “self managed”.
+NOTE: It’s possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster, you have to move the CAPI components to the deployed cluster later to make it “self managed”.
 
 First, export the kubeconfig for our DKP Enterprise cluster where our CAPI controller is running:
 
@@ -140,7 +144,7 @@ secret/hcloud-token-hetznerdemo created
 $ kubectl label secret hcloud-token-${CLUSTER_NAME} \
     -n ${CLUSTER_NAMESPACE} \
     clusterctl.cluster.x-k8s.io/move=""
-secret/hcloud-token-hetznerdemo patched
+secret/hcloud-token-hetznerdemo labeled
 ````
 
 After all variables are set correctly and the Secret is created we can use “clusterctl” to create our cluster manifest.
@@ -263,7 +267,7 @@ Cluster/hetznerdemo                                                          Fal
       ├─BootstrapConfig - KubeadmConfig/hetznerdemo-md-0-2wt8p               False  Info      WaitingForControlPlaneAvailable  2m21s  
 ````
 
-After the first control plane node (in this example hetznerdemo-control-plane-h5k5n) is in ready state “true” we can get the kubeconfig of our new created cluster and deploy the needed components CNI, CCM and CSI (optional). 
+After the first control plane node (in this example hetznerdemo-control-plane-h5k5n) is in ready state “true” we can get the kubeconfig of our new created cluster and deploy the needed components CNI, CCM and CSI. The components CNI and CCM are mandatory.
 
 The kubeconfig of the created cluster is stored as secret in the workspace namespace. We can use the kubectl command line tool to download the kubeconfig and save to our local filesystem.
 
@@ -275,48 +279,36 @@ $ kubectl get secret -n ${CLUSTER_NAMESPACE} ${CLUSTER_NAME}-kubeconfig \
 We’ll use this kubeconfig file to communicate directly with the newly created cluster.
 
 ### Deploy CNI
-Kubernetes needs a Container Network Interface (CNI) compliant software defined network to be ready for usage. DKP uses Calico by default but you can use any CNI compliant networking solution. Hetzner CAPI recommends Cilium so we will deploy Cilium via Helm.
+Kubernetes needs a Container Network Interface (CNI) compliant software defined network to be ready for usage. DKP uses Calico by default so we'll deploy Calico to the new deployed cluster. Calico provides multiple deployment methods. In this case we're using the Helm deployment of TigeraOperator. 
+You can find more details at https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
 
 ````
-$ helm repo add cilium https://helm.cilium.io/
-"cilium" has been added to your repositories
+$ helm repo add projectcalico https://projectcalico.docs.tigera.io/charts
+"projectcalico" has been added to your repositories
 
-$ KUBECONFIG=${CLUSTER_NAME}.kubeconfig helm upgrade \
-    --install cilium cilium/cilium \
-    --version 1.10.5 \
-    --namespace kube-system \
-    -f https://raw.githubusercontent.com/syself/cluster-api-provider-hetzner/main/templates/cilium/cilium.yaml
+$ helm upgrade --install calico projectcalico/tigera-operator \
+    --version v3.24.1 \
+    --namespace tigera-operator \
+    --kubeconfig ${CLUSTER_NAME}.kubeconfig \
+    --create-namespace
 
-Release "cilium" does not exist. Installing it now.
-NAME: cilium
+NAME: calico
 LAST DEPLOYED: Mon Aug 29 14:10:32 2022
-NAMESPACE: kube-system
+NAMESPACE: tigera-operator
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-NOTES:
-You have successfully installed Cilium with Hubble Relay and Hubble UI.
-
-Your release version is 1.10.5.
-
-For any further help, visit https://docs.cilium.io/en/v1.10/gettinghelp
 ````
 
-In this example we’re using Helm to add the Cilium Helm chart repository and deploy the Cilium Helm chart to our newly created Kubernetes cluster.
 Please be sure that your “helm upgrade” command uses the kubeconfig file of the target cluster. Otherwise, you could damage your DKP Enterprise cluster.
 
 Validate the running pods after the helm chart was successfully.
 
 ````
-$ kubectl get po -n kube-system --kubeconfig ${CLUSTER_NAME}.kubeconfig |grep cilium
-cilium-48qxj                            1/1     Running   0             3m
-cilium-7rzd5                            1/1     Running   0             4m
-cilium-cwpbp                            1/1     Running   0             4m
-cilium-mq8h2                            1/1     Running   0             1m10s
-cilium-n9ck2                            1/1     Running   0             4m
-cilium-operator-c5fb547b4-fzpb8         1/1     Running   0             4m
-cilium-operator-c5fb547b4-sszjq         1/1     Running   1 (3m ago)    4m
-cilium-zrqt8                            1/1     Running   0             4m
+$ get po -A --kubeconfig ${CLUSTER_NAME}.kubeconfig |grep calico
+calico-system     calico-kube-controllers-7d6749878f-6nxlv                  0/1     Pending   0          26s
+calico-system     calico-node-lrpdm                                         0/1     Running   0          26s
+calico-system     calico-typha-6ccd5d454d-r4mls                             1/1     Running   0          26s
 ````
 
 ### Deploy CCM
@@ -326,10 +318,10 @@ Hetzner Cloud requires a modified Cloud Controller Manager (CCM). The community 
 $ helm repo add syself https://charts.syself.com
 "syself" has been added to your repositories
 
-$ KUBECONFIG=${CLUSTER_NAME}.kubeconfig helm upgrade --install ccm \   
-    syself/ccm-hcloud \
+$ helm upgrade --install ccm syself/ccm-hcloud \
     --version 1.0.10 \
     --namespace kube-system \
+    --kubeconfig ${CLUSTER_NAME}.kubeconfig \
     --set secret.name=hcloud-token-${CLUSTER_NAME} \
     --set secret.tokenKeyName=hcloud \
     --set privateNetwork.enabled=false
