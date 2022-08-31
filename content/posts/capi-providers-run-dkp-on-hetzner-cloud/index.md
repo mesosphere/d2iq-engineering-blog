@@ -427,7 +427,7 @@ You can also see all the resources via Hetzner UI (sorry, German account):
 ![Launched VMs in Hetzner UI](vms.png)
 
 ## Attach cluster to DKP Enterprise
-At this stage CAPI successfully deployed the cluster and the CAPI controller running at the DKP Enterprise centralized cluster is handling the lifecycle. 
+At this stage, CAPI successfully deployed the cluster and the CAPI controller running at the DKP Enterprise centralized cluster is handling the lifecycle. 
 
 In DKP we see the cluster in state “unattached”:
 ![Unattached cluster in DKP Enterprise](unattached.png)
