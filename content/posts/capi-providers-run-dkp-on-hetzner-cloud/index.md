@@ -49,7 +49,7 @@ To start with the deployment of your first cluster at Hetzner Cloud we need the 
   * Upload your SSH public key
   * Generate a readwrite API token for the project
 
-We’ll use the generated API token for the cluster creation and lifecycle process. 
+The generated API token will be used for the cluster creation and lifecycle process. 
 
 ## Deploy Hetzner CAPI provider
 Hetzner is not part of DKP's provided CAPI provider so need to deploy the CAPI provider to your centralized DKP Enterprise CAPI controller first. 
@@ -61,7 +61,7 @@ First, export the kubeconfig for our DKP Enterprise cluster where our CAPI contr
 $ export KUBECONFIG=./dkp.conf
 ````
 
-We use the "clusterctl" command to generate the CAPI provider manifest for Hetzner and apply the generated capi manifest to our DKP Enterprise cluster:
+The "clusterctl" command will be used to generate the CAPI provider manifest for Hetzner and apply the generated capi manifest to our DKP Enterprise cluster:
 
 ````
 $ clusterctl generate provider --infrastructure hetzner > hetzner-capi.yml
@@ -103,7 +103,7 @@ caph-controller-manager-7576dcbf56-wd9tc   1/1     Running   0          44s
 All information around Hetzner CAPI provider can be found on the official github page: https://github.com/syself/cluster-api-provider-hetzner
 
 ## Deploy cluster
-The Hetzner CAPI controller manager is up and running so we can deploy our first Hetzner based cluster. The first steps are exporting all required environment variables to configure the template.
+The Hetzner CAPI controller manager is up and running so the Hetzner based cluster can be deployed. The first steps are exporting all required environment variables to configure the template.
 
 ````
 $ export HCLOUD_TOKEN="<Hetzner rw api token>"
@@ -147,15 +147,15 @@ $ kubectl label secret hcloud-token-${CLUSTER_NAME} \
 secret/hcloud-token-hetznerdemo labeled
 ````
 
-After all variables are set correctly and the Secret is created we can use “clusterctl” to create our cluster manifest.
+After all variables are set correctly and the secret is created the “clusterctl” command can be used to create the Hetzner cluster manifest.
 
 ````
 $ clusterctl generate cluster --infrastructure hetzner:v1.0.0-beta.0 \
     ${CLUSTER_NAME} -n ${CLUSTER_NAMESPACE} > ${CLUSTER_NAME}.yaml
 ````
 
-Befault Hetzner CAPI provider uses the same secret name “hetzner” for every cluster. This could be problematic if we want to deploy multiple clusters placed in different Hetzner projects in the same workspace. That’s why we used the secret name “hcloud-token-${CLUSTER_NAME}”.
-Now we need to patch the generated cluster manifest to set the individual token secret name. 
+Befault Hetzner CAPI provider uses the same secret name “hetzner” for every cluster. This could be problematic if there is the need to deploy multiple clusters placed in different Hetzner projects in the same workspace. One solution is to used a dedicated secret per cluster, in this case a secret with the name “hcloud-token-${CLUSTER_NAME}”.
+If you use dedicated secret names you need to patch the generated cluster manifest to set the individual token secret name. 
 
 ````
 $ cat ${CLUSTER_NAME}.yaml
@@ -230,7 +230,7 @@ spec:
 ---
 ````
 
-Now we can deploy the manifest.
+Now you can deploy the manifest.
 
 ````
 $ kubectl apply -f ${CLUSTER_NAME}.yaml
@@ -245,7 +245,7 @@ hcloudmachinetemplate.infrastructure.cluster.x-k8s.io/hetznerdemo-md-0 created
 hetznercluster.infrastructure.cluster.x-k8s.io/hetznerdemo created
 ````
 
-To see the current status we can describe the cluster via the dkp command line tool.
+To see the current status you can describe the cluster via the dkp command line tool.
 
 ````
 $ dkp describe cluster -n ${CLUSTER_NAMESPACE} -c ${CLUSTER_NAME}
@@ -267,19 +267,19 @@ Cluster/hetznerdemo                                                          Fal
       ├─BootstrapConfig - KubeadmConfig/hetznerdemo-md-0-2wt8p               False  Info      WaitingForControlPlaneAvailable  2m21s  
 ````
 
-After the first control plane node (in this example hetznerdemo-control-plane-h5k5n) is in ready state “true” we can get the kubeconfig of our new created cluster and deploy the needed components CNI, CCM and CSI. The components CNI and CCM are mandatory.
+After the first control plane node (in this example hetznerdemo-control-plane-h5k5n) is in ready state “true” you can get the kubeconfig of our newly created cluster and deploy the needed components CNI, CCM and CSI. The components CNI and CCM are mandatory.
 
-The kubeconfig of the created cluster is stored as secret in the workspace namespace. We can use the kubectl command line tool to download the kubeconfig and save to our local filesystem.
+The kubeconfig of the created cluster is stored as secret in the workspace namespace. You can use the kubectl command line tool to download the kubeconfig and save to our local filesystem.
 
 ````
 $ kubectl get secret -n ${CLUSTER_NAMESPACE} ${CLUSTER_NAME}-kubeconfig \
     -o jsonpath='{.data.value}'|base64 -d> ${CLUSTER_NAME}.kubeconfig
 ````
 
-We’ll use this kubeconfig file to communicate directly with the newly created cluster.
+You’ll use this kubeconfig file to communicate directly with the newly created cluster.
 
 ### Deploy CNI
-Kubernetes needs a Container Network Interface (CNI) compliant software defined network to be ready for usage. DKP uses Calico by default so we'll deploy Calico to the new deployed cluster. Calico provides multiple deployment methods. In this case we're using the Helm deployment of TigeraOperator. 
+Kubernetes needs a Container Network Interface (CNI) compliant software defined network to be ready for usage. DKP uses Calico by default so you'll deploy Calico to the new deployed cluster. Calico provides multiple deployment methods. In this case you're using the Helm deployment of TigeraOperator. 
 You can find more details at https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
 
 ````
@@ -421,10 +421,10 @@ You can also see all the resources via Hetzner UI (sorry, German account):
 ## Attach cluster to DKP Enterprise
 At this stage, CAPI successfully deployed the cluster and the CAPI controller running at the DKP Enterprise centralized cluster is handling the lifecycle. 
 
-In DKP we see the cluster in state “unattached”:
+In DKP you see the cluster in state “unattached”:
 ![Unattached cluster in DKP Enterprise](unattached.png)
 
-That’s why the cluster object is created in the workspace so Kommander detects this cluster but it’s not managed by Kommander / DKP Enterprise right now. To change this we need to apply the missing KommanderCluster object. 
+That’s why the cluster object is created in the workspace so Kommander detects this cluster but it’s not managed by Kommander / DKP Enterprise right now. To change this you need to apply the missing KommanderCluster object. 
 
 ````
 $ cat << EOF | kubectl apply -f -
@@ -475,7 +475,7 @@ service:
 “REGION” must match with the REGION defined in environment variable “HCLOUD_REGION”
 
 ## Recap
-DPK Enterprise is a powerful Kubernetes Distribution which is built on state of the art technologies like Kubernetes and Cluster API. We ship 7 CAPI providers out-of-the-box as part of the DKP product.
+DPK Enterprise is a powerful Kubernetes Distribution which is built on state of the art technologies like Kubernetes and Cluster API. D2iQ ships 7 CAPI providers out-of-the-box as part of the DKP product.
 This guide showed how easy the integration of additional CAPI providers is. You have the possibility to implement additional CAPI providers to DKP, deploy clusters, and use the standardized toolset for Enterprise grade day 2 operation on all of your CAPI valid Kubernetes clusters.
 
 The deployment of CAPI providers and clusters is declarative and based on YAML manifests, so it’s the perfect baseline to implement a GitOps approach. 
