@@ -52,7 +52,7 @@ To start with the deployment of your first cluster at Hetzner Cloud you need the
 The generated API token will be used for the cluster creation and lifecycle process. 
 
 ## Deploy Hetzner CAPI provider
-Hetzner is not part of DKP's provided CAPI provider so need you to deploy the CAPI provider to your centralized DKP Enterprise CAPI controller first. 
+Hetzner is not part of DKP's provided CAPI provider so you need to deploy the CAPI provider to your centralized DKP Enterprise CAPI controller first.
 NOTE: It’s possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster, you have to move the CAPI components to the deployed cluster later to make it “self managed”.
 
 First, export the kubeconfig for our DKP Enterprise cluster where our CAPI controller is running:
@@ -154,7 +154,7 @@ $ clusterctl generate cluster --infrastructure hetzner:v1.0.0-beta.0 \
     ${CLUSTER_NAME} -n ${CLUSTER_NAMESPACE} > ${CLUSTER_NAME}.yaml
 ````
 
-Befault Hetzner CAPI provider uses the same secret name “hetzner” for every cluster. This could be problematic if there is the need to deploy multiple clusters placed in different Hetzner projects in the same workspace. One solution is to used a dedicated secret per cluster, in this case a secret with the name “hcloud-token-${CLUSTER_NAME}”.
+The default configuration of the Hetzner CAPI provider uses the same secret name “hetzner” for every cluster. This could be problematic if there is the need to deploy multiple clusters placed in different Hetzner projects in the same workspace. One solution is to used a dedicated secret per cluster, in this case a secret with the name “hcloud-token-${CLUSTER_NAME}”.
 If you use dedicated secret names you need to patch the generated cluster manifest to set the individual token secret name. 
 
 ````
