@@ -484,6 +484,6 @@ service:
 
 ## Recap
 DPK Enterprise is a powerful Kubernetes Distribution which is built on state of the art technologies like Kubernetes Cluster API. We ship 7 CAPI providers out of the box as part of the DKP product.
-This guide showed how easy the integration of additional CAPI providers looks like. You have the possibility to implement additional CAPI providers to DKP, deploy clusters and use the standardized toolset for enterprise grate day 2 operation on all of your CAPI valid Kubernetes clusters.
+This guide showed how easy the integration of additional CAPI providers is. You have the possibility to implement additional CAPI providers to DKP, deploy clusters, and use the standardized toolset for Enterprise grade day 2 operation on all of your CAPI valid Kubernetes clusters.
 
 The deployment of CAPI providers and clusters is declarative and based on YAML manifests, so it’s the perfect baseline to implement a GitOps approach. 
