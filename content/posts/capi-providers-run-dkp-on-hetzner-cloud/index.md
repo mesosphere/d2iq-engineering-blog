@@ -471,7 +471,7 @@ kube-system              Active   44m
 All pre enabled applications from the Application Catalog (like Traefik) will be deployed to the target cluster now. 
 
 ## Get Traefik up and running
-For Traefik we need to set an additional service label. Otherwise Kubernetes is not able to create the external LoadBalancer. 
+For Traefik we need to set an additional service label. Otherwise, Kubernetes is not able to create the external LoadBalancer. 
 Please set the following settings to our Traefik deployment (via DKP Enterprise UI or cli):
 
 ````
