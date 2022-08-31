@@ -96,7 +96,7 @@ NAME                                       READY   STATUS    RESTARTS   AGE
 caph-controller-manager-7576dcbf56-wd9tc   1/1     Running   0          44s
 ````
 
-All information around Hetzner CAPI provider you can found on the official github page: https://github.com/syself/cluster-api-provider-hetzner
+All information around Hetzner CAPI provider can be found on the official github page: https://github.com/syself/cluster-api-provider-hetzner
 
 ## Deploy cluster
 The Hetzner CAPI controller manager is up and running so we can deploy our first Hetzner based cluster. The first steps are exporting all required environment variables to configure the template.
