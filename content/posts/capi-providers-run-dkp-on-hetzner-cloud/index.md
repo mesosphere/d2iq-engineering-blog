@@ -10,7 +10,7 @@ feature_image: hetzner.png
 
 # Run DKP on Hetzner with Cluster API (CAPI)
 
-D2iQ Kubernetes Platform (DKP) makes your operation life easier. Instead of wasting time with research during the CNCF landscape for the right tools to solve your enterprise requirements  and struggling with the implementation and lifecycle you can use a fully curated, integrated and supported Day 2 ready out of the box platform.
+The D2iQ Kubernetes Platform (DKP) makes your operational life easier. Instead of wasting time researching the CNCF landscape for the right tools to solve your enterprise requirements,  and struggling with the implementation and lifecycle, you can use a fully curated, integrated and supported Day 2 ready, out of the box platform.
 The supported CAPI providers bring in an easy to use integrated under the hood infrastructure as code approach with the headache around the development and lifecycle of infrastructure as code automation. The product supports the following providers out of the box:
 * AKS
 * AWS
