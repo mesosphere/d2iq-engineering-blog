@@ -143,7 +143,7 @@ $ kubectl label secret hcloud-token-${CLUSTER_NAME} \
 secret/hcloud-token-hetznerdemo patched
 ````
 
-After all variables are set correctly and the secret is created we can use “clusterctl” to create our cluster manifest by using our exported variables.
+After all variables are set correctly and the Secret is created we can use “clusterctl” to create our cluster manifest.
 
 ````
 $ clusterctl generate cluster --infrastructure hetzner:v1.0.0-beta.0 \
