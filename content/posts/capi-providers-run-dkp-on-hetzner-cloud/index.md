@@ -137,9 +137,9 @@ $ kubectl create secret generic hcloud-token-${CLUSTER_NAME} \
     --from-literal=hcloud=${HCLOUD_TOKEN} -n ${CLUSTER_NAMESPACE} 
 secret/hcloud-token-hetznerdemo created
 
-$ kubectl patch secret hcloud-token-${CLUSTER_NAME} \
-    -p '{"metadata":{"labels":{"clusterctl.cluster.x-k8s.io/move":""}}}' \
-    -n ${CLUSTER_NAMESPACE}
+$ kubectl label secret hcloud-token-${CLUSTER_NAME} \
+    -n ${CLUSTER_NAMESPACE} \
+    clusterctl.cluster.x-k8s.io/move=""
 secret/hcloud-token-hetznerdemo patched
 ````
 
