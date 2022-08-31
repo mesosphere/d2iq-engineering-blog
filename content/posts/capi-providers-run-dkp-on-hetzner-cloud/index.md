@@ -343,7 +343,7 @@ REVISION: 1
 TEST SUITE: None
 ````
 
-Validate the running pods after the helm chart was successfully.
+Validate the running pods after the helm chart was successfully updated.
 
 ````
 $ kubectl get po -n kube-system --kubeconfig ${CLUSTER_NAME}.kubeconfig |grep ccm
