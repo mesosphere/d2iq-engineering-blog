@@ -41,7 +41,7 @@ The core components for an OpenStack based IaaS platform are:
 * Neutron (Network)
 * Nova (Compute)
 
-The OpenStack ecosystem contains 20+ more project. Evenry project handles one "as a service" feature like DNSaaS, LBaaS, etc. The most used hypervisor is Linux KVM. OpenStack can be used to create Public and Private cloud platforms and its a nice alternative to proprietary infrastructure solutions like VMware. 
+The OpenStack ecosystem contains 20+ more project. Every project handles one "as a service" feature like DNSaaS, LBaaS, etc. The most used hypervisor is Linux KVM. OpenStack can be used to create public and private cloud platforms and it's a nice alternative to proprietary infrastructure solutions like VMware. 
 
 For more information, see https://www.openstack.org/
 
@@ -63,10 +63,11 @@ NOTE: The OpenStack CAPI provider required OpenStack Octavia (LoadBalancer as a 
 
 ## Deploy OpenStack CAPI provider
 OpenStack (CAPO) is not part of DKP's provided CAPI provider so you need to deploy the CAPI provider to your centralized DKP Enterprise CAPI controller first. 
+
 NOTE: It’s possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster, you have to move the CAPI components to the deployed cluster later to make it “self managed”.
 
 First, export the kubeconfig for our DKP Enterprise cluster where our CAPI controller is running:
-ss
+
 ````
 $ export KUBECONFIG=./dkp.conf
 ````
@@ -159,7 +160,7 @@ Build 'qemu' finished after 15 minutes 2 seconds.
 --> qemu: VM files in directory: ./output/ubuntu-2004-kube-v1.22.9
 ````
 
-The image is generated as qcow2 file. We can upload this image directly to the OpenStack image store but the most OpenStack platform recommend RAW images instead of qcow2 (performance boost during deployment, based on the storage integration). 
+The image is generated as qcow2 file. We can upload this image directly to the OpenStack image store but the most OpenStack platforms recommend RAW images instead of qcow2 (performance boost during deployment, based on the storage integration). 
 You can use the command "qemu-img" to convert the qcow2 image to raw:
 
 ````
@@ -176,9 +177,9 @@ export OS_CLOUD=<name of the openstack cloud>
 openstack image create --private --file ./output/ubuntu-2004-kube-v1.22.9/ubuntu-2004-kube-v1.22.9.raw ubuntu-2004-kube-v1.22.9
 ````
 
-This step requires that your OpenStack clouds.yaml is placed at /etc/openstack/clouds.yaml
+>> This step requires that your OpenStack clouds.yaml is placed at /etc/openstack/clouds.yaml or in our current directory.
 
-### Different Kubernetes Version
+### Different Kubernetes version
 Currently the image-builder default Kubernetes version is 1.22.9. If you need a newer Kubernetes version you have to patch the packer config and replace the default version 1.22.9 by your favorite version. In this example we build a CAPI image with Kubernetes version 1.23.7:
 
 ````
@@ -203,8 +204,8 @@ Build 'qemu' finished after 15 minutes 58 seconds.
 After this you have an additional CAPI image for OpenStack with Kubernetes v1.23.7. After conversion to RAW you can upload it to OpenStack too.
  
 ## Deploy cluster
-The OpenStack CAPI controller manager is up and running so the OpenStack based cluster can be deployed. 
-The first step is loading the clouds.yaml file the environment. The community created a helper script you should use to convert clouds.yaml to environment variables. 
+The OpenStack CAPI controller manager is up and running, so the OpenStack based cluster can be deployed. 
+The first step is loading the clouds.yaml file the environment. The community has created a helper script you can use to convert clouds.yaml to environment variables. 
 
 Be sure that your clouds.yaml has the minimum settings like this:
 ````
@@ -241,13 +242,13 @@ $ source /tmp/env.rc /etc/openstack/clouds.yaml openstack
 
 After this we need to export additional required variables:
 ````
-export OPENSTACK_DNS_NAMESERVERS=<dns nameserver>
+export OPENSTACK_DNS_NAMESERVERS=<dns nameservers>
 export OPENSTACK_FAILURE_DOMAIN=<availability zone name>
-export OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR=<flavor>
-export OPENSTACK_NODE_MACHINE_FLAVOR=<flavor>
+export OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR=<flavor name>
+export OPENSTACK_NODE_MACHINE_FLAVOR=<flavor name>
 export OPENSTACK_SSH_KEY_NAME=<ssh key pair name>
 export OPENSTACK_EXTERNAL_NETWORK_ID=<external network ID>
-export CLUSTER_NAMESPACE=openstack-mc7nh-clgc6
+export CLUSTER_NAMESPACE=<workspace namespace name>
 export CLUSTER_NAME=openstack
 export CONTROL_PLANE_MACHINE_COUNT=3
 export WORKER_MACHINE_COUNT=3
@@ -256,9 +257,10 @@ export OPENSTACK_IMAGE_NAME=ubuntu-2004-kube-v1.22.9
 ````
 
 Please be sure that all exported variables are valid. The Kubernetes version must fit the supported K8s version range from DKP and KUBERNETES_VERSION must match the installed Kubernetes version of the used OpenStack image.
-See DKP release notes to validate which Kubernetes versions are supported.
 
-The variable “CLUSTER_NAME” defines the namespace of the DKP workspace where the cluster should be created. Please note that workspace name and namespace name can be different. You can get both via the dkp cli:
+See DKP release notes to validate which Kubernetes versions are [supported](https://docs.d2iq.com/dkp/2.3/2-3-release-notes#id-(v2.4)2.3.0ReleaseNotes-SupportedVersionssupported-versions).
+
+The variable “CLUSTER_NAMESPACE” defines the namespace of the DKP workspace where the cluster should be created. Please note that workspace name and namespace name can be different. You can get both via the dkp cli:
 
 ````
 $ dkp get workspace
@@ -308,7 +310,7 @@ Cluster/openstack                                                             Fa
       └─MachineInfrastructure - OpenStackMachine/openstack-md-0-4llzl                                                                            
 ````
 
-After the first control plane node (in this example openstack-control-plane-gd8nv) is in ready state “true” you can get the kubeconfig of our newly created cluster and deploy the needed CNI component.
+After the first control plane node (in this example openstack-control-plane-gd8nv) is in ready state “true”, you can get the kubeconfig of our newly created cluster and deploy the needed CNI component.
 
 The kubeconfig of the created cluster is stored as secret in the workspace namespace. You can use the kubectl command line tool to download the kubeconfig and save to our local filesystem.
 
@@ -320,44 +322,53 @@ $ kubectl get secret -n ${CLUSTER_NAMESPACE} ${CLUSTER_NAME}-kubeconfig \
 You’ll use this kubeconfig file to communicate directly with the newly created cluster.
 
 ### Deploy CNI
-Kubernetes needs a Container Network Interface (CNI) compliant software defined network to be ready for usage. DKP uses Calico by default so you'll deploy Calico to the new deployed cluster. Calico provides multiple deployment methods. In this case you're using the Helm deployment of TigeraOperator. 
-
-You can find more details at https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
+Kubernetes needs a Container Network Interface (CNI) compliant software defined network to be ready for usage. DKP uses Calico by default so you'll deploy Calico to the new deployed cluster. Calico provides multiple deployment methods. In this case you're using Calico manifests:
 
 ````
-$ helm repo add projectcalico https://projectcalico.docs.tigera.io/charts
-"projectcalico" has been added to your repositories
-
-$ helm upgrade --install calico projectcalico/tigera-operator \
-    --version v3.24.1 \
-    --namespace tigera-operator \
-    --kubeconfig ${CLUSTER_NAME}.kubeconfig \
-    --create-namespace
-
-NAME: calico
-LAST DEPLOYED: Mon Aug 29 14:10:32 2022
-NAMESPACE: tigera-operator
-STATUS: deployed
-REVISION: 1
-TEST SUITE: None
+$ kubectl apply --kubeconfig ${CLUSTER_NAME}.kubeconfig \
+    -f https://docs.projectcalico.org/v3.21/manifests/calico.yaml
+customresourcedefinition.apiextensions.k8s.io/bgpconfigurations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/bgppeers.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/blockaffinities.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/caliconodestatuses.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/clusterinformations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/felixconfigurations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/globalnetworkpolicies.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/globalnetworksets.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/hostendpoints.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/ipamblocks.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/ipamconfigs.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/ipamhandles.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/ippools.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/ipreservations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/kubecontrollersconfigurations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/networkpolicies.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/networksets.crd.projectcalico.org created
+clusterrole.rbac.authorization.k8s.io/calico-kube-controllers created
+clusterrolebinding.rbac.authorization.k8s.io/calico-kube-controllers created
+clusterrole.rbac.authorization.k8s.io/calico-node created
+clusterrolebinding.rbac.authorization.k8s.io/calico-node created
+daemonset.apps/calico-node created
+serviceaccount/calico-node created
+deployment.apps/calico-kube-controllers created
+serviceaccount/calico-kube-controllers created
+Warning: policy/v1beta1 PodDisruptionBudget is deprecated in v1.21+, unavailable in v1.25+; use policy/v1 PodDisruptionBudget
+poddisruptionbudget.policy/calico-kube-controllers created
 ````
 
-Please be sure that your “helm upgrade” command uses the kubeconfig file of the target cluster. Otherwise, you could damage your DKP Enterprise cluster.
+Please be sure that your “kubectl apply” command uses the kubeconfig file of the target cluster. Otherwise, you could damage your DKP Enterprise cluster.
 
 Validate the running pods after the helm chart was successfully.
 
 ````
 $ kubectl get po -A --kubeconfig ${CLUSTER_NAME}.kubeconfig |grep calico
-calico-system     calico-kube-controllers-78687bb75f-g6c5t                1/1     Running   0               118s
-calico-system     calico-node-2bfzd                                       1/1     Running   0               118s
-calico-system     calico-node-9dmc6                                       0/1     Running   0               118s
-calico-system     calico-node-b2zxk                                       1/1     Running   0               118s
-calico-system     calico-node-cjgwf                                       0/1     Running   0               118s
-calico-system     calico-node-gnc8p                                       0/1     Running   0               118s
-calico-system     calico-node-sgc8v                                       1/1     Running   0               118s
-calico-system     calico-typha-f46dbd9bc-4qqhp                            1/1     Running   0               110s
-calico-system     calico-typha-f46dbd9bc-68bjj                            1/1     Running   0               118s
-calico-system     calico-typha-f46dbd9bc-twkc6                            1/1     Running   0               110s
+kube-system   calico-kube-controllers-7f76d48f74-9pvpg                           1/1     Running   0               2m9s
+kube-system   calico-node-7mqfw                                                  1/1     Running   0               2m10s
+kube-system   calico-node-f65nv                                                  1/1     Running   0               2m10s
+kube-system   calico-node-fkkth                                                  1/1     Running   0               2m10s
+kube-system   calico-node-ps8hq                                                  1/1     Running   0               2m10s
+kube-system   calico-node-tgrz4                                                  1/1     Running   0               2m10s
+kube-system   calico-node-znmk5                                                  1/1     Running   0               2m10s
 ````
 
 ### Deploy CCM
@@ -378,8 +389,8 @@ cloudConfig:
     tenant-name: "<OpenStack project name>"
     user-domain-name: "<OpenStack domain name>"
   loadBalancer:
-    floating-network-id: external
-    create-monitor: true
+    floating-network-id: "<external network id>"
+    create-monitor: false
 EOF
 
 $ helm repo add cpo https://kubernetes.github.io/cloud-provider-openstack
@@ -408,7 +419,7 @@ openstack-cloud-controller-manager-lsvns                1/1     Running   0     
 ````
 
 ### Deploy CSI (optional)
-OpenStack provides a Container Storage Interface (CSI) for the block storage backend (Cinder) and file storage backend (Manila). If your application needs storage it makes sense to deploy the CSI plugins to easily consume block and (if available in your OpenStack cloud) file storage via Kubernetes StorageClass.
+OpenStack provides a Container Storage Interface (CSI) for the block storage backend (Cinder) and file storage backend (Manila). If your application needs storage it makes sense to deploy the CSI plugins to easily consume block storage and (if available in your OpenStack cloud) file storage via Kubernetes StorageClass.
 
 The deployment is also available via Helm chart. The following example deploys the cinder default configuration:
 
@@ -430,7 +441,7 @@ NOTES:
 Use the following storageClass csi-cinder-sc-retain and csi-cinder-sc-delete only for RWO volumes.
 ````
 
-The secret is already created by the CCM, so we can skip the creating part and reuse the existing secret. 
+The secret is already created by the CCM, so there is no need to create a dedicated secret for CSI and you can reuse the existing secret from CCM. 
 Validate if the StorageClass is created.
 
 ````
@@ -484,7 +495,9 @@ At this stage, CAPI successfully deployed the cluster and the CAPI controller ru
 In DKP you see the cluster in state “unattached”:
 ![Unattached cluster in DKP Enterprise](unattached.png)
 
-That’s why the cluster object is created in the workspace so Kommander detects this cluster but it’s not managed by Kommander / DKP Enterprise right now. To change this you need to apply the missing KommanderCluster object. 
+The reason for this is because the cluster object is created in the workspace, so Kommander detects this cluster but it’s not managed by Kommander / DKP Enterprise right now. 
+
+To change this you need to apply the missing KommanderCluster object. 
 
 ````
 $ cat << EOF | kubectl apply -f -
@@ -524,20 +537,10 @@ tigera-operator          Active   93m
 
 All pre enabled applications from the Application Catalog (like Traefik) will be deployed to the target cluster now. 
 
-## Get Traefik up and running
-For Traefik we need to set an additional service label. Otherwise, Kubernetes is not able to create the external LoadBalancer. 
-Please set the following settings to our Traefik deployment (via DKP Enterprise UI or cli):
-
-````
-service:
-  annotations: 
-    load-balancer.hetzner.cloud/location: "<REGION>"
-````
-
-“REGION” must match with the REGION defined in environment variable “HCLOUD_REGION”
-
 ## Recap
 DPK Enterprise is a powerful Kubernetes Distribution which is built on state of the art technologies like Kubernetes and Cluster API. D2iQ ships 7 CAPI providers out-of-the-box as part of the DKP product.
 This guide showed how easy the integration of additional CAPI providers is. You have the possibility to implement additional CAPI providers to DKP, deploy clusters, and use the standardized toolset for Enterprise grade day 2 operation on all of your CAPI valid Kubernetes clusters.
 
 The deployment of CAPI providers and clusters is declarative and based on YAML manifests, so it’s the perfect baseline to implement a GitOps approach. 
+
+Thanks to our partner [Wavecon](https://wavecon.de/) and [noris network](https://www.noris.de) for providing an account on their new OpenStack based public cloud [Wavestack](https://www.noris.de/wavestack-cloud-demo).
