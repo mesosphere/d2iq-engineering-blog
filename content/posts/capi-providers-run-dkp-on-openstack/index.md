@@ -424,12 +424,32 @@ OpenStack provides a Container Storage Interface (CSI) for the block storage bac
 The deployment is also available via Helm chart. The following example deploys the cinder default configuration:
 
 ````
+$ cat <<EOF> csi.yml
+secret:
+  enabled: true
+  create: false
+  name: cloud-config
+storageClass:
+  enabled: true
+  custom: |-
+    ---
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: rbd-fast
+      annotations:
+        storageclass.kubernetes.io/is-default-class: "true"
+    provisioner: cinder.csi.openstack.org
+    volumeBindingMode: WaitForFirstConsumer
+    allowVolumeExpansion: true
+    parameters:
+      type: rbd_fast
+EOF
+
 $ helm upgrade --install cinder-csi cpo/openstack-cinder-csi \
     --kubeconfig ${CLUSTER_NAME}.kubeconfig \
     --namespace kube-system \
-    --set secret.enabled=true \
-    --set secret.create=false \
-    --set secret.name=cloud-config
+    -f csi.yml
 
 NAME: cinder-csi
 LAST DEPLOYED: Wed Aug 31 12:18:48 2022
