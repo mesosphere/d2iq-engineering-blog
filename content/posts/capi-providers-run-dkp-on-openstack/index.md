@@ -96,7 +96,7 @@ mutatingwebhookconfiguration.admissionregistration.k8s.io/capo-mutating-webhook-
 validatingwebhookconfiguration.admissionregistration.k8s.io/capo-validating-webhook-configuration created
 ````
 
-Lets verify that your Hetzner CAPI provider is up and running:
+Lets verify that your Openstack CAPI provider is up and running:
 
 ````
 $ kubectl get po -n capo-system
