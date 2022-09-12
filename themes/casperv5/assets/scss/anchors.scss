@@ -1,0 +1,14 @@
+// Copyright 2022 D2iQ, Inc. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+a.hanchor {
+  color: var(--color-midgrey);
+  text-decoration: none;
+
+  transition: all .25s linear;
+}
+
+
+*:hover > a.hanchor {
+  margin-left: -1.125em !important;
+}

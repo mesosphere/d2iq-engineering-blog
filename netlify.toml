@@ -14,7 +14,7 @@
   [headers.values]
     Content-Security-Policy = '''
       default-src 'self';
-      script-src 'self' https://code.jquery.com/ https://cdnjs.cloudflare.com/ https://*.googletagmanager.com/;
+      script-src 'self' https://cdnjs.cloudflare.com/ https://*.googletagmanager.com/;
       style-src 'self' 'unsafe-inline';
       object-src 'none';
       base-uri 'self';
