@@ -3,10 +3,10 @@
   command = "hugo --gc --minify"
 
 [build.environment]
-  HUGO_VERSION = "0.101.0"
+  HUGO_VERSION = "0.102.3"
   HUGO_ENV = "production"
   HUGO_ENABLEGITINFO = "true"
-  NODE_VERSION = "16.15.1"
+  NODE_VERSION = "16.17.0"
   NODE_ENV = "development"
 
 [[headers]]
