@@ -8,27 +8,32 @@ excerpt: "Learn how to add the custom CAPI provider for OpenStack (CAPO) and cre
 feature_image: openstack.png
 ---
 
-# Run DKP on Hetzner with Cluster API (CAPI)
+# Run DKP on OpenStack with Cluster API (CAPI)
 
-The D2iQ Kubernetes Platform (DKP) makes your operational life easier. Instead of wasting time researching the CNCF landscape for the right tools to solve your enterprise requirements,  and struggling with the implementation and lifecycle, you can use a fully curated, integrated and supported Day 2 ready, out of the box platform.
+The D2iQ Kubernetes Platform (DKP) makes your operational life easier. Instead of wasting time researching the CNCF landscape for the right tools to solve your enterprise requirements, and struggling with the implementation and lifecycle, you can use a fully curated, integrated, and supported Day 2 ready, out of the box platform.
 DKP supported CAPI infrastructures provide an easy to use infrastructure-as-code approach that eliminates the headache around the complexity of the development and lifecycle challenges of Kubernetes. DKP supports the following infrastructure providers out of the box:
-* AKS
-* AWS
-* Azure
-* EKS
-* GCP
-* Preprovisioned (based on Ansible, requires SSH)
-* VMware vSphere
 
-Beside the pre integrated, supported providers you have the possibility to bring in any other CAPI provider. 
-This blog post shows you the needed steps to run DKP on Hetzner Cloud by using the Hetzner CAPI provider.
+* [AKS][capz]
+* [AWS][capa]
+* [Azure][capz]
+* [EKS][capa]
+* [GCP][capg]
+* Preprovisioned (based on Ansible, requires SSH)
+* [VMware vSphere][capv]
+
+For more information about the supported CAPI providers please check out the official DKP documentation: [Advanced configuration][advanced configuration]
+
+Beside the pre-integrated, supported providers, you can bring in any other CAPI provider.
+This blog post shows you the needed steps to run DKP on OpenStack by using the OpenStack CAPI provider.
+
+Please note that all additional CAPI providers, which are not part of DKP, are not supported by D2iQ. 
 
 ## What is CAPI?
 
-Kubernetes Cluster API (CAPI) is an official sub project from Kubernetes. The goal of CAPI is to provide a modular framework for deployment and lifecycle management of Kubernetes clusters. At a glance CAPI provides a declarative API and a toolset (for example clusterctl) to create and manage Kubernetes cluster as a Kubernetes object. 
-A big benefit of CAPI is the large number of infrastructure providers (24+). This provider brings in all the required integrations for the infrastructure and handles the infrastructure as code lifecycle. The user did not need to think about infrastructure topics like how virtual machines are provisioned or how to create a nat gateway. Just define how many masters/workers, with flavor, with operating system and CAPI will deploy the cluster. 
+Kubernetes Cluster API (CAPI) is an official sub project from Kubernetes. The goal of CAPI is to provide a modular framework for deployment and lifecycle management of Kubernetes clusters. At a glance CAPI provides a declarative API and a toolset (for example `clusterctl`) to create and manage Kubernetes clusters as a Kubernetes object.
+A big benefit of CAPI is the large number of infrastructure providers (24+). This provider brings in all the required integrations for the infrastructure and handles the infrastructure as code lifecycle. The user does not need to think about infrastructure topics like how virtual machines are provisioned or how to create a NAT gateway. Just define how many control plane and worker nodes, with flavor, with operating system and CAPI will deploy the cluster.
 
-For more information, see the official CAPI documentation: https://cluster-api.sigs.k8s.io/
+For more information, see the [official CAPI documentation][CAPI docs]
 
 ## What is OpenStack?
 OpenStack is an open source cloud infrastructure platform to mainly provide infrastrcture as a service (IaaS). The OpenStack project was started 2010 by NASA and Rackspace. 2014 the OpenStack Foundation was founded and the ecosystem grows to an Anything as a Service (XaaS) platform. The foundation was renamed to "Open Infrastructure Foundation" in 2021.
@@ -43,16 +48,16 @@ The core components for an OpenStack based IaaS platform are:
 
 The OpenStack ecosystem contains 20+ more project. Every project handles one "as a service" feature like DNSaaS, LBaaS, etc. The most used hypervisor is Linux KVM. OpenStack can be used to create public and private cloud platforms and it's a nice alternative to proprietary infrastructure solutions like VMware. 
 
-For more information, see https://www.openstack.org/
+For more information, see the [official OpenStack website][openstack website]
 
 ## Prerequisites / Environment
 To start with the deployment of your first cluster at OpenStack you need the following tools and informations:
 * DKP command line tool (version 2.2+)
 * Running DKP Enterprise (to attach the OpenStack cluster)
-  * Create Workspace (see https://docs.d2iq.com/dkp/2.3/workspaces#id-(v2.4)Workspaces-CreateaWorkspace)
-* kubectl command line tool (see https://kubernetes.io/docs/tasks/tools/)
-* helm command line tool (see https://helm.sh/docs/intro/install/)
-* Clusterctl command line tool (see https://cluster-api.sigs.k8s.io/user/quick-start.html#install-clusterctl)
+  * [Create Workspace][create workspace docs]
+* [kubectl][kubectl] command line tool
+* [helm][helm] command line tool
+* [clusterctl][clusterctl] command line tool (see https://cluster-api.sigs.k8s.io/user/quick-start.html#install-clusterctl)
 * OpenStack account
   * Download your "OpenStack clouds.yaml file" (Login -> API Access -> Download OpenStack clouds.yaml file)
   * Upload your SSH public key
@@ -62,9 +67,9 @@ During this example you can use your personal credentails. For production deploy
 NOTE: The OpenStack CAPI provider required OpenStack Octavia (LoadBalancer as a Service).
 
 ## Deploy OpenStack CAPI provider
-OpenStack (CAPO) is not part of DKP's provided CAPI provider so you need to deploy the CAPI provider to your centralized DKP Enterprise CAPI controller first. 
+OpenStack (CAPO) is not part of DKP's supported CAPI provider so you need to deploy the CAPI provider to your DKP Enterprise management cluster first. 
 
-NOTE: It’s possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster, you have to move the CAPI components to the deployed cluster later to make it “self managed”.
+NOTE: It’s possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster, you have to move the CAPI components to the deployed cluster later to make it `self managed`.
 
 First, export the kubeconfig for our DKP Enterprise cluster where our CAPI controller is running:
 
@@ -72,7 +77,7 @@ First, export the kubeconfig for our DKP Enterprise cluster where our CAPI contr
 $ export KUBECONFIG=./dkp.conf
 ````
 
-The "clusterctl" command will be used to generate the CAPI provider manifest for OpenStack and apply the generated capi manifest to our DKP Enterprise cluster:
+The `clusterctl` command will be used to generate the CAPI provider manifest for OpenStack and apply the generated capi manifest to our DKP Enterprise cluster:
 
 ````
 $ clusterctl generate provider --infrastructure openstack > openstack-capi.yml
@@ -104,12 +109,12 @@ NAME                                       READY   STATUS    RESTARTS   AGE
 capo-controller-manager-69bfb5c646-7jspb   1/1     Running   0          25s
 ````
 
-All information around OpenStack CAPI provider can be found on the official github page: https://github.com/kubernetes-sigs/cluster-api-provider-openstack
+All information around OpenStack CAPI provider can be found on the [official github page][capo]
 
 ## Generate base image
 Virtual machines in OpenStack need a base image to start from. The base images for CAPO requires already installed tooling like kubeadm, kubelet and contrainer runtime. The OpenStack CAPI community provides an automation to easily build CAPI images for OpenStack. 
 To follow this process you need an Linux server (Ubuntu is recommended) to run the KVM based image build process.
-For more information see the official documentation: https://image-builder.sigs.k8s.io/capi/providers/openstack.html
+For more information see the [official capo documentation][capo docs].
 
 Jump to your build server via SSH and install all the needed packages first:
 
@@ -177,7 +182,7 @@ export OS_CLOUD=<name of the openstack cloud>
 openstack image create --private --file ./output/ubuntu-2004-kube-v1.22.9/ubuntu-2004-kube-v1.22.9.raw ubuntu-2004-kube-v1.22.9
 ````
 
->> This step requires that your OpenStack clouds.yaml is placed at /etc/openstack/clouds.yaml or in our current directory.
+>> This step requires that your OpenStack `clouds.yaml` is placed at `/etc/openstack/clouds.yaml` or in our current directory.
 
 ### Different Kubernetes version
 Currently the image-builder default Kubernetes version is 1.22.9. If you need a newer Kubernetes version you have to patch the packer config and replace the default version 1.22.9 by your favorite version. In this example we build a CAPI image with Kubernetes version 1.23.7:
@@ -256,11 +261,11 @@ export KUBERNETES_VERSION=1.22.9
 export OPENSTACK_IMAGE_NAME=ubuntu-2004-kube-v1.22.9
 ````
 
-Please be sure that all exported variables are valid. The Kubernetes version must fit the supported K8s version range from DKP and KUBERNETES_VERSION must match the installed Kubernetes version of the used OpenStack image.
+Please be sure that all exported variables are valid. The Kubernetes version must fit the supported K8s version range from DKP and `KUBERNETES_VERSION` must match the installed Kubernetes version of the used OpenStack image.
 
-See DKP release notes to validate which Kubernetes versions are [supported](https://docs.d2iq.com/dkp/2.3/2-3-release-notes#id-(v2.4)2.3.0ReleaseNotes-SupportedVersionssupported-versions).
+See DKP release notes to validate which Kubernetes versions are [supported][DKP release notes].
 
-The variable “CLUSTER_NAMESPACE” defines the namespace of the DKP workspace where the cluster should be created. Please note that workspace name and namespace name can be different. You can get both via the dkp cli:
+The variable `CLUSTER_NAMESPACE` defines the namespace of the DKP workspace where the cluster should be created. Please note that workspace name and namespace name can be different. You can get both via the dkp cli:
 
 ````
 $ dkp get workspace
@@ -270,7 +275,7 @@ kommander-workspace  	kommander
 openstack-mc7nh-clgc6	openstack-mc7nh-clgc6
 ````
 
-After all variables are set correctly the “clusterctl” command can be used to create the Hetzner cluster manifest and apply it to DKP.
+After all variables are set correctly the `clusterctl` command can be used to create the Hetzner cluster manifest and apply it to DKP.
 
 ````
 $ clusterctl generate cluster --infrastructure openstack:v0.6.3 ${CLUSTER_NAME} \
@@ -310,7 +315,7 @@ Cluster/openstack                                                             Fa
       └─MachineInfrastructure - OpenStackMachine/openstack-md-0-4llzl                                                                            
 ````
 
-After the first control plane node (in this example openstack-control-plane-gd8nv) is in ready state “true”, you can get the kubeconfig of our newly created cluster and deploy the needed CNI component.
+After the first control plane node (in this example `openstack-control-plane-gd8nv`) is in ready state `true`, you can get the kubeconfig of our newly created cluster and deploy the needed CNI component.
 
 The kubeconfig of the created cluster is stored as secret in the workspace namespace. You can use the kubectl command line tool to download the kubeconfig and save to our local filesystem.
 
@@ -322,7 +327,8 @@ $ kubectl get secret -n ${CLUSTER_NAMESPACE} ${CLUSTER_NAME}-kubeconfig \
 You’ll use this kubeconfig file to communicate directly with the newly created cluster.
 
 ### Deploy CNI
-Kubernetes needs a Container Network Interface (CNI) compliant software defined network to be ready for usage. DKP uses Calico by default so you'll deploy Calico to the new deployed cluster. Calico provides multiple deployment methods. In this case you're using Calico manifests:
+Kubernetes needs a Container Network Interface (CNI) compliant software defined network to be ready for usage. DKP uses [Calico][calico] by default so you'll deploy Calico to the new deployed cluster. Calico provides multiple deployment methods. 
+In this case you're using Calico manifests:
 
 ````
 $ kubectl apply --kubeconfig ${CLUSTER_NAME}.kubeconfig \
@@ -356,7 +362,7 @@ Warning: policy/v1beta1 PodDisruptionBudget is deprecated in v1.21+, unavailable
 poddisruptionbudget.policy/calico-kube-controllers created
 ````
 
-Please be sure that your “kubectl apply” command uses the kubeconfig file of the target cluster. Otherwise, you could damage your DKP Enterprise cluster.
+Please be sure that your `kubectl apply` command uses the kubeconfig file of the target cluster. Otherwise, you could damage your DKP Enterprise cluster.
 
 Validate the running pods after the helm chart was successfully.
 
@@ -374,7 +380,7 @@ kube-system   calico-node-znmk5                                                 
 ### Deploy CCM
 Kubernetes requires a external cloud provider to communicate with the OpenStack API. The community provides a Cloud Controller Manager for the OpenStack API. This OpenStack CCM is also available via Helm and will be deployed like the CNI solution.
 
-First we need to create a openstack-ccm.yaml with the required settings and deploy the Helm chart. You found all these settings in the clouds.yaml file.
+First we need to create a `openstack-ccm.yaml` with the required settings and deploy the Helm chart. You found all these settings in the `clouds.yaml` file.
 
 ````
 $ cat <<EOF>openstack-ccm.yaml
@@ -472,7 +478,7 @@ csi-cinder-sc-retain   cinder.csi.openstack.org   Retain          Immediate     
 ````
 
 ## Verify cluster
-After CNI and CCM are deployed correctly CAPI continues with the deployment of all master and worker nodes. After a few minutes our cluster should be deployed and all nodes are in state “Ready”. 
+After CNI and CCM are deployed correctly CAPI continues with the deployment of all master and worker nodes. After a few minutes our cluster should be deployed and all nodes are in state `Ready`. 
 You can verify this via dkp and kubectl cli:
 
 ````
@@ -510,7 +516,7 @@ You can also see all the resources via OpenStack Horizon:
 ![Launched VMs in OpenStack UI](vms.png)
 
 ## Attach cluster to DKP Enterprise
-At this stage, CAPI successfully deployed the cluster and the CAPI controller running at the DKP Enterprise centralized cluster is handling the lifecycle. 
+At this stage, CAPI successfully deployed the cluster and the CAPI controller, running at the DKP Enterprise management cluster, is handling the lifecycle. 
 
 In DKP you see the cluster in state “unattached”:
 ![Unattached cluster in DKP Enterprise](unattached.png)
@@ -536,7 +542,7 @@ EOF
 ````
 
 This object tells Kommander / DKP Enterprise that the new cluster should be handled as an attached cluster. 
-After a few seconds, the cluster shows up as “Active” and DKP starts to deploy Flux and the workspace namespace to the target cluster. You can validate this via UI and cli:
+After a few seconds, the cluster shows up as `Active` and DKP starts to deploy Flux and the workspace namespace to the target cluster. You can validate this via UI and cli:
 ![Attached cluster in DKP Enterprise](attached.png)
 
 ````
@@ -558,9 +564,31 @@ tigera-operator          Active   93m
 All pre enabled applications from the Application Catalog (like Traefik) will be deployed to the target cluster now. 
 
 ## Recap
-DPK Enterprise is a powerful Kubernetes Distribution which is built on state of the art technologies like Kubernetes and Cluster API. D2iQ ships 7 CAPI providers out-of-the-box as part of the DKP product.
+DKP Enterprise is a multi-cloud management platform which is built on state of the art technologies like Kubernetes and Cluster API. D2iQ ships 7 CAPI providers out-of-the-box as part of the DKP product.
 This guide showed how easy the integration of additional CAPI providers is. You have the possibility to implement additional CAPI providers to DKP, deploy clusters, and use the standardized toolset for Enterprise grade day 2 operation on all of your CAPI valid Kubernetes clusters.
 
 The deployment of CAPI providers and clusters is declarative and based on YAML manifests, so it’s the perfect baseline to implement a GitOps approach. 
 
-Thanks to our partner [Wavecon](https://wavecon.de/) and [noris network](https://www.noris.de) for providing an account on their new OpenStack based public cloud [Wavestack](https://www.noris.de/wavestack-cloud-demo).
+Thanks to our partner [Wavecon][wavecon] and [noris network][noris] for providing an account on their new OpenStack based public cloud [Wavestack][wavestack].
+
+
+[CAPI docs]: https://cluster-api.sigs.k8s.io/
+[openstack website]: https://www.openstack.org/
+[create workspace docs]: https://docs.d2iq.com/dkp/2.3/workspaces#id-(v2.4)Workspaces-CreateaWorkspace
+[kubectl]: https://kubernetes.io/docs/tasks/tools/
+[helm]: https://helm.sh/docs/intro/install/
+[clusterctl]: https://cluster-api.sigs.k8s.io/user/quick-start.html#install-clusterctl
+[hetzner capi]: https://helm.sh/docs/intro/install/
+[calico]: https://www.tigera.io/project-calico/
+[calico quickstart]: https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
+[capa]: https://cluster-api-aws.sigs.k8s.io/
+[capz]: https://capz.sigs.k8s.io/
+[capg]: https://github.com/kubernetes-sigs/cluster-api-provider-gcp
+[capv]: https://github.com/kubernetes-sigs/cluster-api-provider-vsphere
+[advanced configuration]: https://docs.d2iq.com/dkp/2.3/advanced-configuration
+[DKP release notes]: https://docs.d2iq.com/dkp/2.3/2-3-release-notes#id-(2.3)2.3.0ReleaseNotes-SupportedVersionssupported-versions
+[capo]: https://github.com/kubernetes-sigs/cluster-api-provider-openstack
+[capo docs]: https://image-builder.sigs.k8s.io/capi/providers/openstack.html
+[wavecon]: https://wavecon.de/
+[noris]: https://www.noris.de/
+[wavestack]: https://www.noris.de/wavestack-cloud-demo
