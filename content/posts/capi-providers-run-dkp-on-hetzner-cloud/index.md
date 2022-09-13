@@ -25,6 +25,8 @@ For more information about the supported CAPI providers please check out the off
 Beside the pre-integrated, supported providers, you can bring in any other CAPI provider.
 This blog post shows you the needed steps to run DKP on Hetzner Cloud by using the Hetzner CAPI provider.
 
+Please note that all additional CAPI providers, which are not part of DKP, are not supported by D2iQ. 
+
 ## What is CAPI?
 
 Kubernetes Cluster API (CAPI) is an official sub project from Kubernetes. The goal of CAPI is to provide a modular framework for deployment and lifecycle management of Kubernetes clusters. At a glance CAPI provides a declarative API and a toolset (for example `clusterctl`) to create and manage Kubernetes clusters as a Kubernetes object.
