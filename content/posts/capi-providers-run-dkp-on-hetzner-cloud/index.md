@@ -21,6 +21,7 @@ DKP supported CAPI infrastructures provide an easy to use infrastructure-as-code
 * Preprovisioned (based on Ansible, requires SSH)
 * [VMware vSphere][capv]
 
+For more information about the supported CAPI providers please check out the official DKP documentation: [Advanced configuration][advanced configuration]
 Beside the pre-integrated, supported providers, you can bring in any other CAPI provider.
 This blog post shows you the needed steps to run DKP on Hetzner Cloud by using the Hetzner CAPI provider.
 
@@ -57,8 +58,8 @@ The generated API token will be used for the cluster creation and lifecycle proc
 
 ## Deploy Hetzner CAPI provider
 
-Hetzner is not part of DKP's provided CAPI provider so you need to deploy the CAPI provider to your centralized DKP Enterprise CAPI controller first.
-NOTE: It’s possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster, you have to move the CAPI components to the deployed cluster later to make it “self managed”.
+Hetzner is not one of DKP's supported CAPI providers so you need to deploy the CAPI provider to your DKP Enterprise management cluster first.
+NOTE: It’s possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster, you will have to move the CAPI components to the deployed cluster later to make it `self managed`.
 
 First, export the kubeconfig for our DKP Enterprise cluster where our CAPI controller is running:
 
@@ -125,7 +126,7 @@ export CLUSTER_NAMESPACE=hetzner-7wrqw-5t2tp
 ```
 
 Please be sure that all exported variables are valid. The `HCLOUD_SSH_KEY` name must match with the name you set during the upload via Hetzner CLI / UI. The Kubernetes version must fit the supported K8s version range from DKP.
-See DKP release notes to validate which Kubernetes versions are supported.
+See [DKP release notes][DKP release notes] to validate which Kubernetes versions are supported.
 
 These environment variables define that a cluster with 3 control-planes with `cpx31` flavor and 3 workers with `cpx31` flavor in region `fsn1` will be created. Your SSH key can be used to login as user `root`.
 A default Ubuntu 20.04 is used as a base image, but it is recommended to use your own base image if you run clusters in production!
@@ -146,12 +147,6 @@ CAPI credentials are stored as a secret. The following commands generate a secre
 $ kubectl create secret generic hcloud-token-${CLUSTER_NAME} \
     --from-literal=hcloud=${HCLOUD_TOKEN} -n ${CLUSTER_NAMESPACE}
 
-<<<<<<< HEAD
-```bash
-$ kubectl create secret generic hcloud-token-${CLUSTER_NAME} \
-    --from-literal=hcloud=${HCLOUD_TOKEN} -n ${CLUSTER_NAMESPACE}
-=======
->>>>>>> 912fae1 (docs: Cleanup DKP + Hetzner article)
 secret/hcloud-token-hetznerdemo created
 
 $ kubectl label secret hcloud-token-${CLUSTER_NAME} \
@@ -447,7 +442,7 @@ You can also see all the resources via Hetzner UI (sorry, German account!):
 
 ## Attach cluster to DKP Enterprise
 
-At this stage, CAPI successfully deployed the cluster and the CAPI controller running at the DKP Enterprise centralized cluster is handling the lifecycle.
+At this stage, CAPI successfully deployed the cluster and the CAPI controller running at the DKP Enterprise management cluster is handling the lifecycle.
 
 In DKP you see the cluster in state `unattached`:
 ![Unattached cluster in DKP Enterprise](unattached.png)
@@ -507,7 +502,7 @@ service:
 
 ## Recap
 
-DPK Enterprise is a powerful Kubernetes Distribution which is built on state of the art technologies like Kubernetes and Cluster API. D2iQ ships 7 CAPI providers out-of-the-box as part of the DKP product.
+DKP Enterprise is a multi-cloud management platform which is built on state of the art technologies like Kubernetes and Cluster API. D2iQ ships 7 CAPI providers out-of-the-box as part of the DKP product.
 This guide showed how easy the integration of additional CAPI providers is. You have the possibility to implement additional CAPI providers to DKP, deploy clusters, and use the standardized toolset for Enterprise grade day 2 operation on all of your CAPI valid Kubernetes clusters.
 
 The deployment of CAPI providers and clusters is declarative and based on YAML manifests, so it’s the perfect baseline to implement a GitOps approach.
@@ -525,3 +520,5 @@ The deployment of CAPI providers and clusters is declarative and based on YAML m
 [capz]: https://capz.sigs.k8s.io/
 [capg]: https://github.com/kubernetes-sigs/cluster-api-provider-gcp
 [capv]: https://github.com/kubernetes-sigs/cluster-api-provider-vsphere
+[advances configuration]: https://docs.d2iq.com/dkp/2.3/advanced-configuration
+[DKP release notes]: https://docs.d2iq.com/dkp/2.3/2-3-release-notes#id-(2.3)2.3.0ReleaseNotes-SupportedVersionssupported-versions
