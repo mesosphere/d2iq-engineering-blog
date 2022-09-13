@@ -161,7 +161,7 @@ $ kubectl label secret hcloud-token-${CLUSTER_NAME} \
 secret/hcloud-token-hetznerdemo labeled
 ```
 
-After all variables are set correctly and the secret is created the `clusterctl` command can be used to create the Hetzner cluster manifest.
+After all variables are set correctly and the secret is created, the `clusterctl` command can be used to create the Hetzner cluster manifest.
 
 ```bash
 clusterctl generate cluster --infrastructure hetzner:v1.0.0-beta.0 \
