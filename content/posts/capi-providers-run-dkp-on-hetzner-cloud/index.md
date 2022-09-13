@@ -33,7 +33,7 @@ For more information, see the [official CAPI documentation][CAPI docs]
 
 ## What is Hetzner?
 
-Outside of Germany / DACH Hetzner is not very popular. Hetzner was founded 1997 in Germany and the portfolio is focused around colocation, bare metal server (as a service) and Hetzner Cloud. Hetzner Cloud provides a very easy to use self service offering around virtual machines (based on KVM), network, (block-) storage, and LoadBalancer. For automation approaches there are cli tools, Terraform modules and a CAPI provider available.
+Outside of Germany / DACH Hetzner is not very popular. Hetzner was founded 1997 in Germany and the portfolio is focused around colocation, bare metal server (as a service) and Hetzner Cloud. Hetzner Cloud provides a very easy to use self service offering around virtual machines (based on KVM), network, (block-) storage, and LoadBalancer. For automation approaches there are cli tools, Terraform modules, and a CAPI provider available.
 Since 2021 a datacenter in Ashburn, Virginia is also available to run workload in the United States of America.
 
 For more information, see [Hetzner's website][hetzner].
