@@ -283,7 +283,7 @@ Cluster/hetznerdemo                                                          Fal
       ├─BootstrapConfig - KubeadmConfig/hetznerdemo-md-0-2wt8p               False  Info      WaitingForControlPlaneAvailable  2m21s
 ```
 
-After the first control plane node (in this example hetznerdemo-control-plane-h5k5n) is in ready state `true` you can get the kubeconfig of our newly created cluster and deploy the needed components CNI, CCM and CSI. The components CNI and CCM are mandatory.
+After the first control plane node (in this example hetznerdemo-control-plane-h5k5n) is in ready state `true`, you can get the kubeconfig of our newly created cluster and deploy the needed components CNI, CCM, and CSI. The components CNI and CCM are mandatory.
 
 The `kubeconfig` of the created cluster is stored as secret in the workspace namespace. You can use the `kubectl` command line tool to download the kubeconfig and save to our local filesystem.
 
