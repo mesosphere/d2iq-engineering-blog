@@ -169,7 +169,7 @@ clusterctl generate cluster --infrastructure hetzner:v1.0.0-beta.0 \
 ```
 
 The default configuration of the Hetzner CAPI provider uses the same secret name `hetzner` for every cluster. This could be problematic if there is the need to deploy multiple clusters placed in different Hetzner projects in the same workspace. One solution is to used a dedicated secret per cluster, in this case a secret with the name `hcloud-token-${CLUSTER_NAME}`.
-If you use dedicated secret names you need to patch the generated cluster manifest to set the individual token secret name.
+If you use dedicated secret names, you need to patch the generated cluster manifest to set the individual token secret name.
 
 ```bash
 $ cat ${CLUSTER_NAME}.yaml
