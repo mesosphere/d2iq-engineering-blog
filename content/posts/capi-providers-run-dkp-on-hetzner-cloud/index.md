@@ -522,5 +522,5 @@ The deployment of CAPI providers and clusters is declarative and based on YAML m
 [capz]: https://capz.sigs.k8s.io/
 [capg]: https://github.com/kubernetes-sigs/cluster-api-provider-gcp
 [capv]: https://github.com/kubernetes-sigs/cluster-api-provider-vsphere
-[advances configuration]: https://docs.d2iq.com/dkp/2.3/advanced-configuration
+[advanced configuration]: https://docs.d2iq.com/dkp/2.3/advanced-configuration
 [DKP release notes]: https://docs.d2iq.com/dkp/2.3/2-3-release-notes#id-(2.3)2.3.0ReleaseNotes-SupportedVersionssupported-versions
