@@ -21,7 +21,7 @@ DKP supported CAPI infrastructures provide an easy to use infrastructure-as-code
 * Preprovisioned (based on Ansible, requires SSH)
 * [VMware vSphere][capv]
 
-Beside the pre-integrated, supported providers you have the possibility to bring in any other CAPI provider.
+Beside the pre-integrated, supported providers, you can bring in any other CAPI provider.
 This blog post shows you the needed steps to run DKP on Hetzner Cloud by using the Hetzner CAPI provider.
 
 ## What is CAPI?
