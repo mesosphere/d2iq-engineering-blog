@@ -10,7 +10,7 @@ feature_image: hetzner.png
 
 ## What is DKP?
 
-The D2iQ Kubernetes Platform (DKP) makes your operational life easier. Instead of wasting time researching the CNCF landscape for the right tools to solve your enterprise requirements,  and struggling with the implementation and lifecycle, you can use a fully curated, integrated, and supported Day 2 ready, out of the box platform.
+The D2iQ Kubernetes Platform (DKP) makes your operational life easier. Instead of wasting time researching the CNCF landscape for the right tools to solve your enterprise requirements, and struggling with the implementation and lifecycle, you can use a fully curated, integrated, and supported Day 2 ready, out of the box platform.
 DKP supported CAPI infrastructures provide an easy to use infrastructure-as-code approach that eliminates the headache around the complexity of the development and lifecycle challenges of Kubernetes. DKP supports the following infrastructure providers out of the box:
 
 * [AKS][capz]
