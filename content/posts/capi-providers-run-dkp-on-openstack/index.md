@@ -46,7 +46,7 @@ The core components for an OpenStack based IaaS platform are:
 * Neutron (Network)
 * Nova (Compute)
 
-The OpenStack ecosystem contains 20+ more project. Every project handles one "as a service" feature like DNSaaS, LBaaS, etc. The most used hypervisor is Linux KVM. OpenStack can be used to create public and private cloud platforms and it's a nice alternative to proprietary infrastructure solutions like VMware. 
+The OpenStack ecosystem contains 20+ more projects. Every project handles one "as a service" feature like DNSaaS, LBaaS, etc. The most used hypervisor is Linux KVM. OpenStack can be used to create public and private cloud platforms and it's a nice alternative to proprietary infrastructure solutions like VMware. 
 
 For more information, see the [official OpenStack website][openstack website]
 
