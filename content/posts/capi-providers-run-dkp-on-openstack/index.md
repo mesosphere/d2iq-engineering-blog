@@ -330,7 +330,7 @@ $ kubectl get secret -n ${CLUSTER_NAMESPACE} ${CLUSTER_NAME}-kubeconfig \
 You’ll use this kubeconfig file to communicate directly with the newly created cluster.
 
 ### Deploy CNI
-Kubernetes needs a Container Network Interface (CNI) compliant software defined network to be ready for usage. DKP uses [Calico][calico] by default so you'll deploy Calico to the new deployed cluster. Calico provides multiple deployment methods. 
+Kubernetes needs a Container Network Interface (CNI) compliant software defined network to be ready for usage. DKP uses [Calico][calico] by default, so you'll deploy Calico to the new deployed cluster. Calico provides multiple deployment methods. 
 In this case, you're using Calico manifests:
 
 ````
