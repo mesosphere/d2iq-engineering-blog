@@ -482,7 +482,7 @@ csi-cinder-sc-retain   cinder.csi.openstack.org   Retain          Immediate     
 
 ## Verify cluster
 After CNI and CCM are deployed correctly, CAPI continues with the deployment of all control plane and worker nodes. After a few minutes, our cluster should be deployed and all nodes are in state `Ready`. 
-You can verify this via dkp and kubectl cli:
+You can verify this via `dkp` and kubectl CLI:
 
 ````
 $ dkp describe cluster -n ${CLUSTER_NAMESPACE} -c ${CLUSTER_NAME}
