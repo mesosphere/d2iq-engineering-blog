@@ -430,7 +430,7 @@ openstack-cloud-controller-manager-lsvns                1/1     Running   0     
 ### Deploy CSI (optional)
 OpenStack provides a Container Storage Interface (CSI) for the block storage backend (Cinder) and file storage backend (Manila). If your application needs storage it makes sense to deploy the CSI plugins to easily consume block storage and (if available in your OpenStack cloud) file storage via Kubernetes StorageClass.
 
-The deployment is also available via Helm chart. The following example deploys the cinder default configuration:
+The deployment is also available via Helm chart. The following example deploys the Cinder default configuration:
 
 ````
 $ cat <<EOF> csi.yml
