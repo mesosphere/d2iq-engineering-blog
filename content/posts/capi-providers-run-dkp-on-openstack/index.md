@@ -278,7 +278,7 @@ kommander-workspace  	kommander
 openstack-mc7nh-clgc6	openstack-mc7nh-clgc6
 ````
 
-After all variables are set correctly the `clusterctl` command can be used to create the Hetzner cluster manifest and apply it to DKP.
+After all variables are set correctly, the `clusterctl` command can be used to create the OpenStack cluster manifest and apply it to DKP.
 
 ````
 $ clusterctl generate cluster --infrastructure openstack:v0.6.3 ${CLUSTER_NAME} \
