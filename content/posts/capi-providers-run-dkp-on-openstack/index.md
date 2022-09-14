@@ -545,7 +545,7 @@ EOF
 ````
 
 This object tells Kommander / DKP Enterprise that the new cluster should be handled as an attached cluster. 
-After a few seconds, the cluster shows up as `Active` and DKP starts to deploy Flux and the workspace namespace to the target cluster. You can validate this via UI and cli:
+After a few seconds, the cluster shows up as `Active` and DKP starts to deploy Flux and the workspace namespace to the target cluster. You can validate this via UI and CLI:
 ![Attached cluster in DKP Enterprise](attached.png)
 
 ````
