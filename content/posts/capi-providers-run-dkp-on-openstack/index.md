@@ -65,7 +65,7 @@ To start with the deployment of your first cluster at OpenStack, you need the fo
 * An Ubuntu / Linux server to run KVM for image build
 
 During this example you can use your personal credentials. For production deployments, it's recommended to create Application Credentials instead using personal credentials!
-NOTE: The OpenStack CAPI provider required OpenStack Octavia (LoadBalancer as a Service).
+NOTE: The OpenStack CAPI provider requires OpenStack Octavia (LoadBalancer as a Service).
 
 ## Deploy OpenStack CAPI provider
 OpenStack (CAPO) is not part of DKP's supported CAPI provider so you need to deploy the CAPI provider to your DKP Enterprise management cluster first. 
