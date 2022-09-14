@@ -575,7 +575,7 @@ Thanks to our partner [Wavecon][wavecon] and [noris network][noris] for providin
 
 [CAPI docs]: https://cluster-api.sigs.k8s.io/
 [openstack website]: https://www.openstack.org/
-[create workspace docs]: https://docs.d2iq.com/dkp/2.3/workspaces#id-(v2.4)Workspaces-CreateaWorkspace
+[create workspace docs]: https://docs.d2iq.com/dkp/2.3/workspaces#id-(2.3)Workspaces-CreateaWorkspace
 [kubectl]: https://kubernetes.io/docs/tasks/tools/
 [helm]: https://helm.sh/docs/intro/install/
 [clusterctl]: https://cluster-api.sigs.k8s.io/user/quick-start.html#install-clusterctl
