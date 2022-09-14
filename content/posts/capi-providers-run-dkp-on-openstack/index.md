@@ -213,7 +213,7 @@ After this, you have an additional CAPI image for OpenStack with Kubernetes v1.2
  
 ## Deploy cluster
 The OpenStack CAPI controller manager is up and running, so the OpenStack based cluster can be deployed. 
-The first step is loading the `clouds.yaml` file the environment. The community has created a helper script you can use to convert `clouds.yaml` to environment variables. 
+The first step is loading the `clouds.yaml` file into the environment. The community has created a helper script you can use to convert `clouds.yaml` to environment variables. 
 
 Be sure that your `clouds.yaml` has the minimum settings like this:
 ````
