@@ -68,7 +68,7 @@ During this example you can use your personal credentials. For production deploy
 NOTE: The OpenStack CAPI provider requires OpenStack Octavia (LoadBalancer as a Service).
 
 ## Deploy OpenStack CAPI provider
-OpenStack (CAPO) is not part of DKP's supported CAPI provider so you need to deploy the CAPI provider to your DKP Enterprise management cluster first. 
+OpenStack (CAPO) is not part of DKP's supported CAPI provider, so you need to deploy the CAPI provider to your DKP Enterprise management cluster first. 
 
 NOTE: It’s possible to create a fresh local DKP bootstrap cluster and run the same steps there. If you run the steps on a local DKP bootstrap cluster, you have to move the CAPI components to the deployed cluster later to make it `self managed`.
 
