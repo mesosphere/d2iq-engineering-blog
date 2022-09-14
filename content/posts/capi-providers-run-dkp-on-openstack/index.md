@@ -268,7 +268,7 @@ Please be sure that all exported variables are valid. The Kubernetes version mus
 
 See DKP release notes to validate which Kubernetes versions are [supported][DKP release notes].
 
-The variable `CLUSTER_NAMESPACE` defines the namespace of the DKP workspace where the cluster should be created. Please note that workspace name and namespace name can be different. You can get both via the dkp cli:
+The variable `CLUSTER_NAMESPACE` defines the namespace of the DKP workspace where the cluster should be created. Please note that workspace name and namespace name can be different. You can get both via the DKP CLI:
 
 ````
 $ dkp get workspace
