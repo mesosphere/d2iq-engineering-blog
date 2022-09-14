@@ -187,7 +187,8 @@ openstack image create --private --file ./output/ubuntu-2004-kube-v1.22.9/ubuntu
 >> This step requires that your OpenStack `clouds.yaml` is placed at `/etc/openstack/clouds.yaml` or in your current directory.
 
 ### Different Kubernetes version
-Currently the image-builder default Kubernetes version is 1.22.9. If you need a newer Kubernetes version you have to patch the packer config and replace the default version 1.22.9 by your favorite version. In this example we build a CAPI image with Kubernetes version 1.23.7:
+
+Currently, the image-builder default Kubernetes version is 1.22.9. If you need a newer Kubernetes version, you have to patch the packer config and replace the default version 1.22.9 with your preferred version. In this example, we build a CAPI image with Kubernetes version 1.23.7:
 
 ````
 $ sed -i 's/1.22.9/1.23.7/g' packer/config/kubernetes.json
