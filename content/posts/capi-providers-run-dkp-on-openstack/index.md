@@ -51,7 +51,8 @@ The OpenStack ecosystem contains 20+ more projects. Every project handles one "a
 For more information, see the [official OpenStack website][openstack website]
 
 ## Prerequisites / Environment
-To start with the deployment of your first cluster at OpenStack you need the following tools and informations:
+
+To start with the deployment of your first cluster at OpenStack, you need the following tools and information:
 * DKP command line tool (version 2.2+)
 * Running DKP Enterprise (to attach the OpenStack cluster)
   * [Create Workspace][create workspace docs]
