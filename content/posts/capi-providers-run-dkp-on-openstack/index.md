@@ -64,7 +64,7 @@ To start with the deployment of your first cluster at OpenStack, you need the fo
   * Upload your SSH public key
 * An Ubuntu / Linux server to run KVM for image build
 
-During this example you can use your personal credentails. For production deployments it's recommended to create Application Credentials instead using personal credentials!
+During this example you can use your personal credentials. For production deployments, it's recommended to create Application Credentials instead using personal credentials!
 NOTE: The OpenStack CAPI provider required OpenStack Octavia (LoadBalancer as a Service).
 
 ## Deploy OpenStack CAPI provider
