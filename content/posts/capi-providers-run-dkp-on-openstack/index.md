@@ -526,7 +526,7 @@ In DKP you see the cluster in state “unattached”:
 
 The reason for this is because the cluster object is created in the workspace, so Kommander detects this cluster but it’s not managed by Kommander / DKP Enterprise right now. 
 
-To change this you need to apply the missing KommanderCluster object. 
+To change this, you need to apply the missing KommanderCluster object:
 
 ````
 $ cat << EOF | kubectl apply -f -
