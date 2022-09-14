@@ -564,7 +564,7 @@ openstack-mc7nh-clgc6    Active   10m
 tigera-operator          Active   93m
 ````
 
-All pre enabled applications from the Application Catalog (like Traefik) will be deployed to the target cluster now. 
+All pre-enabled applications from the Application Catalog (like Traefik) will be deployed to the target cluster now.
 
 ## Recap
 DKP Enterprise is a multi-cloud management platform which is built on state of the art technologies like Kubernetes and Cluster API. D2iQ ships 7 CAPI providers out-of-the-box as part of the DKP product.
