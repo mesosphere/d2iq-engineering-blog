@@ -248,7 +248,7 @@ For example, in my environment, the source command looks like this:
 $ source /tmp/env.rc /etc/openstack/clouds.yaml openstack
 ````
 
-After this we need to export additional required variables:
+After this, we need to export additional required variables:
 ````
 export OPENSTACK_DNS_NAMESERVERS=<dns nameservers>
 export OPENSTACK_FAILURE_DOMAIN=<availability zone name>
