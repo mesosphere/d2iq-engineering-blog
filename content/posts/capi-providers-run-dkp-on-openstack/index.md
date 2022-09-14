@@ -177,7 +177,8 @@ $ qemu-img convert \
     ./output/ubuntu-2004-kube-v1.22.9/ubuntu-2004-kube-v1.22.9.raw
 ````
 
-After the successful convert you can upload your image to OpenStack via UI or cli:
+After the successful conversion, you can upload your image to OpenStack via UI or CLI:
+
 ````
 export OS_CLOUD=<name of the openstack cloud>
 openstack image create --private --file ./output/ubuntu-2004-kube-v1.22.9/ubuntu-2004-kube-v1.22.9.raw ubuntu-2004-kube-v1.22.9
