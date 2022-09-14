@@ -115,7 +115,7 @@ All information around OpenStack CAPI provider can be found on the [official git
 ## Generate base image
 Virtual machines in OpenStack need a base image to start from. The base images for CAPO require already installed tooling like kubeadm, kubelet and container runtime. The OpenStack CAPI community provides an automation to easily build CAPI images for OpenStack. 
 To follow this process you need an Linux server (Ubuntu is recommended) to run the KVM based image build process.
-For more information see the [official capo documentation][capo docs].
+For more information, see the [official capo documentation][capo docs].
 
 Jump to your build server via SSH and install all the needed packages first:
 
