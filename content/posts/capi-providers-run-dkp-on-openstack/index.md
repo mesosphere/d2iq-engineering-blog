@@ -36,7 +36,7 @@ A big benefit of CAPI is the large number of infrastructure providers (24+). Thi
 For more information, see the [official CAPI documentation][CAPI docs]
 
 ## What is OpenStack?
-OpenStack is an open source cloud infrastructure platform to mainly provide infrastrcture as a service (IaaS). The OpenStack project was started 2010 by NASA and Rackspace. 2014 the OpenStack Foundation was founded and the ecosystem grows to an Anything as a Service (XaaS) platform. The foundation was renamed to "Open Infrastructure Foundation" in 2021.
+OpenStack is an open source cloud infrastructure platform to mainly provide infrastrcture as a service (IaaS). The OpenStack project was started 2010 by NASA and Rackspace. In 2014, the OpenStack Foundation was founded and the ecosystem grows to an Anything as a Service (XaaS) platform. The foundation was renamed to "Open Infrastructure Foundation" in 2021.
 
 The core components for an OpenStack based IaaS platform are:
 * Cinder (Block storage)
