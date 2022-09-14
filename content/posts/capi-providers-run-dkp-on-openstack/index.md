@@ -381,7 +381,7 @@ kube-system   calico-node-znmk5                                                 
 ````
 
 ### Deploy CCM
-Kubernetes requires a external cloud provider to communicate with the OpenStack API. The community provides a Cloud Controller Manager for the OpenStack API. This OpenStack CCM is also available via Helm and will be deployed like the CNI solution.
+Kubernetes requires an external cloud provider to communicate with the OpenStack API. The community provides a Cloud Controller Manager for the OpenStack API. This OpenStack CCM is also available via Helm and will be deployed like the CNI solution.
 
 First we need to create a `openstack-ccm.yaml` with the required settings and deploy the Helm chart. You found all these settings in the `clouds.yaml` file.
 
