@@ -140,7 +140,7 @@ The current version of the image-builder support base images for
 * Ubuntu 18.04
 * Ubuntu 20.04
 
-The following command start the build process for a Ubuntu 20.04 CAPI base image:
+The following command starts the build process for an Ubuntu 20.04 CAPI base image:
 
 ````
 $ make build-qemu-ubuntu-2004
