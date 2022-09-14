@@ -166,7 +166,7 @@ Build 'qemu' finished after 15 minutes 2 seconds.
 --> qemu: VM files in directory: ./output/ubuntu-2004-kube-v1.22.9
 ````
 
-The image is generated as qcow2 file. We can upload this image directly to the OpenStack image store but the most OpenStack platforms recommend RAW images instead of qcow2 (performance boost during deployment, based on the storage integration). 
+The image is generated as a qcow2 file. We can upload this image directly to the OpenStack image store, but most OpenStack platforms recommend RAW images instead of qcow2 (performance boost during deployment, based on the storage integration). 
 You can use the command "qemu-img" to convert the qcow2 image to raw:
 
 ````
