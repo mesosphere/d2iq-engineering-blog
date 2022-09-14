@@ -113,7 +113,7 @@ capo-controller-manager-69bfb5c646-7jspb   1/1     Running   0          25s
 All information around OpenStack CAPI provider can be found on the [official github page][capo]
 
 ## Generate base image
-Virtual machines in OpenStack need a base image to start from. The base images for CAPO requires already installed tooling like kubeadm, kubelet and contrainer runtime. The OpenStack CAPI community provides an automation to easily build CAPI images for OpenStack. 
+Virtual machines in OpenStack need a base image to start from. The base images for CAPO require already installed tooling like kubeadm, kubelet and container runtime. The OpenStack CAPI community provides an automation to easily build CAPI images for OpenStack. 
 To follow this process you need an Linux server (Ubuntu is recommended) to run the KVM based image build process.
 For more information see the [official capo documentation][capo docs].
 
