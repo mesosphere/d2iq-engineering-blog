@@ -58,7 +58,7 @@ To start with the deployment of your first cluster at OpenStack, you need the fo
   * [Create Workspace][create workspace docs]
 * [kubectl][kubectl] command line tool
 * [helm][helm] command line tool
-* [clusterctl][clusterctl] command line tool (see https://cluster-api.sigs.k8s.io/user/quick-start.html#install-clusterctl)
+* [clusterctl][clusterctl] command line tool
 * OpenStack account
   * Download your "OpenStack clouds.yaml file" (Login -> API Access -> Download OpenStack clouds.yaml file)
   * Upload your SSH public key
