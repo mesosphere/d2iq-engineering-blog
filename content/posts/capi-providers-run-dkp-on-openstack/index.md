@@ -243,7 +243,7 @@ NOTE: If you running on MacOS you have to patch the /tmp/env.rc
 $ sed -ie 's/--wrap=0//g' /tmp/env.rc
 ````
 
-In my environment the source command looks like this:
+For example, in my environment, the source command looks like this:
 ````
 $ source /tmp/env.rc /etc/openstack/clouds.yaml openstack
 ````
