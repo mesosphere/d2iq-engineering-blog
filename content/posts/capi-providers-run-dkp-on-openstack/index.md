@@ -123,7 +123,7 @@ Jump to your build server via SSH and install all the needed packages first:
 $ sudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients virtinst cpu-checker libguestfs-tools libosinfo-bin python3-pip ansible make
 ````
 
-After the installation of the required tools you can clone to repo and run the preparation.
+After the installation of the required tools, you can clone the repo and run the preparation.
 During this step all depenencies will be resolved.
 
 ````
