@@ -295,7 +295,7 @@ kubeadmconfigtemplate.bootstrap.cluster.x-k8s.io/openstack-md-0 created
 secret/openstack-cloud-config created
 ````
 
-To see the current status you can describe the cluster via the dkp command line tool.
+You can describe the cluster's current status via the `dkp` command line tool.
 
 ````
 $ dkp describe cluster -n ${CLUSTER_NAMESPACE} -c ${CLUSTER_NAME}
