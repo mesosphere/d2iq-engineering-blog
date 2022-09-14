@@ -581,7 +581,6 @@ Thanks to our partner [Wavecon][wavecon] and [noris network][noris] for providin
 [kubectl]: https://kubernetes.io/docs/tasks/tools/
 [helm]: https://helm.sh/docs/intro/install/
 [clusterctl]: https://cluster-api.sigs.k8s.io/user/quick-start.html#install-clusterctl
-[hetzner capi]: https://helm.sh/docs/intro/install/
 [calico]: https://www.tigera.io/project-calico/
 [calico quickstart]: https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
 [capa]: https://cluster-api-aws.sigs.k8s.io/
