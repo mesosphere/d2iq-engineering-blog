@@ -568,7 +568,7 @@ All pre enabled applications from the Application Catalog (like Traefik) will be
 
 ## Recap
 DKP Enterprise is a multi-cloud management platform which is built on state of the art technologies like Kubernetes and Cluster API. D2iQ ships 7 CAPI providers out-of-the-box as part of the DKP product.
-This guide showed how easy the integration of additional CAPI providers is. You have the possibility to implement additional CAPI providers to DKP, deploy clusters, and use the standardized toolset for Enterprise grade day 2 operation on all of your CAPI valid Kubernetes clusters.
+This guide showed how easy the integration of additional CAPI providers is. You have the possibility to implement additional CAPI providers to DKP, deploy clusters, and use the standardized toolset for Enterprise-grade Day 2 operation on all of your CAPI valid Kubernetes clusters.
 
 The deployment of CAPI providers and clusters is declarative and based on YAML manifests, so it’s the perfect baseline to implement a GitOps approach. 
 
