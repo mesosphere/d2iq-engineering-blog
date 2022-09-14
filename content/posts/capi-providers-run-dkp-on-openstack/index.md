@@ -209,7 +209,7 @@ Build 'qemu' finished after 15 minutes 58 seconds.
 --> qemu: VM files in directory: ./output/ubuntu-2004-kube-v1.23.7
 ````
 
-After this you have an additional CAPI image for OpenStack with Kubernetes v1.23.7. After conversion to RAW you can upload it to OpenStack too.
+After this, you have an additional CAPI image for OpenStack with Kubernetes v1.23.7. After conversion to RAW, you can upload it to OpenStack, too.
  
 ## Deploy cluster
 The OpenStack CAPI controller manager is up and running, so the OpenStack based cluster can be deployed. 
