@@ -39,12 +39,15 @@ production stylesheet in assets/built/screen.css
     --color-wash: #e5eff5;
     --color-darkmode: #151719;
 
+    --color-d2iq-primary-purple: #330072;
+    --color-d2iq-secondary-purple: #775BB0;
+
     /*
     An accent color is also set by Ghost itself in
     Ghost Admin > Settings > Brand
     */
 
-    --ghost-accent-color: #330072;
+    --ghost-accent-color: var(--color-d2iq-primary-purple);
     
     /*
     You can use this variable throughout your styles
@@ -283,6 +286,19 @@ body:not(.has-cover) .site-header-content:not(.left-aligned) {
     grid-gap: 40px;
     grid-template-columns: auto auto 1fr;
     grid-auto-flow: row dense;
+}
+
+.gh-head-subtext {
+    @extend .gh-head;
+    padding-top: MIN(10px, 1.6vmin);
+    padding-bottom: MIN(10px, 1.6vmin);
+    text-align: center;
+    font-style: italic;
+    font-size: smaller;
+}
+
+.has-cover:not(.home-template) .gh-head-subtext {
+    background-color: var(--color-d2iq-secondary-purple);
 }
 
 
