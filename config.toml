@@ -1,6 +1,6 @@
 baseURL = 'https://eng.d2iq.com/'
 title = 'D2iQ Engineering'
-Description = 'Insides from D2iQ Engineers'
+Description = 'Hear the latest from the D2iQ Engineering team'
 theme = "casperv5"
 languageCode = "en-us"
 
