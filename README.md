@@ -41,7 +41,7 @@ If you do not have [asdf][asdf] installed, then please manually install [hugo][h
 To create a new post, run:
 
 ```shell
-hugo new --kind post posts/<name>
+hugo new --kind post-bundle posts/<name>
 ```
 
 Note that `<name>` should be a directory path and the title of the post will be derived from it. As an example:
@@ -69,6 +69,38 @@ Some content...
 ```
 
 Now you can edit the file `content/posts/a-new-post/index.md` to add your content.
+
+### Add a new page
+
+To create a new page, run:
+
+```shell
+hugo new --kind page-bundle <name>
+```
+
+Note that `<name>` should be a directory path and the title of the page will be derived from it. As an example:
+
+```bash
+$ hugo new --kind page-bundle some/new/page
+Content dir "content/some/new/page" created
+
+
+$ ls content/some/new/page/
+feature.png  _index.md
+
+$ cat content/some/new/page/_index.md
+---
+title: "A New Post"
+date: 2022-08-24T16:31:50+01:00
+tags: []
+excerpt: ADD EXCERPT HERE
+feature_image: feature.png
+---
+
+Some content...
+```
+
+Now you can edit the file `content/some/new/page/_index.md` to add your content.
 
 ### Preview your content locally
 

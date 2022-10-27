@@ -1,14 +1,36 @@
+{{ define "body_class" }}post-template{{ end }}
+
 {{ define "main" }}
   <main id="site-main" class="site-main">
     <article class="article post{{ range $tag := .Params.tags }} post-{{ $tag | urlize }}{{ end }}">
 
       <header class="article-header gh-canvas">
 
+        <div class="article-tag post-card-tags">
+          {{ with .Params.tags }}
+            {{ $primaryTag := (index . 0) }}
+            <span class="post-card-primary-tag">
+              <a href="{{ "/blog/tags/" | relLangURL }}{{ $primaryTag | urlize }}">{{ $primaryTag }}</a>
+            </span>
+          {{ end }}
+          {{ if (eq .Params.featured true) }}
+            <span class="post-card-featured">{{ partial "icon" "fire" }} Featured</span>
+          {{ end }}
+        </div>
+
         <h1 class="article-title">{{ .Page.Title }}</h1>
 
         {{ if isset .Params "excerpt" }}
           <p class="article-excerpt">{{ .Params.excerpt }}</p>
         {{ end }}
+
+        <div class="article-byline">
+          <section class="article-byline-content">
+
+            {{ partial "authors.html" . }}
+
+          </section>
+        </div>
 
         {{ if isset .Params "feature_image" }}
           {{ $feature_image_config := dict "image" (.Resources.GetMatch .Params.feature_image) "caption" (.Params.feature_image_caption) "alt" (.Params.feature_image_alt) "page_title" .Title }}
@@ -20,6 +42,10 @@
       <section class="gh-content gh-canvas">
         {{ .Content }}
       </section>
+
+      {{/*  <section class="article-comments gh-canvas">
+        If you want to embed comments, this is a good place to paste your code!
+      </section>  */}}
 
     </article>
   </main>
