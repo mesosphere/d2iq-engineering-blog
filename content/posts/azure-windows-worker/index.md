@@ -46,10 +46,10 @@ To start with the deployment of your cluster at Azure, you need the following to
 
 ## Create the base DKP cluster on Azure
 First you need a default DKP cluster on Azure with Linux control plane and worker nodes to run the Linux based core components.
-DKP is based on Cluster API and use the CAPZ provider for deployment and lifecycle of Kubernetes clusters on Azure. 
-All needed requirements and a detailed description you can found at our DKP on [Azure quick start guide][dkp-azure-requirements]
+DKP is based on Cluster API and use the `CAPZ` provider for deployment and lifecycle of Kubernetes clusters on Azure. 
+All needed requirements and a detailed description you can found at the official DKP documentation [Azure quick start guide][dkp-azure-requirements]
 
-You need to export a bunch of enironment variables to start:
+You need to export a bunch of environment variables to start:
 ````
 export AZURE_CLIENT_ID="<client id>"
 export AZURE_TENANT_ID="<tenant id>"
@@ -61,7 +61,7 @@ export AZURE_TENANT_ID_B64="$(echo -n "$AZURE_TENANT_ID" | base64 | tr -d '\n')"
 export AZURE_CLIENT_ID_B64="$(echo -n "$AZURE_CLIENT_ID" | base64 | tr -d '\n')"
 export AZURE_CLIENT_SECRET_B64="$(echo -n "$AZURE_CLIENT_SECRET" | base64 | tr -d '\n')"
 ````
-This environment variables includes your Azure credentials to communicate with the Azure api. please fill in your client id, tenant id, client secret and subscription id. the last 4 variables convert your input to Base64 encodes strings which are handed over to DKP in the next steps.
+This environment variables includes your Azure credentials to communicate with the Azure api. P lease fill in your `client id`, `tenant id`, `client secret` and `subscription id`. The last 4 variables convert your input to Base64 encoded strings which will be handed over to DKP in the next steps.
 
 Now you need to define your base cluster:
 ````
@@ -78,14 +78,14 @@ export DKP_EXTRAVARS="--additional-tags expiration=8h,owner=ksahm"
 ````
 
 With this informations you can start the DKP bootstrap and create the base cluster on Azure.
-The bootstrap process is based on [KIND][kind]. For more information please see the DKP docs section [Azure bootstrap][dkp-azure-boostrap].
+The bootstrap process is based on [KIND][kind]. For more information, please see the DKP docs section [Azure bootstrap][dkp-azure-bootstrap].
 ````
 $ dkp create bootstrap
  ✓ Creating a bootstrap cluster 
  ✓ Initializing new CAPI components
 ````
 
-If the bootstrap container is ready you can deploy the cluster by using the dkp cli:
+If the bootstrap container is ready you can deploy the cluster by using the dkp command `dkp create cluster`:
 ````
 $ dkp create cluster azure \
   -c ${CLUSTER_NAME} \
@@ -165,6 +165,15 @@ myazurecluster-md-0-sppq8            Ready      <none>                 7m30s   v
 
 Now the base cluster is deployed.
 
+### Patch node-feature-discovery
+You need to patch the `node-feature-discovery-worker` DaemonSet to prevent that linux based pods of this DaemonSet are started on Windows workers.
+This issue can be solved by this patch command:
+
+````
+$ kubectl patch ds -n node-feature-discovery node-feature-discovery-worker --kubeconfig ${CLUSTER_NAME}.kubeconfig --type=merge -p '{"spec": {"template": {"spec": {"nodeSelector":{"kubernetes.io/os":"linux"}}}}}'
+````
+
+
 ## Create Windows node pool
 To deploy the Windows worker you need to define a new, additional node pool and attach it to the deployed cluster.
 A nodepool is a group of worker nodes, all nodes in the pool are sized equal. 
@@ -173,12 +182,12 @@ For this you need to export an additional set of environment variables to define
 ````
 export WORKER_MACHINE_WINDOWS_COUNT=4
 export AZURE_WINDOWS_NODE_MACHINE_TYPE="Standard_D8s_v3"
-export AZURE_SSH_PUBLIC_KEY_B64="$(base64 ${SSH_PUBLIC_KEY_FILE})"
+export AZURE_SSH_PUBLIC_KEY_B64="$(base64 -i ${SSH_PUBLIC_KEY_FILE})"
 export AZURE_SSH_PUBLIC_KEY="$(cat ${SSH_PUBLIC_KEY_FILE})"
 ````
 > Please note that the 4 environment variables are in *ADDITION* to the already exported variable.
 
-Currently there is a version change of the Azure image urns. You need to use the `az` cli tool to get the right version matching to your selected Kubernetes version and export them as variable. In this example Kubernetes version 1.23.12 is in use:
+Currently there is a version change of the Azure image urns. You need to use the Azure cli tool `az` to get the right version matching to your selected Kubernetes version and export them as variable. In this example Kubernetes version 1.23.12 is in use:
 ````
 $ az vm image list --publisher cncf-upstream --all --sku windows-2022-containerd-gen1 --offer capi-windows -l ${AZURE_LOCATION}
 ...
@@ -334,8 +343,8 @@ myazurecluster-md-0-dwmrr            Ready      <none>                 10m     v
 myazurecluster-md-0-sppq8            Ready      <none>                 9m52s   v1.23.12
 ````
 
-The Windows worker stuck in status `NotReady` because the existing Calico DaemonSet is just for Linux nodes. 
-So you need to deploy a DaemonSet for Windows.
+The Windows worker stuck in status `NotReady` because the existing `Calico` DaemonSet is just for Linux nodes. 
+So you need to deploy a Calico DaemonSet for Windows as well as a `Kube-Proxy` for Windows.
 
 ## Deploy Kube-Proxy to Windows nodes
 For successful network connectivity you need to deploy `Kube-Proxy` to the Windows worker nodes. 
@@ -363,12 +372,12 @@ spec:
       securityContext:
         windowsOptions:
           hostProcess: true
-          runAsUserName: "NT AUTHORITY\\system"
+          runAsUserName: 'NT AUTHORITY\system'
       hostNetwork: true
       containers:
       - image: sigwindowstools/kube-proxy:v${KUBERNETES_VERSION}-calico-hostprocess
-        args: ["$env:CONTAINER_SANDBOX_MOUNT_POINT/kube-proxy/start.ps1"]
-        workingDir: "$env:CONTAINER_SANDBOX_MOUNT_POINT/kube-proxy/"
+        args: ["\$env:CONTAINER_SANDBOX_MOUNT_POINT/kube-proxy/start.ps1"]
+        workingDir: "\$env:CONTAINER_SANDBOX_MOUNT_POINT/kube-proxy/"
         name: kube-proxy
         env:
         - name: NODE_NAME
@@ -403,7 +412,7 @@ spec:
     type: RollingUpdate
 EOF
 
-kubectl apply -f kube-proxy-win.yml
+kubectl apply --kubeconfig ${CLUSTER_NAME}.kubeconfig -f kube-proxy-win.yml
 ````
 
 ## Deploy Calico to Windows nodes
@@ -559,7 +568,7 @@ spec:
       securityContext:
         windowsOptions:
           hostProcess: true
-          runAsUserName: "NT AUTHORITY\\system"
+          runAsUserName: "NT AUTHORITY\\\\system"
       hostNetwork: true
       serviceAccountName: calico-node
       nodeSelector:
@@ -577,7 +586,7 @@ spec:
         # and CNI network config file on each node.
         - name: install-cni
           image: sigwindowstools/calico-install:v3.23.0-hostprocess
-          args: ["$env:CONTAINER_SANDBOX_MOUNT_POINT/calico/install.ps1"]
+          args: ["\$env:CONTAINER_SANDBOX_MOUNT_POINT/calico/install.ps1"]
           imagePullPolicy: Always
           env:
             # Name of the CNI config file to create.
@@ -615,12 +624,12 @@ spec:
           securityContext:
             windowsOptions:
               hostProcess: true
-              runAsUserName: "NT AUTHORITY\\system"
+              runAsUserName: "NT AUTHORITY\\\\system"
       containers:
       - name: calico-node-startup
         image: sigwindowstools/calico-node:v3.23.0-hostprocess
-        args: ["$env:CONTAINER_SANDBOX_MOUNT_POINT/calico/node-service.ps1"]
-        workingDir: "$env:CONTAINER_SANDBOX_MOUNT_POINT/calico/"
+        args: ["\$env:CONTAINER_SANDBOX_MOUNT_POINT/calico/node-service.ps1"]
+        workingDir: "\$env:CONTAINER_SANDBOX_MOUNT_POINT/calico/"
         imagePullPolicy: Always
         volumeMounts:
         - name: calico-config-windows
@@ -646,9 +655,9 @@ spec:
           value: "4096"
       - name: calico-node-felix
         image: sigwindowstools/calico-node:v3.23.0-hostprocess
-        args: ["$env:CONTAINER_SANDBOX_MOUNT_POINT/calico/felix-service.ps1"]
+        args: ["\$env:CONTAINER_SANDBOX_MOUNT_POINT/calico/felix-service.ps1"]
         imagePullPolicy: Always
-        workingDir: "$env:CONTAINER_SANDBOX_MOUNT_POINT/calico/"
+        workingDir: "\$env:CONTAINER_SANDBOX_MOUNT_POINT/calico/"
         volumeMounts:
         - name: calico-config-windows
           mountPath: /etc/kube-calico-windows/
@@ -707,10 +716,10 @@ calico-node-f8tv4                          1/1     Running   0          20m   10
 calico-node-kqctn                          1/1     Running   0          21m   10.1.0.5         myazurecluster-md-0-blrqp            <none>           <none>
 calico-node-svpr9                          1/1     Running   0          17m   10.0.0.6         myazurecluster-control-plane-5pfjc   <none>           <none>
 calico-node-w9tt2                          1/1     Running   0          21m   10.1.0.6         myazurecluster-md-0-dwmrr            <none>           <none>
-calico-node-windows-b86pq                  1/2     Running   0          86s   10.1.0.9         myazurecl-l8dws                      <none>           <none>
-calico-node-windows-fr494                  1/2     Running   0          86s   10.1.0.8         myazurecl-f4x5q                      <none>           <none>
-calico-node-windows-fspbr                  1/2     Running   0          86s   10.1.0.7         myazurecl-72gtq                      <none>           <none>
-calico-node-windows-l9mjg                  1/2     Running   0          86s   10.1.0.10        myazurecl-ctw62                      <none>           <none>
+calico-node-windows-b86pq                  2/2     Running   0          86s   10.1.0.9         myazurecl-l8dws                      <none>           <none>
+calico-node-windows-fr494                  2/2     Running   0          86s   10.1.0.8         myazurecl-f4x5q                      <none>           <none>
+calico-node-windows-fspbr                  2/2     Running   0          86s   10.1.0.7         myazurecl-72gtq                      <none>           <none>
+calico-node-windows-l9mjg                  2/2     Running   0          86s   10.1.0.10        myazurecl-ctw62                      <none>           <none>
 calico-node-xspt2                          1/1     Running   0          20m   10.1.0.4         myazurecluster-md-0-sppq8            <none>           <none>
 calico-typha-76c5c4b77d-2m4hr              1/1     Running   0          19m   10.1.0.6         myazurecluster-md-0-dwmrr            <none>           <none>
 calico-typha-76c5c4b77d-8ccmd              1/1     Running   0          22m   10.0.0.4         myazurecluster-control-plane-g2h6j   <none>           <none>
@@ -752,7 +761,7 @@ spec:
     spec:
       containers:
       - name: iis
-        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2022
         resources:
           limits:
             cpu: 1
@@ -787,7 +796,54 @@ kubectl apply -f iis.yaml --kubeconfig ${CLUSTER_NAME}.kubeconfig
 Validate the deployment:
 ````
 $ kubectl get po,svc --kubeconfig ${CLUSTER_NAME}.kubeconfig
+NAME                            READY   STATUS    RESTARTS   AGE
+pod/iis-1809-5745f49584-gsqml   1/1     Running   0          7m4s
+
+NAME                 TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)        AGE
+service/iis          LoadBalancer   10.102.12.86   40.78.50.251   80:30911/TCP   15m
+service/kubernetes   ClusterIP      10.96.0.1      <none>         443/TCP        71m
 ````
+
+If the pod is in state `Running` and the service `iis` got an external ip address via Azure Loadbalancer you can test the deployed webservice via browser or curl:
+
+````
+curl http://40.78.50.251
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>IIS Windows Server</title>
+<style type="text/css">
+<!--
+body {
+        color:#000000;
+        background-color:#0072C6;
+        margin:0;
+}
+
+#container {
+        margin-left:auto;
+        margin-right:auto;
+        text-align:center;
+        }
+
+a img {
+        border:none;
+}
+
+-->
+</style>
+</head>
+<body>
+<div id="container">
+<a href="http://go.microsoft.com/fwlink/?linkid=66138&amp;clcid=0x409"><img src="iisstart.png" alt="IIS" width="960" height="600" /></a>
+</div>
+</body>
+</html>
+````
+
+The test was sucessful. The workload is started on the Windows nodes and service is accessable.
+
 
 ## Attach to DKP Enterprise (optional)
 If you want to attach the cluster to DKP Enterprise you need to update the Application settings before you attach the cluster to DKP Enterprise.
