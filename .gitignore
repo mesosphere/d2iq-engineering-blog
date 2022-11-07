@@ -3,6 +3,7 @@ node_modules
 /resources/_gen/
 /assets/jsconfig.json
 hugo_stats.json
+.DS_Store
 
 # Temporary lock file while building
 .hugo_build.lock
