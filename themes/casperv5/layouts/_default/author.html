@@ -54,6 +54,17 @@
                 {{ partial "icons/twitter.html" }}
               </a>
               {{ end }}
+              {{ if $author.mastodon }}
+              {{ $splitMastodon := split $author.mastodon "@" }}
+              <a
+                class="author-profile-social-link"
+                href="https://{{ index $splitMastodon 1 }}/@{{ index $splitMastodon 0 }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {{ partial "icons/mastodon.html" }}
+              </a>
+              {{ end }}
             </div>
           </footer>
         </div>
