@@ -1,6 +1,6 @@
 ---
 authors: ["Arvind Bhoj"]
-title: "CAPI vSphere (capv) - Nodes With predefined IP Range(s)"
+title: "CAPI vSphere (capv) - Nodes With predefined IP Ranges"
 date: 2022-10-26T15:46:46-04:00
 featured: false
 tags: ["cluster api", "vsphere", "capv", "ip address"]
