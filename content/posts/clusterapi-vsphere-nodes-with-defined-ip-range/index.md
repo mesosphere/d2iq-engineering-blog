@@ -117,7 +117,7 @@ export VCENTER_TEMPLATE=capi_compatible_os_template
 dkp create cluster vsphere --cluster-name=${CLUSTER_NAME} --network=${NETWORK} --control-plane-endpoint-host=${CONTROL_PLANE_ENDPOINT} --data-center=${DATACENTER} --data-store=${DATASTORE} --folder=${VM_FOLDER} --server=${VCENTER} --ssh-public-key-file=${SSH_PUB_KEY} --resource-pool=${RESOURCE_POOL} --vm-template=${VCENTER_TEMPLATE} --virtual-ip-interface=eth0 --dry-run -o yaml > dkp-cluster.yaml
 ```
 
-In the cluster deployment manifest, update the VsphereMachineTemplate resource for the set of nodes that are to source the IP from the defined pool as shown below:
+In the cluster deployment manifest, update the `VsphereMachineTemplate` resource for the set of nodes that are to source the IP from the defined pool as shown below:
 1. Add the `cluster.x-k8s.io/ip-pool-name: ${CLUSTER_NAME}` label. This points to the pool that was created in the last step and ties the MachineTemplate to the pool.
 2. Disable dhcp4 and dhcp6
 
