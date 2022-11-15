@@ -20,7 +20,7 @@ Hopefully that explains why a predefined IP Address range is required.
 
 Now that we understand why we need a static IP Address range for Nodes, let's see how to implement this for a [CAPV](https://github.com/kubernetes-sigs/cluster-api-provider-vsphere) provisioner.
 
-The solution requires two components to be deployed to the CAPI cluster:
+The solution requires deploying two components to the CAPI cluster:
 1. [metal3 ipam provider](https://github.com/metal3-io/ip-address-manager.git)
 2. [vsphere ipam adpater](https://github.com/spectrocloud/cluster-api-provider-vsphere-static-ip.git)
 
