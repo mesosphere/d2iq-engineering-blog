@@ -10,7 +10,7 @@ description: Learn how to manage Kubernetes across multiple cloud providers with
 feature_image: multiple-clouds.jpg
 ---
 
-# Intro
+## Intro
 
 When handling multiple environments, two common concerns are the isolation among them and their similarity. Cloud native environments provide us with multiple forms of isolation and different organizations have different ways of handling that. You can have just a bunch of new containers, a new instance, a new VPC, a new account in your cloud provider, etc.
 
