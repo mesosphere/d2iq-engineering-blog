@@ -24,7 +24,8 @@ The solution requires deploying two components to the CAPI cluster:
 1. [metal3 ipam provider](https://github.com/metal3-io/ip-address-manager.git)
 2. [vsphere ipam adpater](https://github.com/spectrocloud/cluster-api-provider-vsphere-static-ip.git)
 
-The first component provides the core [IPAM](https://en.wikipedia.org/wiki/IP_address_management) provider capabilities and the second component works as an adapter between [CAPV](https://github.com/kubernetes-sigs/cluster-api-provider-vsphere) (i.e. the vSphere CAPI provisioner itself) and the IPAM provider that is orginally meant for [metal3](https://metal3.io/) CAPI provider.
+The first component provides the core [IPAM](https://en.wikipedia.org/wiki/IP_address_management) provider capabilities. 
+The second component works as an adapter between [CAPV](https://github.com/kubernetes-sigs/cluster-api-provider-vsphere) (the vSphere CAPI provisioner itself), and the IPAM provider that is originally meant for [metal3](https://metal3.io/) CAPI provider.
 
 ## Prerequisites: 
 1. A working CAPI-enabled Kubernetes cluster with CAPV provider. Either deploy a KIND cluster and then manually install the CAPI components on it, or use DKP to do it by running `dkp create bootstrap`. More details here:
