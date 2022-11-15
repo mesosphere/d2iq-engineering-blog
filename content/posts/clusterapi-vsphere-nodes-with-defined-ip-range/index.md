@@ -158,4 +158,4 @@ kubectl create -f dkp-cluster.yaml
 
 This will deploy a vSphere cluster with the IP's from the range specified in the IPPOOL resource instead of randomly picking an IP from DHCP. 
 
-Well. That's it. Hope your found this useful.
+Well. That's it. Hope you found this useful in setting up a vsphere environment.
