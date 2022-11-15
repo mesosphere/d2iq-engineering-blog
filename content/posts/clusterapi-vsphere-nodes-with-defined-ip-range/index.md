@@ -42,7 +42,7 @@ https://docs.d2iq.com/dkp/latest/vsphere-bootstrap
 > -  Now upload the tars to the airgapped server hosting the bootstrap cluster and use `docker load` to load the images into the local docker instance (e.g. `docker load -i ip-address-manager.tar` ) 
 > - Finally load the images to the KIND cluster using KIND cli (download from cli from https://github.com/kubernetes-sigs/kind/releases) (e.g. `kind load docker-image quay.io/metal3-io/ip-address-manager:main --name=konvoy-capi-bootstrapper`. Where, `konvoy-capi-bootstrapper` is the name of the kind cluster created by DKP bootstrap. If using a different mechanism of deploying the kind cluster then get the name of the cluster using `kind get clusters` and use in the above command as the cluster name).
 
-## Steps to Deploy
+## Steps to Deploy IPAM for CAPV
 
 ### Step 1: Clone the vsphere-ipam git repository
 
