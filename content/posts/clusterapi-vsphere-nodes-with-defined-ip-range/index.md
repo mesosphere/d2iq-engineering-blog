@@ -121,7 +121,6 @@ In the cluster deployment manifest, update the `VsphereMachineTemplate` resource
 1. Add the `cluster.x-k8s.io/ip-pool-name: ${CLUSTER_NAME}` label. This points to the pool that was created in the last step and ties the MachineTemplate to the pool.
 2. Disable dhcp4 and dhcp6
 
-e.g.
 ```
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: VSphereMachineTemplate
