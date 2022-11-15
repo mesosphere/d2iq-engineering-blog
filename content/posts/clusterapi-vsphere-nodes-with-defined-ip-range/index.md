@@ -14,7 +14,7 @@ When deploying Kubernetes on [vSphere](https://en.wikipedia.org/wiki/VMware_vSph
 This external load balancer-provided vip, however, must be created before provisioning the cluster as this is the endpoint used by all the nodes to join and form the cluster. This is fine when the nodes are pre-provisioned, but what about cluster creation methods like [CAPV](https://github.com/kubernetes-sigs/cluster-api-provider-vsphere) (Cluster API vSphere) where the nodes are provisioned along with the rest of the cluster creation and the IP is not known before hand? 
 We could use a hacky solution where we create the VIP at the time of cluster creation and let the cluster creation process fail until we manually add a backend after an IP is allocated to the first control plane node. This would be extremely painful and we would have to time it perfectly for everything to go well. 
 
-Hopefully that explains why a predefined IP Address range is required. 
+That's why a predefined IP Address range is a better solution. 
 
 # The Solution
 
