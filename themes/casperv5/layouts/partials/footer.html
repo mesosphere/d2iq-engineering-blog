@@ -1,8 +1,17 @@
-<footer class="site-footer outer">
-  <div class="inner">
-    <section class="copyright">
-      <a href="/">{{ $.Site.Title }}</a> &copy; {{ now.Year }}
-    </section>
-    {{/*  <nav class="site-footer-nav"></nav>  */}}
+<div class="gh-head-subtext">
+  <div class="outer">
+    <div class="inner">
+      We<span style="color:var(--color-red);margin-left: 5px;">{{ partial "icon" "heart" }}</span> our engineers and are proud of the hard work they do! The content they share in this blog is provided "as is", is not supported by D2iQ Inc., and is for educational purposes only.
+    </div>
   </div>
+</div>
+<footer class="site-footer">
+  <div class="outer">
+    <div class="inner">
+      <section class="copyright">
+        <a href="/">{{ $.Site.Title }}</a> &copy; {{ now.Year }}
+      </section>
+      {{/*  <nav class="site-footer-nav"></nav>  */}}
+    </div>
+</div>
 </footer>

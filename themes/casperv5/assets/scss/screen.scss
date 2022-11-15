@@ -292,19 +292,6 @@ body:not(.has-cover) .site-header-content:not(.left-aligned) {
     grid-auto-flow: row dense;
 }
 
-.gh-head-subtext {
-    @extend .gh-head;
-    padding-top: MIN(10px, 1.6vmin);
-    padding-bottom: MIN(10px, 1.6vmin);
-    text-align: center;
-    font-style: italic;
-    font-size: smaller;
-}
-
-.has-cover:not(.home-template) .gh-head-subtext {
-    background-color: var(--color-d2iq-lightpurple);
-}
-
 
 /* Brand
 /* ---------------------------------------------------------- */
@@ -1703,10 +1690,23 @@ iframe.instagram-media + script + :not([id]) {
 
 /* 11. Site Footer
 /* ---------------------------------------------------------- */
+.gh-head-subtext {
+    @extend .gh-head;
+    position: relative;
+    padding-top: MIN(10px, 1.6vmin);
+    padding-bottom: MIN(10px, 1.6vmin);
+    text-align: center;
+    font-style: italic;
+    font-size: smaller;
+    margin: MAX(12vmin, 64px) 0 0 0;
+}
+
+.has-cover:not(.home-template) .gh-head-subtext {
+    background-color: var(--color-d2iq-lightpurple);
+}
 
 .site-footer {
     position: relative;
-    margin: MAX(12vmin, 64px) 0 0 0;
     padding-top: 20px;
     padding-bottom: 20px;
     color: #fff;
