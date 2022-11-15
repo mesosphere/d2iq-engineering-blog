@@ -42,7 +42,7 @@ https://docs.d2iq.com/dkp/latest/vsphere-bootstrap
 > -  Now upload the tars to the airgapped server hosting the bootstrap cluster and use `docker load` to load the images into the local docker instance (e.g. `docker load -i ip-address-manager.tar` ) 
 > - Finally load the images to the KIND cluster using KIND cli (download from cli from https://github.com/kubernetes-sigs/kind/releases) (e.g. `kind load docker-image quay.io/metal3-io/ip-address-manager:main --name=konvoy-capi-bootstrapper`. Where, `konvoy-capi-bootstrapper` is the name of the kind cluster created by DKP bootstrap. If using a different mechanism of deploying the kind cluster then get the name of the cluster using `kind get clusters` and use in the above command as the cluster name).
 
-## Steps to Deploy IPAM for CAPV
+## Steps to Deploy CAPV with IPAM
 
 ### Step 1: Clone the vsphere-ipam git repository
 
@@ -117,9 +117,17 @@ export VCENTER_TEMPLATE=capi_compatible_os_template
 dkp create cluster vsphere --cluster-name=${CLUSTER_NAME} --network=${NETWORK} --control-plane-endpoint-host=${CONTROL_PLANE_ENDPOINT} --data-center=${DATACENTER} --data-store=${DATASTORE} --folder=${VM_FOLDER} --server=${VCENTER} --ssh-public-key-file=${SSH_PUB_KEY} --resource-pool=${RESOURCE_POOL} --vm-template=${VCENTER_TEMPLATE} --virtual-ip-interface=eth0 --dry-run -o yaml > dkp-cluster.yaml
 ```
 
-In the cluster deployment manifest, update the `VsphereMachineTemplate` resource for the set of nodes that are to source the IP from the defined pool as shown below:
-1. Add the `cluster.x-k8s.io/ip-pool-name: ${CLUSTER_NAME}` label. This points to the pool that was created in the last step and ties the MachineTemplate to the pool.
-2. Disable dhcp4 and dhcp6
+### Step 6: Update `VsphereMachineTemplate` to use IPAM insted of DHCP
+
+The generated cluster deployment manifest will have two `VsphereMachineTemplate` resource definitions that define:
+- One pool of machines for `Control Plane`; and 
+- One pool of machines for `Worker Nodes`. (Note: This is the default but additional worker node pools can be added to a cluster)
+
+The IPAM solution is very flexibile and does not require all pools in a cluster to get it's IPs from the IPAM. This is an important feature as in many cases (like the one defined earlier in this blog), only Control Plane Nodes need to have a predefined list of IPs.  
+
+So, in this step, update the `VsphereMachineTemplate` resource for the nodes pool(s) that is/are to get IPs from IPAM as shown below:
+1. Add the `cluster.x-k8s.io/ip-pool-name: ${CLUSTER_NAME}` label. This binds the MachineTemplate to the pool that was created earlier.
+2. Disable dhcp4 and dhcp6 (DHCP is default so that needs to be disabled for pool(s) using IPAM)
 
 ```
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
@@ -148,13 +156,96 @@ spec:
       server: ${VCENTER}
       template: ${capi_compatible_os_template}
 ```
-### Step 6: Deploy the cluster by deploying the resources defined in the manifest to the CAPI cluster
+### Step 7: Deploy the cluster by deploying the resources defined in the manifest to the CAPI cluster
 
 e.g.
 ```
 kubectl create -f dkp-cluster.yaml
 ```
+### Step 8: Watch the cluster as it is being deployed 
 
-This will deploy a vSphere cluster with the IP's from the range specified in the IPPOOL resource instead of randomly picking an IP from DHCP. 
+Now, observe the cluster as it is being deployed. This can be done easily using the DKP cli as shown below:
+
+```
+dkp describe cluster -c ${CLUSTER_NAME}
+```
+
+The above command will return something like. This indicates that it is waiting for Static IP Allocation from an IPAM instead of getting it from DHCP (default behavior):
+```
+NAME                                                         READY  SEVERITY  REASON                           SINCE  MESSAGE                                                      
+Cluster/dkp-demo                                             False  Warning   ScalingUp                        3s     Scaling up control plane to 3 replicas (actual 1)            
+├─ClusterInfrastructure - VSphereCluster/dkp-demo            True                                              14s                                                                 
+├─ControlPlane - KubeadmControlPlane/dkp-demo-control-plane  False  Warning   ScalingUp                        3s     Scaling up control plane to 3 replicas (actual 1)            
+│ └─Machine/dkp-demo-control-plane-vhrlx                     False  Info      WaitingForStaticIPAllocation     10s    1 of 2 completed                                             
+└─Workers                                                                                                                                                                          
+  └─MachineDeployment/dkp-demo-md-0                          False  Warning   WaitingForAvailableMachines      16s    Minimum availability requires 4 replicas, current 0 available
+    ├─Machine/dkp-demo-md-0-747c5848b4-hpzjn                 False  Info      WaitingForControlPlaneAvailable  13s    0 of 2 completed                                             
+    ├─Machine/dkp-demo-md-0-747c5848b4-kcgqb                 False  Info      WaitingForControlPlaneAvailable  13s    0 of 2 completed                                             
+    ├─Machine/dkp-demo-md-0-747c5848b4-mjjtc                 False  Info      WaitingForControlPlaneAvailable  13s    0 of 2 completed                                             
+    └─Machine/dkp-demo-md-0-747c5848b4-z4nn2                 False  Info      WaitingForControlPlaneAvailable  13s    0 of 2 completed
+```
+> Note: The `REASON` field will continue to display `WaitingForStaticIPAllocation` till the machine is cloned; powered up; and an ip is allocated to it.
+
+Run the following command to ensure that an ip got allocated to the machine
+```
+kubectl get $(kubectl get vspheremachines -o name | grep control) -o yaml | grep -A 3 " devices:"
+```
+
+The output will be something like this:
+```
+    devices:
+    - gateway4: 15.235.38.190
+      ipAddrs:
+      - 15.235.38.172/27
+```
+
+If not, then for troubleshooting view the logs of the `capv-static-ip-controller-manager` pod and apply fixes based on that.
+```
+kubectl logs -f -n capv-system deploy/capv-static-ip-controller-manager  manager
+```
+
+Assuming everything went well, wait for some more time and run the `dkp describe cluster` command again.The output will look something like this:
+>The time this process takes, depends significantly on the time it takes to clone a template into a running VM.
+
+```
+$ dkp describe cluster -c ${CLUSTER_NAME}
+NAME                                                         READY  SEVERITY  REASON                       SINCE  MESSAGE                                                      
+Cluster/dkp-demo                                             False  Warning   ScalingUp                    25m    Scaling up control plane to 3 replicas (actual 1)            
+├─ClusterInfrastructure - VSphereCluster/dkp-demo            True                                          25m                                                                 
+├─ControlPlane - KubeadmControlPlane/dkp-demo-control-plane  False  Warning   ScalingUp                    25m    Scaling up control plane to 3 replicas (actual 1)            
+│ └─Machine/dkp-demo-control-plane-vhrlx                     True                                          4m15s                                                               
+└─Workers                                                                                                                                                                      
+  └─MachineDeployment/dkp-demo-md-0                          False  Warning   WaitingForAvailableMachines  25m    Minimum availability requires 4 replicas, current 0 available
+    ├─Machine/dkp-demo-md-0-747c5848b4-hpzjn                 False  Info      Cloning                      47s    1 of 2 completed                                             
+    ├─Machine/dkp-demo-md-0-747c5848b4-kcgqb                 False  Info      Cloning                      47s    1 of 2 completed                                             
+    ├─Machine/dkp-demo-md-0-747c5848b4-mjjtc                 False  Info      Cloning                      47s    1 of 2 completed                                             
+    └─Machine/dkp-demo-md-0-747c5848b4-z4nn2                 False  Info      Cloning                      47s    1 of 2 completed    
+```
+
+Finally, all the machines will have their `READY` status set to `True` and we now have a vSphere cluster with the IPs from the range specified in the IPPOOL resource instead of randomly picking an IP from DHCP. 
+
+```
+dkp describe cluster -c dkp-demo
+NAME                                                         READY  SEVERITY  REASON                       SINCE  MESSAGE                                                      
+Cluster/dkp-demo                                             True                                          51m           
+├─ClusterInfrastructure - VSphereCluster/dkp-demo            True                                          52m                                                                 
+├─ControlPlane - KubeadmControlPlane/dkp-demo-control-plane  True                                          51m       
+│ └─Machine/dkp-demo-control-plane-vhrlx                     True                                          30m                                             │ └─Machine/dkp-demo-control-plane-m9dtd                     True                                          25m    
+│ └─Machine/dkp-demo-control-plane-txncn                     True                                          20m    
+└─Workers                                                                                                                                                                      
+  └─MachineDeployment/dkp-demo-md-0                          True                                          52m    
+    ├─Machine/dkp-demo-md-0-747c5848b4-hpzjn                 True                                          4m7s
+    ├─Machine/dkp-demo-md-0-747c5848b4-kcgqb                 True                                          4m5s              
+    ├─Machine/dkp-demo-md-0-747c5848b4-mjjtc                 True                                          4m28s     
+    └─Machine/dkp-demo-md-0-747c5848b4-z4nn2                 True                                          8m28s  
+```
+
+Now use the dkp cli to get the kubeconfig of the newly provisioned cluster and verify that the cluster is up
+
+```
+dkp get kubeconfig -c ${CLUSTER_NAME} > ${CLUSTER_NAME}.conf
+export KUBECONFIG=$(pwd)/${CLUSTER_NAME}.conf #Point kubectl to the downloaded kubeconfig
+kubectl get nodes -o wide #Print the list of nodes along with their IPs
+```
 
 Well. That's it. Hope you found this useful in setting up a vsphere environment.
