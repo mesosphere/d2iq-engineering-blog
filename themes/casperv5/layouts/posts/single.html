@@ -32,9 +32,11 @@
           </section>
         </div>
 
-        {{ if isset .Params "feature_image" }}
-          {{ $feature_image_config := dict "image" (.Resources.GetMatch .Params.feature_image) "caption" (.Params.feature_image_caption) "alt" (.Params.feature_image_alt) "page_title" .Title }}
-          {{ partial "feature_image.html" $feature_image_config }}
+        {{ if ( default true ( index .Params "show_feature_image" ) ) }}
+          {{ if isset .Params "feature_image" }}
+            {{ $feature_image_config := dict "image" (.Resources.GetMatch .Params.feature_image) "caption" (.Params.feature_image_caption) "alt" (.Params.feature_image_alt) "page_title" .Title }}
+            {{ partial "feature_image.html" $feature_image_config }}
+          {{ end }}
         {{ end }}
 
       </header>
