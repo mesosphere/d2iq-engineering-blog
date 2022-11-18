@@ -7,6 +7,7 @@ tags: ["kubernetes", "gitops", "capi"]
 excerpt: Watch Jimmi's talk from ContainerDays 2022 on how you can build your very own Kubernetes-as-a-Service with GitOps and ClusterAPI
 feature_image: kubernetes-as-a-service-container-days.png
 show_feature_image: false
+content_extra_class: video
 ---
 
 {{< youtube lS4Z8rxa4hs >}}
