@@ -608,4 +608,4 @@ Thanks to our partner [Wavecon][wavecon] and [noris network][noris] for providin
 [capo docs]: https://image-builder.sigs.k8s.io/capi/providers/openstack.html
 [wavecon]: https://wavecon.de/
 [noris]: https://www.noris.de/
-[wavestack]: https://www.noris.de/wavestack-cloud-demo
+[wavestack]: https://www.noris.de/wavestack-cloud
