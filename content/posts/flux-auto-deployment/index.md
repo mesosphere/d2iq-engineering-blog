@@ -460,41 +460,6 @@ flux create image update static-sample \
 --export > ./clusters/lab/static-sample-automation.yaml
 ```
 
-We need to manually edit the file as our source repository is in a different namespace:
-
-```sh
-cat > clusters/lab/static-sample-automation.yaml <<'EOF'
----
-apiVersion: image.toolkit.fluxcd.io/v1beta1
-kind: ImageUpdateAutomation
-metadata:
-  name: static-sample
-  namespace: static-sample
-spec:
-  git:
-    checkout:
-      ref:
-        branch: main
-    commit:
-      author:
-        email: fluxcdbot@users.noreply.github.com
-        name: fluxcdbot
-      messageTemplate: "{{range .Updated.Images}}{{println .}}{{end}}"
-    push:
-      branch: main
-  interval: 1m0s
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  update:
-    path: ./clusters/lab
-    strategy: Setters
-EOF
-```
-
-We updated the namespace of the `sourceRef` to contain the namespace.
-
 We can now look at what flux figured out:
 
 ```sh
