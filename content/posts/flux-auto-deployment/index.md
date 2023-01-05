@@ -4,7 +4,7 @@ title: "Automatic deployment updates with Flux"
 date: 2022-12-24T09:01:22+01:00
 featured: false
 tags: ["flux", "kubernetes", "gitops"]
-excerpt: Learn how to install Flux, deploy an application with it and configure automatic updates whenever a new version is published.
+excerpt: Learn how to install Flux, deploy an application with it, and configure automatic updates whenever a new version is published.
 feature_image: feature.png
 ---
 
@@ -12,12 +12,12 @@ feature_image: feature.png
 
 ## What are we doing?
 
-In this article, we will set up Flux on a Kubernetes cluster, deploy an application via Flux
-and configure it to automatically update the used container image whenever there is a new version available.
+In this article, we set up Flux on a Kubernetes cluster, deploy an application via Flux,
+and then configure it to automatically update the used container image whenever there is a new version available.
 
-We will deploy this sample hello world website: https://github.com/mstruebing/static-sample
+We deploy this sample hello world website: https://github.com/mstruebing/static-sample
 which is set up to automatically build and push a new docker image tagged as the current timestamp to DockerHub whenever there is a new commit.
-Look into the `index.html`, `Dockerfile` and `.github/workflows/ci.yaml` files to get a sense of what the application is doing.
+Look into the [`index.html`](https://github.com/mstruebing/static-sample/blob/main/index.html), [`Dockerfile`](https://github.com/mstruebing/static-sample/blob/main/Dockerfile) and [`.github/workflows/ci.yaml`](https://github.com/mstruebing/static-sample/blob/main/.github/workflows/ci.yaml) files to get a sense of what the application is doing.
 
 The full Flux repository can be found here: https://github.com/mstruebing/flux-demo where every step is a single commit.
 
@@ -31,24 +31,24 @@ So I will keep it short and if you want to know more I recommend reading the fol
 
 Let's explain a couple of terms first:
 
-- Infrastructure as code: This is a way to describe your infrastructure in a declarative way with code
+- Infrastructure as code (IaC): This is a way to describe your infrastructure in a declarative way with code.
 - GitOps: A way to automatically update your infrastructure to match the definition of your infrastructure as code from a git repository
 
 Now we can say that Flux is a GitOps solution for Kubernetes.
-That means Flux manages to apply your infrastructure as code-defined infrastructure from a Git repository to your Kubernetes cluster in an automated way.
+That means Flux manages to apply your IaC-defined infrastructure from a Git repository to your Kubernetes cluster in an automated way.
 
-There are two different approaches to GitOps, push based and pull-based - we will use the pull-based approach.
+There are two different approaches to GitOps, push based and pull-based; we are using the pull-based approach.
 
-Push-based means that the update is triggered by typically a CI/CD pipeline.
-Pull-based means that there are running services which monitor your git repository (or for example image registry) and act on changes when they occur, these resources will be most likely checked in an interval.
+Push-based means that the update is typically triggered by a CI/CD pipeline.
+Pull-based means that there are running services which monitor your git repository (or for example image registry) and act on changes when they occur. These resources most likely are polled on a specified interval.
 
 All of this has a couple of advantages:
 
-- You can deploy fast, easily and often by a push to a repository
+- You can deploy fast, easily and often by simply pushing to a repository
 - You can run a `git revert` if you messed up your environment and everything is like it was before
 - This means you can easily roll back to every state of your application or infrastructure
 - Not everyone needs access to the actual infrastructure environment, access to the git repository is enough to manage the infrastructure
-- Self-documenting infrastructure, you do not need to ssh into a server and look around running services or explore all resources on a Kubernetes cluster
+- Self-documenting infrastructure: you do not need to ssh into a server and look around running services or explore all resources on a Kubernetes cluster
 - Easy to create a demo environment by replicating the repository or creating a second deploy target
 
 ## Installing flux
@@ -58,19 +58,19 @@ We need the Flux CLI installed on our local system you can have a look at how to
 
 If you have installed the Flux CLI and have configured `kubectl` to be connected with the right cluster you can run `flux check --pre` to make sure your cluster is ready to get flux installed.
 
-Now we need a personal access token for GitHub, you can create it here: https://github.com/settings/tokens
-Generate a new token and check everything under repo.
+1. We need a personal access token for GitHub, which you can create here: https://github.com/settings/tokens.
+   Generate a new token and check everything under repo.
 
-Export your GitHub user name and your newly created token:
+2. Export your GitHub user name and your newly created token:
 
 ```sh
 $ export GITHUB_USER="<YOUR_USERNAME>"
 $  export GITHUB_TOKEN="<TOKEN>"
 ```
 
-Tip: when you add a space in front of any shell command this command will not be available in your shell history.
+Tip: When you add a space in front of any shell command, this command is not available in your shell history.
 
-Install flux with this command, I use `clusters/lab` here as my path because that's what my Kubernetes cluster is called and that way it's easier to set up this repository for multiple clusters.
+3. Install flux with this command, I use `clusters/lab` here as my path because that's what my Kubernetes cluster is called and that way it's easier to set up this repository for multiple clusters.
 
 ```sh
 flux bootstrap github \
@@ -80,7 +80,7 @@ flux bootstrap github \
  --personal
 ```
 
-This will install flux on your cluster, creates the git repository in case it doesn't exist yet, adds a deploy key to the repository and pushes all the needed resources into the repository.
+This installs flux on your cluster, creates the git repository in case it doesn't exist yet, adds a deploy key to the repository and pushes all the needed resources into the repository.
 
 The output should look similar to this:
 
@@ -145,14 +145,14 @@ And now we have successfully installed flux on our cluster.
 
 ## Deploying our sample application
 
-What we need to do to deploy our sample application is to create a kustomization
-for flux to tell flux what to do and where to find it and what resources it needs to create.
+To deploy our sample application we need to create a kustomization
+to tell flux where to find our application definition in git.
 
 First, start with cloning the repository flux created on our local machine.
 We will execute the next steps from the root of the repository.
 
 ```sh
-mkdir -p clusters/lab && \
+mkdir -p clusters/lab
 flux create kustomization static-sample \
  --target-namespace=static-sample \
  --source=flux-system \
@@ -183,30 +183,25 @@ spec:
 
 This means: hey, look, this is a kustomization which is called static-sample and lives
 in our flux repository in the path `./clusters/lab/kustomize`, please check this every 5 minutes
-and prune every resource which is not in the repository anymore (`prune: true`).
+and prune every resource which is no longer in the repository (`prune: true`).
 
-Now let's create this `kustomize` directory and add a namespace first before we add our other resources:
+Let's create this `kustomize` directory and add a namespace first before we add our other resources:
 
 ```sh
-mkdir clusters/lab/kustomize && touch clusters/lab/kustomize/{kustomization,namespace}.yaml
-```
-
-```yaml
-# namespace.yaml
+mkdir -p clusters/lab/kustomize
+cat > clusters/lab/kustomize/namespace.yaml <<'EOF'
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: static-sample
-```
-
-```yaml
-# kustomization.yaml
----
+EOF
+cat > clusters/lab/kustomize/kustomization.yaml <<'EOF'
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
+EOF
 ```
 
 If we now push these changes up, we should shortly see a namespace popping up on our
@@ -229,20 +224,8 @@ Now let's add all our other resources to make this application available on the 
 touch clusters/lab/kustomize/{deployment,service,ingress}.yaml
 ```
 
-```yaml
-# kustomization.yaml
----
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - namespace.yaml
-  - deployment.yaml
-  - service.yaml
-  - ingress.yaml
-```
-
-```yaml
-# deployment.yaml
+```sh
+cat > clusters/lab/kustomize/deployment.yaml <<'EOF'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -263,10 +246,8 @@ spec:
         - image: mstruebing/static-sample:1666603774
           imagePullPolicy: IfNotPresent
           name: static-sample
-```
-
-```yaml
-# service.yaml
+EOF
+cat > clusters/lab/kustomize/service.yaml <<'EOF'
 ---
 apiVersion: v1
 kind: Service
@@ -281,10 +262,8 @@ spec:
       targetPort: 80
   selector:
     app: static-sample
-```
-
-```yaml
-# ingress.yaml
+EOF
+cat > clusters/lab/kustomize/ingress.yaml <<'EOF'
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -303,10 +282,21 @@ spec:
                   name: http
             path: /
             pathType: Prefix
+EOF
+cat > clusters/lab/kustomize/kustomization.yaml <<'EOF'
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+EOF
 ```
 
 As this cluster is running on my local network I will edit my `/etc/hosts` file
-to map the ip of the control plane node to the host I've added as the ingress rule.
+to map the IP address of the control plane node to the host I've added as the ingress rule.
 
 If we now push this up and monitor our Kubernetes resources we should see these resources popping up on the cluster, you can monitor it with:
 
@@ -331,7 +321,7 @@ NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
 deployment.apps/static-sample   1/1     1            1           107s
 ```
 
-So now, when the resources are there we can go to http://static.lab.cluster/ and should see our website.
+When the resources are there we can go to http://static.lab.cluster/ and should see our website.
 
 ![website before](website-before.png)
 
@@ -364,7 +354,7 @@ $ flux bootstrap github \
   --personal
 ```
 
-If we now look at the pods running in our `flux-system`-namespace we can see the
+If we look at the pods running in our `flux-system`-namespace we can see the
 controllers for our special components running:
 
 ```sh
@@ -378,8 +368,8 @@ helm-controller-56fc8dd99d-hbvfl               1/1     Running   0          106s
 kustomize-controller-bc455c688-dwflv           1/1     Running   0          106s
 ```
 
-Now we need to add an image repository which defines which repository to use for the image,
-an image policy which defines which image tags to use and how to order them and an image update automation which defines how we want to update our deployment.
+We need to add an image repository which defines which repository to use for the image,
+an image policy which defines which image tags to use and how to order them, and an image update automation which defines how we want to update our deployment.
 
 Make sure to pull the repository first before following along as flux committed some
 files to the repository with the latest flux installation.
@@ -402,8 +392,8 @@ flux create image policy static-sample \
 
 We need to adjust the image policy to the following:
 
-```yaml
-# clusters/lab/static-sample-policy.yaml
+```sh
+cat >clusters/lab/static-sample-policy.yaml <<'EOF'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
@@ -419,15 +409,16 @@ spec:
   policy:
     numerical:
       order: asc
+EOF
 ```
 
 This means that we want to extract the timestamp from the image and sort them ascending to always
-have the newest image available. You can find a lot of other examples in the flux documentation: https://fluxcd.io/docs/components/image/imagepolicies/#examples .
+have the newest image available. You can find a lot of other examples in the flux documentation: [https://fluxcd.io/docs/components/image/imagepolicies/#examples].
 
-Now we need to tell our deployment that it should use the image from the freshly created `ImagePolicy`:
+We need to tell our deployment that it should use the image from the freshly created `ImagePolicy`:
 
-```yaml
-# deployment.yaml
+```sh
+cat > clusters/lab/kustomize/deployment.yaml <<'EOF'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -448,15 +439,17 @@ spec:
         - image: mstruebing/static-sample:1666603774 # {"$imagepolicy": "static-sample:static-sample"}
           imagePullPolicy: IfNotPresent
           name: static-sample
+EOF
 ```
 
-We update the image to contain the comment `# {"$imagepolicy": "static-sample:static-sample"}` which needs to match the namespace and name of the `ImagePolicy`.
+We have updated the image to contain the comment `# {"$imagepolicy": "static-sample:static-sample"}` which needs to match the namespace and name of the `ImagePolicy`.
 
-Now the last part is to create our image update automation with the following command:
+The last part is to create our image update automation with the following command:
 
 ```sh
 flux create image update static-sample \
 --namespace=static-sample \
+--git-repo-namespace=flux-system \
 --git-repo-ref=flux-system \
 --git-repo-path="./clusters/lab" \
 --checkout-branch=main \
@@ -469,8 +462,8 @@ flux create image update static-sample \
 
 We need to manually edit the file as our source repository is in a different namespace:
 
-```yaml
-# static-sample-automation.yaml
+```sh
+cat > clusters/lab/static-sample-automation.yaml <<'EOF'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
@@ -497,6 +490,7 @@ spec:
   update:
     path: ./clusters/lab
     strategy: Setters
+EOF
 ```
 
 We updated the namespace of the `sourceRef` to contain the namespace.
@@ -542,4 +536,4 @@ That's it, you can do a lot more with Flux and what I did may not be the optimal
 But it works for me and I deploy some applications on a real Kubernetes cluster like this without issues.
 
 The Flux documentation contains all of this information but it could be hard to find your way around
-with no experience, I decided to write that blog post and hopefully inspire some people to try it out.
+with no experience, so I decided to write that blog post and hopefully inspire some people to try it out.
