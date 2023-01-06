@@ -17,21 +17,6 @@ The next parts of this series will be:
 * DKP and KubeVirt Part 3 - How to leave the cluster internal network and use native VLANs
 * DKP and KubeVirt Part 4 - Run DKP on top of KubeVirt by using the [Cluster API][capi] provider [CAPK][capk]
 
-## What is DKP?
-
-The D2iQ Kubernetes Platform (DKP) makes your operational life easier. Instead of wasting time researching the CNCF landscape for the right tools to solve your enterprise requirements, and struggling with the implementation and lifecycle, you can use a fully curated, integrated, and supported Day 2 ready, out-of-the-box platform.
-DKP supported CAPI infrastructures provide an easy to use infrastructure-as-code approach that eliminates the headache around the complexity of the development and lifecycle challenges of Kubernetes. DKP supports the following infrastructure providers out of the box:
-
-* [AKS][capz]
-* [AWS][capa]
-* [Azure][capz]
-* [EKS][capa]
-* [GCP][capg]
-* Preprovisioned (based on Ansible, requires SSH)
-* [VMware vSphere][capv]
-
-For more information about the supported CAPI providers, please check out the official DKP documentation: [Advanced configuration][advanced configuration]
-
 ## What is KubeVirt?
 
 The goal of the [KubeVirt] project is running and managing virtual machines (VMs) as Kubernetes workload. Important to understand is: KubeVirt is **NOT** a hypervisor. KubeVirt is a framework consisting of Kubernetes operators, custom resource definitions (CRDs) and apis. Via CRDs, KubeVirt extend the Kubernetes API and gives the user the possibility to manage virtual machines as Kubernetes objects. 
