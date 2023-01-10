@@ -20,7 +20,7 @@ The next parts of this series will be:
 ## What is KubeVirt?
 
 The goal of the [KubeVirt] project is running and managing virtual machines (VMs) as Kubernetes workload. Important to understand is: KubeVirt is **NOT** a hypervisor. KubeVirt is a framework consisting of Kubernetes operators, custom resource definitions (CRDs) and apis. Via CRDs, KubeVirt extend the Kubernetes API and gives the user the possibility to manage virtual machines as Kubernetes objects. 
-The created virtual machines are created via [KVM] / [Libvirt]
+The created virtual machines are created via [KVM] / [libvirt]
 
 KubeVirt is part of the [CNCF] umbrella and currently an [Incubator] project.
 
