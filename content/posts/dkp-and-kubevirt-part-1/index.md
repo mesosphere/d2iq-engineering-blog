@@ -732,7 +732,7 @@ The next Kubevirt blog post will cover the topic "persistence".
 [Ceph]: https://ceph.io/
 [CNCF]: https://cncf.io
 [Incubator]: https://landscape.cncf.io/card-mode?project=incubating
-[Libvirt]: https://libvirt.org/
+[libvirt]: https://libvirt.org/
 [12factorapp]: https://12factor.net/
 [IaaS]: https://en.wikipedia.org/wiki/Infrastructure_as_a_service
 [kubevirt-components]: https://github.com/kubevirt/kubevirt/blob/main/docs/components.md
