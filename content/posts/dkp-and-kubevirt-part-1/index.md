@@ -56,7 +56,7 @@ But this is the topic of the next parts of this KubeVirt series.
 ## KubeVirt basics and architecture
 
 Already pointed out but learning is repeating: KubeVirt is **NOT** an hypervisor.
-The virtual machines are created and managed via KVM / Libvirt. 
+The virtual machines are created and managed via KVM / libvirt.
 The virtual machines are **NOT** running inside a pod. All virtual machines are **real** KVM virtual machines running on the Linux nodes (and btw: that is how [OpenStack][openstack] works). 
 
 ![Simple architecure](architecture-simple.png)
