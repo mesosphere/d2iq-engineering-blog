@@ -220,7 +220,7 @@ spec:
             memory: 64M
 ```
 
-* The `domain` section defined the hardware settings of the KVM virtual machine. This settings will be converted to the XML definition which is needed for Libvirt.
+* The `domain` section defined the hardware settings of the KVM virtual machine. This settings will be converted to the XML definition which is needed for libvirt.
 * `disks` defines the hard disks of the virtual machines, like the `volumeMounts` section of a pod. 
 * `interfaces` defines which with networks should be attached to the virtual machine. In this case the default CNI network (Calico for example) will be connected to the virtual machine. With this setting the virtual machine receives an ip address of the Pod network and can communicate with the Kuberneres pods and services directly.
 * `resources` defines the memory settings for the virtual machine. This virtual machine get 64MB memory assigned.
