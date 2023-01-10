@@ -680,7 +680,7 @@ virt-launcher-ubuntu-vm-ljjvb                             2/2     Running   0   
 ```
 
 The `virt-launcher` pod has multiple stages and tasks:
-* `container-disk-binary` and `volumecontainerdisk-init` prepare the disk image. The examples, used in this blog post, are using docker images as source which containts the base images for Cirros or Ubuntu. The init pods extract the qcow2 file `disk.img` and prepare it, so Libvirt is able to use it. Other sources can be isos or qcow2 images downloaded directly by the init pods from http sources or fileshares. 
+* `container-disk-binary` and `volumecontainerdisk-init` prepare the disk image. The examples, used in this blog post, are using docker images as source which containts the base images for Cirros or Ubuntu. The init pods extract the qcow2 file `disk.img` and prepare it, so libvirt is able to use it. Other sources can be isos or qcow2 images downloaded directly by the init pods from http sources or fileshares. 
 * `volumecontainerdisk` copies the disk image to the right directory.
 * `compute`, the main container, controlls the virtual machine via libvirt. This container can be used to run `virsh` commands again libvirt:
 
