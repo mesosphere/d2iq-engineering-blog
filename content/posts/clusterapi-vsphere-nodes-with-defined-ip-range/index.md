@@ -1,7 +1,7 @@
 ---
-authors: ["Arvind Bhoj"]
-title: "CAPI vSphere (capv) - Nodes With predefined IP Ranges"
-date: 2022-10-26T15:46:46-04:00
+authors: ["arbhoj"]
+title: "CAPI vSphere (CAPV) - Nodes with Predefined IP Ranges"
+date: 2023-01-12T09:01:22+01:00
 featured: false
 tags: ["cluster api", "vsphere", "capv", "ip address"]
 excerpt: Learn how to predefine a range of IP Addresses for nodes provisioned via clusterapi capv provisioner
