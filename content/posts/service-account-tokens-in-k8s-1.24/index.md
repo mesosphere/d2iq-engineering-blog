@@ -3,7 +3,7 @@ title: "Service Account Tokens in Kubernetes v1.24"
 date: 2022-08-18T16:50:39+01:00
 authors: ["jdyson"]
 featured: true
-tags: ["Kubernetes", "security"]
+tags: ["kubernetes", "security"]
 slug: service-account-tokens-in-kubernetes-v1.24
 feature_image: who-are-you.jpg
 excerpt: |

@@ -3,7 +3,7 @@ authors: ["ksahm"]
 title: "CAPI Providers - Run DKP on OpenStack"
 date: 2022-11-07T10:22:47+02:00
 featured: true
-tags: ["CAPI", "Kubernetes", "DKP", "OpenStack", "Multicluster"]
+tags: ["cluster api", "capi", "kubernetes", "dkp", "openstack", "multicluster"]
 excerpt: "Learn how to add the custom CAPI provider for OpenStack (CAPO) and create DKP clusters on top of OpenStack infrastructure"
 feature_image: openstack.png
 ---
