@@ -49,7 +49,7 @@ First you need a default DKP cluster on Azure with Linux control plane and worke
 DKP is based on Cluster API and use the `CAPZ` provider for deployment and lifecycle of Kubernetes clusters on Azure. 
 All needed requirements and a detailed description you can find in the official DKP documentation [Azure quick start guide][dkp-azure-requirements]
 
-You need to export a bunch of environment variables to start:
+First, export these environment variables:
 ````
 export AZURE_CLIENT_ID="<client id>"
 export AZURE_TENANT_ID="<tenant id>"
