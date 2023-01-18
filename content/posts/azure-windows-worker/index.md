@@ -30,7 +30,7 @@ Note: all additional CAPI providers, which are not part of DKP, are not supporte
 
 ## What is CAPI?
 
-Kubernetes Cluster API (CAPI) is an official subproject from Kubernetes. The goal of CAPI is to provide a modular framework for deployment and lifecycle management of Kubernetes clusters. At a glance, CAPI provides a declarative API and a toolset (for example `clusterctl`) to create and manage Kubernetes clusters as a Kubernetes object.
+Kubernetes Cluster API (CAPI) is an official sub-project from Kubernetes. The goal of CAPI is to provide a modular framework for deployment and lifecycle management of Kubernetes clusters. At a glance, CAPI provides a declarative API and a toolset (for example `clusterctl`) to create and manage Kubernetes clusters as a Kubernetes object.
 A big benefit of CAPI is the large number of infrastructure providers (24+). This provider brings in all the required integrations for the infrastructure and handles the infrastructure as code lifecycle. The user does not need to think about infrastructure topics like how virtual machines are provisioned or how to create a NAT gateway. Just define how many control plane and worker nodes, with flavor, with operating system and CAPI will deploy the cluster.
 
 For more information, see the [official CAPI documentation][CAPI docs]
