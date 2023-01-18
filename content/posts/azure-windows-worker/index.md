@@ -85,7 +85,7 @@ $ dkp create bootstrap
  ✓ Initializing new CAPI components
 ````
 
-If the bootstrap container is ready you can deploy the cluster by using the dkp command `dkp create cluster`:
+When the bootstrap container is ready, you can deploy the cluster by using the dkp command `dkp create cluster`:
 ````
 $ dkp create cluster azure \
   -c ${CLUSTER_NAME} \
