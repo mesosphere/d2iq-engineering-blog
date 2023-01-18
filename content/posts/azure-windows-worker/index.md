@@ -63,7 +63,7 @@ export AZURE_CLIENT_SECRET_B64="$(echo -n "$AZURE_CLIENT_SECRET" | base64 | tr -
 ````
 These environment variables include your Azure credentials to communicate with the Azure api. Fill in your `client id`, `tenant id`, `client secret` and `subscription id`. The last 4 variables convert your input to Base64 encoded strings, which will be handed over to DKP in the next steps.
 
-Now you need to define your base cluster:
+Now, define your base cluster:
 ````
 export CLUSTER_NAME="myazurecluster"
 export AZURE_LOCATION="westus"
