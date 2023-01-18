@@ -37,7 +37,7 @@ For more information, see the [official CAPI documentation][CAPI docs]
 
 ## Prerequisites / Environment
 
-To start with the deployment of your cluster at Azure, you need the following tools and information:
+To start the deployment of your cluster on Azure, you need the following tools and information:
 * DKP command line tool (version 2.3+)
 * [kubectl][kubectl] command line tool
 * Local installed Docker
