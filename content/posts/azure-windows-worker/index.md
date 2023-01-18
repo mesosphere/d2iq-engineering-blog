@@ -47,7 +47,7 @@ To start the deployment of your cluster on Azure, you need the following tools a
 ## Create the base DKP cluster on Azure
 First you need a default DKP cluster on Azure with Linux control plane and worker nodes to run the Linux based core components.
 DKP is based on Cluster API and use the `CAPZ` provider for deployment and lifecycle of Kubernetes clusters on Azure. 
-All needed requirements and a detailed description you can found at the official DKP documentation [Azure quick start guide][dkp-azure-requirements]
+All needed requirements and a detailed description you can find in the official DKP documentation [Azure quick start guide][dkp-azure-requirements]
 
 You need to export a bunch of environment variables to start:
 ````
