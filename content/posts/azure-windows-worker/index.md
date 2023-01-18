@@ -146,7 +146,7 @@ Cluster/myazurecluster                                             True         
     └─Machine/myazurecluster-md-0-7484fdb796-mf9rj                 True                     4m41s      
 ````
 
-To communicate the with deployed cluster you need to download the generated kubeconfig. 
+To communicate the with deployed cluster, download the generated kubeconfig. 
 ````
 $ dkp get kubeconfig -c ${CLUSTER_NAME} > ${CLUSTER_NAME}.kubeconfig
 ````
