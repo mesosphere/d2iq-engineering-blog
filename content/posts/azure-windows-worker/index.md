@@ -917,4 +917,4 @@ nodeSelector:
 [kind]: https://kind.sigs.k8s.io/
 [azcli]: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli
 [dkp-azure-requirements]: https://docs.d2iq.com/dkp/latest/azure-prerequisites
-[dkp-azure-bootstrap]: https://docs.d2iq.com/dkp/2.3/azure-bootstrap
+[dkp-azure-bootstrap]: https://docs.d2iq.com/dkp/latest/azure-bootstrap
