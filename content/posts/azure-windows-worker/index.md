@@ -78,7 +78,7 @@ export DKP_EXTRAVARS="--additional-tags expiration=8h,owner=ksahm"
 ````
 
 With this information, you can start the DKP bootstrap cluster and create the base cluster on Azure.
-The bootstrap process is based on [KIND][kind]. For more information, please see the DKP docs section [Azure bootstrap][dkp-azure-bootstrap].
+The bootstrap process is based on [KIND][kind]. For more information, see the DKP docs [Azure bootstrap][dkp-azure-bootstrap] section.
 ````
 $ dkp create bootstrap
  ✓ Creating a bootstrap cluster 
