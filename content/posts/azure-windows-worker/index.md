@@ -77,7 +77,7 @@ export AZURE_NODE_MACHINE_TYPE="Standard_D8s_v3"
 export DKP_EXTRAVARS="--additional-tags expiration=8h,owner=ksahm"
 ````
 
-With this informations you can start the DKP bootstrap and create the base cluster on Azure.
+With this information, you can start the DKP bootstrap cluster and create the base cluster on Azure.
 The bootstrap process is based on [KIND][kind]. For more information, please see the DKP docs section [Azure bootstrap][dkp-azure-bootstrap].
 ````
 $ dkp create bootstrap
