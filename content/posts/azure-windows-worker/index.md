@@ -166,7 +166,7 @@ myazurecluster-md-0-sppq8            Ready      <none>                 7m30s   v
 Now the base cluster is deployed.
 
 ### Patch node-feature-discovery
-You need to patch the `node-feature-discovery-worker` DaemonSet to prevent that linux based pods of this DaemonSet are started on Windows workers.
+Now patch the `node-feature-discovery-worker` DaemonSet to prevent the Linux based pods of this DaemonSet from starting on Windows workers.
 This issue can be solved by this patch command:
 
 ````
