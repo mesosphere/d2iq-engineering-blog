@@ -21,7 +21,7 @@ DKP supported CAPI infrastructures provide an easy to use infrastructure-as-code
 * Preprovisioned (based on Ansible, requires SSH)
 * [VMware vSphere][capv]
 
-For more information about the supported CAPI providers, please check out the official DKP documentation: [Advanced configuration][advanced configuration]
+For more information about the supported CAPI providers, check out the official DKP documentation: [Advanced configuration][advanced configuration]
 
 Beside the pre-integrated, supported providers, you can bring in any other CAPI provider.
 This blog post shows you the needed steps to run DKP on OpenStack by using the OpenStack CAPI provider.
