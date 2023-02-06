@@ -1,6 +1,6 @@
 ---
 authors: ["ksahm"]
-title: "DKP and KubeVirt Part 1 - Run VMs like a Pod"
+title: "KubeVirt Part 1 - Run VMs like a Pod"
 date: 2023-01-05T09:48:47+02:00
 featured: true
 tags: ["KubeVirt", "Kubernetes", "DKP", "Legacy"]
@@ -8,14 +8,14 @@ excerpt: "Learn how to run virtual machines like a Pod and orchestrate them via 
 #feature_image: kubevirt.png
 ---
 
-## Scope of DKP and KubeVirt Part 1
+## Scope of KubeVirt Part 1
 
-This is the first blog post of my "DKP and KubeVirt" series. The scope of this blog post is to understand what [KubeVirt] is and how Kubernetes can create and lifecycle "real" virtual machines via the native Linux Kernel virtualization feature [KVM].
+This is the first blog post of my "KubeVirt" series. The scope of this blog post is to understand what [KubeVirt] is and how Kubernetes can create and lifecycle "real" virtual machines via the native Linux Kernel virtualization feature [KVM].
 
 The next parts of this series will be:
-* DKP and KubeVirt Part 2 - How to create persistency by using software defined storage, provided by [Rook] [Ceph]
-* DKP and KubeVirt Part 3 - How to leave the cluster internal network and use native VLANs
-* DKP and KubeVirt Part 4 - Run DKP on top of KubeVirt by using the [Cluster API][capi] provider [CAPK][capk]
+* KubeVirt Part 2 - How to create persistency by using software defined storage, provided by [Rook] [Ceph]
+* KubeVirt Part 3 - How to leave the cluster internal network and use native VLANs
+* KubeVirt Part 4 - Run DKP on top of KubeVirt by using the [Cluster API][capi] provider [CAPK][capk]
 
 ## What is KubeVirt?
 
@@ -79,6 +79,7 @@ To start with the deployment of KubeVirt and the first virtual machine, followin
 * Already deployed DKP Enterprise cluster
   * Deployment guidence for a DKP cluster can be found at the [D2iQ official documentation][advanced configuration]
 
+> NOTE: this guide works with any Kubernetes distribution.
 
 ## Local installation of virtctl
 
@@ -747,4 +748,3 @@ The next Kubevirt blog post will cover the topic "persistence".
 [openstack]: https://www.openstack.org
 [Cirros]: https://github.com/cirros-dev/cirros
 [cloudinit-docs]: https://cloudinit.readthedocs.io/en/latest/
-
