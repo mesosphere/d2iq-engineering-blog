@@ -317,7 +317,7 @@ Storing signatures
 
 ## The winning feature (for me at least...)
 
-While both `skopeo` and `crane` are great tools when used as CLI tools, `skopeo` cannot be used as a library (although there are lower level libraries in the [https://github.com/containers] GitHub org). `crane` on the other hand is very usable as a library, which as the creator of [`mindthegap`](https://github.com/mesosphere/mindthegap) (a tool to move image bundles specifically targeted for air-gapped use-cases) is a winning feature. Check out the awesome [godocs](https://pkg.go.dev/github.com/google/go-containerregistry@v0.12.1/pkg/v1).
+While both `skopeo` and `crane` are great tools when used as CLI tools, `skopeo` cannot be used as a library (although there are lower level libraries in the [https://github.com/containers] GitHub org). `crane` on the other hand is very usable as a library, which as the creator of [`mindthegap`](https://github.com/mesosphere/mindthegap) (a tool to move image bundles specifically targeted for air-gapped use-cases) is a winning feature. Check out the awesome [godocs](https://pkg.go.dev/github.com/google/go-containerregistry@v0.12.1/pkg/crane) for crane.
 
 ## Summary
 
