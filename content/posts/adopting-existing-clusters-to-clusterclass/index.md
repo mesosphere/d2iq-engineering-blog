@@ -1,7 +1,7 @@
 ---
 authors: ["dkoshkin"]
 title: "Adopting existing clusters to use ClusterClass"
-date: 2023-02-06T15:24:31Z
+date: 2023-03-06T15:24:31Z
 featured: false
 tags: ["cluster api", "capi" ]
 excerpt: "Learn how to adopt your existing CAPI cluster to use ClusterClass."
@@ -12,9 +12,9 @@ feature_image: feature.png
 
 The [ClusterClass feature](https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/index.html) is an important evolution of the Cluster API project. Although it is still an alpha feature, CAPI core and many of the infrastructure providers are working hard to provide support for it. You can read more about the different motivation and goals of ClusterClass in the original [proposal](https://github.com/kubernetes-sigs/cluster-api/blob/main/docs/proposals/20210526-cluster-class-and-managed-topologies.md#clusterclass), but the one I'm most excited for is declarative Kubernetes version upgrades.
 
-When performing a regular Cluster API cluster upgrade, you must have something that will sequentially trigger an upgrade of the control-plane, wait for that upgrade to complete, start the upgrade of each of your MachineDeployments and wait for those to finish. ClusterClass greatly simplifies this flow, by letting you change a single version value in the `Cluster` object and having the new topology reconcile the change for us in the correct order across the whole cluster.
+When performing a regular Cluster API cluster upgrade, you must have something that will sequentially trigger an upgrade of the control-plane, wait for that upgrade to complete, start the upgrade of each of your MachineDeployments and wait for those to finish. ClusterClass greatly simplifies this flow, by letting you change a single version value in the `Cluster` object and having the new topology reconcile the change for use in the correct order across the whole cluster.
 
-In this post, I will show you how to adopt an existing Cluster API Docker (CAPD) cluster to use the ClusterClass feature. You can apply the same steps for any of your clusters as long as they are using [CABPK](https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap.html?highlight=cabp#how-does-cabpk-work) and [MachineDeployments](https://cluster-api.sigs.k8s.io/user/concepts.html?highlight=machinedepl#machinedeployment)
+In this post, I will show you how to adopt an existing Cluster API Docker (CAPD) cluster to use the ClusterClass feature. You can apply the same steps for any of your clusters as long as they are using [CABPK](https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap.html?highlight=cabp#how-does-cabpk-work) and [MachineDeployments](https://cluster-api.sigs.k8s.io/user/concepts.html?highlight=machinedepl#machinedeployment).
 
 ## Create a CAPD Cluster
 
@@ -64,7 +64,7 @@ After a few minutes all the Nodes will become `Ready`.
 At a high level, we will:
 
 1. Create a `ClusterClass` resource specific to our cluster, and missing template `DockerClusterTemplate` and `KubeadmControlPlaneTemplate` resources.
-2. Annotate, label and patch existing cluster resources with required values to what the topology controller expects it to be.
+2. Annotate, label, and patch existing cluster resources with required values to what the topology controller expects it to be.
 3. Patch the `Cluster` object to use the new `ClusterClass`.
 
 ###  Create new resources
@@ -170,7 +170,7 @@ At a high level, we will:
     EOF
     ```
     
-### Annotate, Label and patch Cluster resources
+### Annotate, Label, and Patch Cluster resources
 
 1. A webhook will disallow adding the topology section to an existing cluster, add this annotation to disable webhook check:
 
@@ -204,7 +204,7 @@ At a high level, we will:
     # label worker nodepool
     kubectl label DockerMachineTemplate/$CLUSTER_NAME-md-0 topology.cluster.x-k8s.io/owned=
     kubectl label DockerMachineTemplate/$CLUSTER_NAME-md-0 cluster.x-k8s.io/cluster-name=$CLUSTER_NAME
-    kubectl label DockerMachineTemplate/$CLUSTER_NAME-md-0 topology.cluster.x-k8s.io/deployment-name=md-0
+    kubectl label DockerMachineTemplate/$CLUSTER_NAME-md-0 topology.cluster.x-k8s.io/deployment-name=$CLUSTER_NAME-md-0
     kubectl label KubeadmConfigTemplate/$CLUSTER_NAME-md-0 topology.cluster.x-k8s.io/owned=
     kubectl label MachineDeployment/$CLUSTER_NAME-md-0 topology.cluster.x-k8s.io/owned=
     kubectl label MachineDeployment/$CLUSTER_NAME-md-0 topology.cluster.x-k8s.io/deployment-name=$CLUSTER_NAME-md-0
@@ -307,4 +307,4 @@ At a high level, we will:
     $ kubectl patch cluster $CLUSTER_NAME --type merge --patch '{"spec":{"topology":{"version":"v1.26.0"}}}'
     ```
     
-After a few minutes you should see new `Machines` and update `Nodes`, at this point, your Cluster is being managed by the `ClusterClass`!
+After a few minutes you should see new `Machines` and updated `Nodes`. At this point, your Cluster is being managed by the `ClusterClass`!
