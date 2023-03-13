@@ -804,7 +804,7 @@ service/iis          LoadBalancer   10.102.12.86   40.78.50.251   80:30911/TCP  
 service/kubernetes   ClusterIP      10.96.0.1      <none>         443/TCP        71m
 ````
 
-If the pod is in state `Running` and the service `iis` got an external ip address via Azure Loadbalancer you can test the deployed webservice via browser or curl:
+If the Pod is in state `Running` and the service `iis` got an external IP address via Azure Loadbalancer you can test the deployed webservice via browser or curl:
 
 ````
 curl http://40.78.50.251
