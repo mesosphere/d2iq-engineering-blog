@@ -11,7 +11,7 @@ feature_image: feature.png
 
 # Is your etcd fast enough?
 
-It is very likely when you are going to install your kubernetes management platform of choice you'll get a hardware recommendation, similar to what [we recommend to you in D2iQ](https://docs.d2iq.com/dkp/2.4/resource-requirements).
+It is very likely when you are going to install your Kubernetes management platform of choice you will get a hardware recommendation, similar to what [we recommend to you in D2iQ](https://docs.d2iq.com/dkp/2.4/resource-requirements).
 
 Although these hardware recommendations are great to help you, they never go beyond capacity, for example it might be suggested to use 2 cores cpu and 2GB of RAM but you'll never know how fast the CPU should be or etc. One reason might be because modern hardwares is good enough in terms of performance or we just can trust the provider and select its recommendation (i.e [aws recommendations](https://aws.amazon.com/intel/#Instance_Types)).
 
