@@ -5,7 +5,7 @@ date: 2023-03-13T09:48:47+02:00
 featured: true
 tags: ["KubeVirt", "Kubernetes", "DKP", "Legacy"]
 excerpt: "Learn how to run virtual machines like a Pod and orchestrate them via Kubernetes"
-#feature_image: kubevirt.png
+feature_image: architecture-simple.png
 ---
 
 ## Scope of KubeVirt Part 1
