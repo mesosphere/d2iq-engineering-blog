@@ -43,7 +43,7 @@ Pretty good so far, but let's give it a hint that we actually want a Cluster API
 ![CAPI reconciler](capireconciler.png)
 
 If we compare to what we have so far with the [implementation contract](https://cluster-api.sigs.k8s.io/developer/providers/cluster-infrastructure.html),
-there are some required fields that are missing, let's see if ChatGTP can figure those out for us:
+there are some required fields that are missing, let's see if ChatGPT can figure those out for us:
 
 ![Missing fields](missingfields.png)
 
