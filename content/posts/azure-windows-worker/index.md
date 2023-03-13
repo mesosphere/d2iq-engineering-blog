@@ -699,7 +699,7 @@ spec:
 EOF
 ````
 
-The generated yaml manifest needs to be applied to the running Azure cluster by using the generated kubeconfig.
+The generated YAML manifest needs to be applied to the running Azure cluster by using the generated kubeconfig.
 ````
 $ kubectl apply -f calico-windows.yml --kubeconfig ${CLUSTER_NAME}.kubeconfig
 configmap/calico-windows-config created
