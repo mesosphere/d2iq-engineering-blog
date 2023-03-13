@@ -706,7 +706,7 @@ configmap/calico-windows-config created
 daemonset.apps/calico-node-windows created
 ````
 
-Now you can check if the calico pods are running on the Windows nodes and if the status of the worker nodes is now `Ready`.
+Now you can check if the calico Pods are running on the Windows nodes and if the status of the worker nodes is now `Ready`.
 ````
 $ kubectl get po -n calico-system --kubeconfig ${CLUSTER_NAME}.kubeconfig -o wide
 NAME                                       READY   STATUS    RESTARTS   AGE   IP               NODE                                 NOMINATED NODE   READINESS GATES
