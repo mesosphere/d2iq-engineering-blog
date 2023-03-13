@@ -20,7 +20,7 @@ Most likely when you are reading this article you already have your cluster up a
 ## etcd
 [etcd](https://github.com/etcd-io/etcd)(pronounced et-see-dee) is the primary datastore of Kubernetes. It is a critical component that stores all Kubernetes resources in a cluster and it is very important that etcd operations are performed at an ideal speed. Having an etcd with poor performance is a clear indicator that your customer's experience is significantly been impacted.
 
-If you see following logs in your etcd server, it is important to not ignore them
+If you see following statements in your etcd server logs, it is important to not ignore them
 
 >  etcdserver: read-only range request … took too long (xxxx) to execute
 
