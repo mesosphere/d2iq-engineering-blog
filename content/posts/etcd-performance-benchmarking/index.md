@@ -13,7 +13,7 @@ feature_image: feature.png
 
 It is very likely when you are going to install your Kubernetes management platform of choice you will get a hardware recommendation, similar to what [we recommend to you in D2iQ](https://docs.d2iq.com/dkp/2.4/resource-requirements).
 
-Although these hardware recommendations are great to help you, they never go beyond capacity, for example it might be suggested to use 2 cores cpu and 2GB of RAM but you'll never know how fast the CPU should be or etc. One reason might be because modern hardwares is good enough in terms of performance or we just can trust the provider and select its recommendation (i.e [aws recommendations](https://aws.amazon.com/intel/#Instance_Types)).
+Although these hardware recommendations are great to help you, they never go beyond capacity, for example it might be suggested to use two CPU cores and 2GB of RAM but you will never know how fast the CPU should be.  One reason might be because modern hardwares is good enough in terms of performance or we just can trust the provider and select its recommendation (i.e [aws recommendations](https://aws.amazon.com/intel/#Instance_Types)).
 
 Most likely when you're reading this article you've already have your cluster up and running so we don't explore options that should be considered before choosing your hardwares, but rather make sure your existing ones perform at expected level. In perticular our focus is storage. You may have different stateful applications like mysql, etc, those are also beyond the scope of this article as our focus is mainly on kubernetes itself.
 
