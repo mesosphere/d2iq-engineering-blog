@@ -61,7 +61,7 @@ export AZURE_TENANT_ID_B64="$(echo -n "$AZURE_TENANT_ID" | base64 | tr -d '\n')"
 export AZURE_CLIENT_ID_B64="$(echo -n "$AZURE_CLIENT_ID" | base64 | tr -d '\n')"
 export AZURE_CLIENT_SECRET_B64="$(echo -n "$AZURE_CLIENT_SECRET" | base64 | tr -d '\n')"
 ````
-These environment variables include your Azure credentials to communicate with the Azure api. Fill in your `client id`, `tenant id`, `client secret` and `subscription id`. The last 4 variables convert your input to Base64 encoded strings, which will be handed over to DKP in the next steps.
+These environment variables include your Azure credentials to communicate with the Azure API. Fill in your `client id`, `tenant id`, `client secret` and `subscription id`. The last 4 variables convert your input to Base64 encoded strings, which will be handed over to DKP in the next steps.
 
 Now, define your base cluster:
 ````
