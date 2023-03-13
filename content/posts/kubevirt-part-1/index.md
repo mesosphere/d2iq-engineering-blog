@@ -19,14 +19,14 @@ The next parts of this series will be:
 
 ## What is KubeVirt?
 
-The goal of the [KubeVirt] project is running and managing virtual machines (VMs) as Kubernetes workload. Important to understand is: KubeVirt is **NOT** a hypervisor. KubeVirt is a framework consisting of Kubernetes operators, custom resource definitions (CRDs) and apis. Via CRDs, KubeVirt extend the Kubernetes API and gives the user the possibility to manage virtual machines as Kubernetes objects. 
+The goal of the [KubeVirt] project is running and managing virtual machines (VMs) as Kubernetes workload. Important to understand is: KubeVirt is **NOT** a hypervisor. KubeVirt is a framework consisting of Kubernetes operators, custom resource definitions (CRDs) and APIs. Via CRDs, KubeVirt extend the Kubernetes API and gives the user the possibility to manage virtual machines as Kubernetes objects. 
 The created virtual machines are created via [KVM] / [libvirt]
 
 KubeVirt is part of the [CNCF] umbrella and currently an [Incubator] project.
 
 ## Why KubeVirt?
 
-Some people asking "why (and when) do i need KubeVirt?". The official KubeVirt website describes the following use cases:
+Some people asking "why (and when) do I need KubeVirt?". The official KubeVirt website describes the following use cases:
 
 1. Leverage KubeVirt and Kubernetes to manage virtual machines for impractical-to-containerize apps.
 2. Combine existing virtualized workloads with new container workloads on the one platform.
@@ -39,14 +39,14 @@ What does it mean? There are some common use cases where KubeVirt can make your 
 Kubernetes is not the answer for every workload. To run an application in Kubernetes sucessfully, the application needs to follow some principles. The common buzzword in this direction is [12 Factor App][12factorapp]. If the application is not build for Kubernetes and not compatible with the modern approach of software architecture and lifecycle, a legacy way of management is needed. 
 Long story short: Classic hosting on virtual machines is needed. 
 
-* **Option 1**: Run the virtual machine on a hypervisor, manage the vm in the oldschool way.
-* **Option 2**: Run them via KubeVirt. At the end, it's a virtual machine. But it's managed like a Pod and orchestrated via Kubernetes. 
+* **Option 1**: Run the virtual machine on a hypervisor, manage the VM in the old school way.
+* **Option 2**: Run them via KubeVirt. At the end, it is a virtual machine. But it is managed like a Pod and orchestrated via Kubernetes. 
 
 ### 2. Infrastructure as a Service - the CNCF way
 
 Kubernetes + KubeVirt + storage + network = Infrastructure as a Service
 
-Yes, at the end it's not the easiest approach but with the right tools combined and integrated, Kubernetes can act as an Infrastructure as a Service platform.
+Yes, at the end it is not the easiest approach but with the right tools combined and integrated, Kubernetes can act as an Infrastructure as a Service platform.
 
 What is Infrastructure as a Service ([IaaS])? 
 The automated way to preserve compute, storage and network. 
@@ -64,8 +64,8 @@ The virtual machines are **NOT** running inside a pod. All virtual machines are 
 
 The simple architecture shows the most important components:
 * API: The KubeVirt api component runs as a `Deployment` in Kubernetes and is responsible for the communication with KubeVirt via webhooks, triggered via CRDs and the validation of the triggered objects.
-* Controller: The  KubeVirt controller is the heard of KubeVirt. The controller is responsible for the CRUD (lifecycle) operations of the KubeVirt objects running in Kubernetes. The controller continuously monitors all KubeVirt objects. 
-* Agent: The KubeVirt agent (also known as `virt-handler`) is a `DaemonSet`, running on each Kubernetes worker, and it's the glue between Kubernetes and the underlaying Linux Kernel. The agent is responsible for keep the defined virtual machine (configuration) in sync with the running virtual machine on this node.
+* Controller: The KubeVirt controller is the heart of KubeVirt. The controller is responsible for the CRUD (lifecycle) operations of the KubeVirt objects running in Kubernetes. The controller continuously monitors all KubeVirt objects. 
+* Agent: The KubeVirt agent (also known as `virt-handler`) is a `DaemonSet`, running on each Kubernetes worker, and it is the glue between Kubernetes and the underlaying Linux Kernel. The agent is responsible for keep the defined virtual machine (configuration) in sync with the running virtual machine on this node.
 
 More detailed information to all compoents are available at the [KubeVirt Github page][kubevirt-components].
 
@@ -83,10 +83,10 @@ To start with the deployment of KubeVirt and the first virtual machine, followin
 
 ## Local installation of virtctl
 
-KubeVirt ships it's own CLI tool `virtctl` which is needed to communicate with the created virtual machines (like connecting to the virtual machine via console).
-The binary is available for each common operating system and cpu architecture.
+KubeVirt ships its own CLI tool `virtctl` which is needed to communicate with the created virtual machines (like connecting to the virtual machine via console).
+The binary is available for each common operating system and CPU architecture.
 
-Install virtctl on Mac:
+Install virtctl on macOS:
 ```bash
 $ export RELEASE=v0.58.0
 
@@ -223,9 +223,9 @@ spec:
 
 * The `domain` section defined the hardware settings of the KVM virtual machine. This settings will be converted to the XML definition which is needed for libvirt.
 * `disks` defines the hard disks of the virtual machines, like the `volumeMounts` section of a pod. 
-* `interfaces` defines which with networks should be attached to the virtual machine. In this case the default CNI network (Calico for example) will be connected to the virtual machine. With this setting the virtual machine receives an ip address of the Pod network and can communicate with the Kuberneres pods and services directly.
+* `interfaces` defines which with networks should be attached to the virtual machine. In this case the default CNI network (Calico for example) will be connected to the virtual machine. With this setting the virtual machine receives an IP address of the Pod network and can communicate with the Kubernetes pods and services directly.
 * `resources` defines the memory settings for the virtual machine. This virtual machine get 64MB memory assigned.
-* Because no cpu is set, the default value of `1` will be used.
+* Because no CPU is set, the default value of `1` will be used.
 
 ```
       volumes:
@@ -370,12 +370,12 @@ $ curl https://kubernetes -k
 }
 ```
 
-Again: all commands are executed via `virtctl console` at the virtual machine directly. The output shows that it is a real virtual machine. 
-There is no information about the underlaying linux node visible. The visible ressources are limited. 
+Again, all commands are executed via `virtctl console` at the virtual machine directly. The output shows that it is a real virtual machine. 
+There is no information about the underlaying Linux node visible. The visible resources are limited. 
 
-The interface `eth0` is connected to the CNI overlay network and received an ip address of the pod network.
+The interface `eth0` is connected to the CNI overlay network and received an IP address of the pod network.
 Internet connectivitiy is working out of the box, the masquerading and routing is handled by the Kubernetes CNI.
-Kubernetes internal CoreDNS server resolves all dns requests, the virtual machine can talk with Kubernetes services (in this example the kubernetes api curl).
+Kubernetes internal CoreDNS server resolves all DNS requests, the virtual machine can talk with Kubernetes services (in this example the Kubernetes API curl).
 
 ## Access the VM via SSH
 
@@ -411,8 +411,8 @@ first-vm-svc   NodePort    10.96.149.117   <none>        22:32537/TCP   5s
 kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP        167m
 ```
 
-In this example, a service with type `NodePort` will be created and open the port 32537/tcp on each Kubernetes worker node.
-To access the virtual machine, any Kubernetes worker node ip or hostname + the shown node port can be used:
+In this example, a service with type `NodePort` will be created and open the port 32537/TCP on each Kubernetes worker node.
+To access the virtual machine, any Kubernetes worker node IP or hostname plus the shown node port can be used:
 
 ```bash
 $ ssh <ip.of.my.workernode> -p 32537 -l cirros
@@ -430,7 +430,7 @@ That's easy. Now the virtual machine can be managed like every other Linux host.
 
 ## Run an Ubuntu virtual machine
 
-Already pointed out: Cirros is a testing image, not build for operation. The following manifest creates an Ubuntu virtual machine with 2 cpus, 8GB memory and a ssh service to access the machine. 
+Already pointed out: Cirros is a testing image, not build for operation. The following manifest creates an Ubuntu virtual machine with 2 CPUs, 8GB memory and an SSH service to access the machine. 
 
 But an Ubuntu image has no preconfigured password. So we need to create a cloud-init configuration with SSH public key and (optional) preconfigured password. Create a file with this content:
 
@@ -666,7 +666,7 @@ That`s all.
 
 ## Troubleshoot 
 
-Each technology is nice if it's working fine. But sometimes strange situations will happen. How to debug KubeVirt?
+Each technology is nice if it is working fine. But sometimes strange situations will happen. How to debug KubeVirt?
 
 1. Be sure that all KubeVirt components are up and running: `kubectl get po -n kubevirt`
 2. Check the logs of the KubeVirt components
@@ -681,9 +681,9 @@ virt-launcher-ubuntu-vm-ljjvb                             2/2     Running   0   
 ```
 
 The `virt-launcher` pod has multiple stages and tasks:
-* `container-disk-binary` and `volumecontainerdisk-init` prepare the disk image. The examples, used in this blog post, are using docker images as source which containts the base images for Cirros or Ubuntu. The init pods extract the qcow2 file `disk.img` and prepare it, so libvirt is able to use it. Other sources can be isos or qcow2 images downloaded directly by the init pods from http sources or fileshares. 
+* `container-disk-binary` and `volumecontainerdisk-init` prepare the disk image. The examples, used in this blog post, are using docker images as source which contains the base images for Cirros or Ubuntu. The init pods extract the qcow2 file `disk.img` and prepare it, so libvirt is able to use it. Other sources can be isos or qcow2 images downloaded directly by the init pods from HTTP sources or fileshares. 
 * `volumecontainerdisk` copies the disk image to the right directory.
-* `compute`, the main container, controlls the virtual machine via libvirt. This container can be used to run `virsh` commands again libvirt:
+* `compute`, the main container, controls the virtual machine via libvirt. This container can be used to run `virsh` commands again libvirt:
 
 ```bash
 $ kubectl exec -ti virt-launcher-ubuntu-vm-ljjvb -- bash
