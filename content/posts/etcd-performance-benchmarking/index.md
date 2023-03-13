@@ -37,7 +37,7 @@ For real time monitoring and debugging you can use etcd metrics. etcd [reports](
 - **wal\_fsync\_duration\_seconds**
 - **backend\_commit\_duration\_seconds**
 
-First one is called before applying changes to disk, and second one is after applying changes to disk. it doesn't matter which one you choose, just keep in mind high values for these metrics mean high disk operation latencies and indicate disk issues.  
+First one is called before applying changes to disk, and second one is after applying changes to disk. It does not matter which one you choose, just keep in mind high values for these metrics mean high disk operation latencies and indicate disk issues.  
 As [etcd doc suggests](https://etcd.io/docs/v3.3/faq/#what-does-the-etcd-warning-apply-entries-took-too-long-mean) that 99th percentile duration should be less than **25 ms** for storage in order to be considered fast enough.
 
 ## Benchmarking via Fio
