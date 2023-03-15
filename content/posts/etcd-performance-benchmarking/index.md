@@ -38,7 +38,7 @@ For real time monitoring and debugging, you can use etcd metrics. etcd [reports]
 - **backend\_commit\_duration\_seconds**
 
 First one is called before applying changes to disk, and second one is after applying changes to disk. It does not matter which one you choose, just keep in mind high values for these metrics mean high disk operation latencies and indicate disk issues.  
-As [etcd doc suggests](https://etcd.io/docs/v3.3/faq/#what-does-the-etcd-warning-apply-entries-took-too-long-mean) that 99th percentile duration should be less than **25 ms** for storage in order to be considered fast enough.
+As the [etcd documentation suggests](https://etcd.io/docs/v3.3/faq/#what-does-the-etcd-warning-apply-entries-took-too-long-mean), the 99th percentile duration should be less than **25 ms** for storage to be considered fast enough.
 
 ## Benchmarking via Fio
 If you are running etcd on Linux machines another way to benchmark your storage performance is to use [Fio](https://github.com/axboe/fio) which is a very popular package to simulate I/O workload.
