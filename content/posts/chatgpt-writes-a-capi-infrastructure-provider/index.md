@@ -11,7 +11,7 @@ feature_image: feature.png
 Just like many others, I first heard of [ChatGPT](https://openai.com/blog/chatgpt) at the end of 2022.
 But, besides the initial novelty of getting it to write romantic texts to send to my wife or bad jokes to send to my friends, I haven't used it very much after that.
 That was until I saw the headlines of Microsoft's Bing AI (powered by an even more advanced version of ChatGPT) [professing its love to a NYT tech columnist Kevin Roose](https://www.nytimes.com/2023/02/16/technology/bing-chatbot-microsoft-chatgpt.html).
-As a software engineer I got curious again and decided to find out if ChatGPT can help do my job (without it trying to break up my marriage in the process).
+As a software engineer, I got curious again and decided to find out if ChatGPT can help do my job (without it trying to break up my marriage in the process).
 
 ## ChatGPT Writes a CAPI Infrastructure Provider
 
@@ -28,7 +28,7 @@ Let's give it the initial prompt "Write golang code using kubebuilder to write t
 ![initial prompt](initialprompt.png)
 
 We are on the right track, it knows that it needs to use [kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) and something about a "Cluster".
-It even generated some (incomplete) boilerplate Go code for us. (not shown for sake of brevity)
+It even generated some (incomplete) boilerplate Go code for us (not shown for sake of brevity).
 
 Now let's have ChatGPT use a more meaningful CRD name:
 
@@ -58,7 +58,7 @@ Let's prompt ChatGPT to give use one more important part of the contract, a `Tem
 
 ### Do Something Useful
 
-At this point, ChatGPT provider a lot of boilerplate code, let's try it to use what the context it has through our interaction
+At this point, ChatGPT provided a lot of boilerplate code, let's try it to use what the context it has through our interaction
 and combine what it has "learned" to have the controller do something a little more useful.
 
 ![Write to ConfigMap](writeconfigmap.png)
@@ -76,9 +76,9 @@ Amazing, we know have some code for our infrastructure provider that will use th
 
 ### Final Thoughts
 
-At this point, ChatGPT has given us lots of useful information, sure, we can't just copy and paste the code and have it work, but it's great starting point!
+At this point, ChatGPT has given us lots of useful information. Sure, we can't just copy and paste the code and have it work, but it's a great starting point!
 Writing software is complex, but it's also never done in a vacuum chamber.
 We all look at existing code and ideas, whether that's in other people's blog posts, or StackOverflow or Github issues. 
 ChatGPT can't replace all those sources(at least not as of right now), but it can be another tool that I leverage to make myself a better engineer.
 
-Overall, I was extremely impressed with the conversation I had with ChatGPT, it's been publicly available for only a few months, and I'm excited where the technology goes from here.
+Overall, I was extremely impressed with the conversation I had with ChatGPT. It's been publicly available for only a few months, and I'm excited where the technology goes from here.
