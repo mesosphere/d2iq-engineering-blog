@@ -28,7 +28,7 @@ If you see the following or similar messages in your etcd server logs, it is imp
 This is an indicator that etcd is not performing well and based on [official documentation](https://etcd.io/docs/v3.3/faq/#what-does-the-etcd-warning-apply-entries-took-too-long-mean) this is usually caused by:
 
 - Contention between etcd and other apps
-- Disk is slow
+- Slow disk
 - CPU starvation
 
 ## Benchmarking via etcd metrics
