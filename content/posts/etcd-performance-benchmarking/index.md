@@ -13,7 +13,9 @@ feature_image: feature.png
 
 When you install the Kubernetes management platform of your choice, there are certain minimal hardware requirements you need to meet. At D2iQ, for example, we have [this requirements](https://docs.d2iq.com/dkp/2.4/resource-requirements).
 
-Although these hardware recommendations are great to help you, they never go beyond capacity, for example it might be suggested to use two CPU cores and 2GB of RAM but you will never know how fast the CPU should be.  One reason might be because modern hardwares is good enough in terms of performance or we just can trust the provider and select its recommendation (i.e [aws recommendations](https://aws.amazon.com/intel/#Instance_Types)).
+These hardware recommendations provide a great help and starting point, but they don’t tell you anything about the actual performance of your specific CPU cores. We never seem to question the hardware’s performance. Possibly because we trust modern hardware to perform well enough, or trust the cloud provider and follow their recommendations (i.e. [aws recommendations](https://aws.amazon.com/intel/#Instance_Types)).
+
+However, the actual performance might differ depending on the CPU's brand, frequency, and other specifications. For example, if a platform provider suggests setting up two CPU cores and two GB of RAM, those exactly same resources could perform differently depending on different CPU brands and types.
 
 Most likely, as you are reading this article, you already have your cluster up and running. So you are not really exploring other hardware options, but you rather want to ensure that your existing hardware is performing at the expected level. In this particular article, our focus is storage in the context of **Kubernetes** itself. You may have different stateful applications like MySQL, but those are beyond the scope of this article.
 
