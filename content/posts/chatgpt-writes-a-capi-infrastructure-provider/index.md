@@ -1,8 +1,7 @@
 ---
 authors: ["dkoshkin"]
 title: "ChatGPT Writes a CAPI Infrastructure Provider"
-date: 2023-03-08T10:12:58-08:00
-featured: false
+date: 2023-03-15T10:12:58-08:00
 tags: ["cluster api", "capi" ]
 excerpt: "ChatGPT Writes a CAPI Infrastructure Provider"
 feature_image: feature.png
