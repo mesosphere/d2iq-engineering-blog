@@ -18,7 +18,7 @@ Although these hardware recommendations are great to help you, they never go bey
 Most likely, as you are reading this article, you already have your cluster up and running. So you are not really exploring other hardware options, but you rather want to ensure that your existing hardware is performing at the expected level. In this particular article, our focus is storage in the context of **Kubernetes** itself. You may have different stateful applications like MySQL, but those are beyond the scope of this article.
 
 ## etcd
-[etcd](https://github.com/etcd-io/etcd)(pronounced et-see-dee) is the primary datastore of Kubernetes. It is a critical component that stores all Kubernetes resources in a cluster and it is very important that etcd operations are performed at an ideal speed. Having an etcd with poor performance is a clear indicator that your customer's experience is significantly been impacted.
+[etcd](https://github.com/etcd-io/etcd)(pronounced et-see-dee) is the primary datastore of Kubernetes. It is a critical component that stores all Kubernetes resources in a cluster, therefore it is very important that etcd operations are performed at an ideal speed. Having an etcd instance with poor performance is a clear indicator that your customer's experience is significantly being impacted.
 
 If you see following statements in your etcd server logs, it is important to not ignore them
 
