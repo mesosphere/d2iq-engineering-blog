@@ -75,4 +75,4 @@ following is the output from etcd node of D2iQ cluster running on an AWS ec2 ins
    | 99.00th=[ 6376], 99.50th=[ 9634], 99.90th=[15795], 99.95th=[15795],
 ``` 
 
-You can see that the 99th percentile is 6376 or about 6.3ms of latency which is an acceptable latency.
+You can see that the 99th percentile is 6376 or about 6.3ms of latency, which is an acceptable latency.
