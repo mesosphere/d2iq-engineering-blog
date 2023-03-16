@@ -78,6 +78,6 @@ Amazing, we know have some code for our infrastructure provider that will use th
 At this point, ChatGPT has given us lots of useful information. Sure, we can't just copy and paste the code and have it work, but it's a great starting point!
 Writing software is complex, but it's also never done in a vacuum chamber.
 We all look at existing code and ideas, whether that's in other people's blog posts, or StackOverflow or Github issues. 
-ChatGPT can't replace all those sources(at least not as of right now), but it can be another tool that I leverage to make myself a better engineer.
+ChatGPT can't replace all those sources (at least not as of right now), but it can be another tool that I leverage to make myself a better engineer.
 
 Overall, I was extremely impressed with the conversation I had with ChatGPT. It's been publicly available for only a few months, and I'm excited where the technology goes from here.
