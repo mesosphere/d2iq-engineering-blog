@@ -5,7 +5,7 @@ date: 2022-06-01
 draft: true
 ---
 
-Deploying cluster with DKP is easy but in common production environments the Cluster must fit into the existing ecosystem respecting permissions and user-roles, dealing with docker registry authentication or using a special certificate issuer
+Deploying clusters with DKP is easy, but in common production environments the cluster must fit into the existing ecosystem respecting permissions and user roles, dealing with Docker registry authentication or using a special certificate issuer.
 
 # What means production cluster
 With this post we want to explain how a DKP cluster can be created in a repoducable way that is using SSO instead of static credentials, ensuring to not run into rate limiting for docker hub pulls or ACME based certificate requests.
