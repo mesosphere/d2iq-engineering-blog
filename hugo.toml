@@ -47,6 +47,8 @@ ignoreErrors = ["error-disable-taxonomy"]
   favicon = "images/D2iQ_Logo_Color-RGB.svg"
   # logo = "images/D2iQ_Logo_Color-RGB.svg"
 
+  ghrepo = "https://github.com/mesosphere/d2iq-engineering-blog/"
+
   [Params.social]
     twitter = "d2iq_eng"
 

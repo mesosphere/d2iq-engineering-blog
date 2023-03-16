@@ -1541,6 +1541,23 @@ iframe.instagram-media + script + :not([id]) {
     border-radius: 6px;
 }
 
+.improve-page-button {
+    display: inline-block;
+    padding: 9px 15px;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    background: var(--ghost-accent-color);
+    border-radius: 6px;
+}
+
+.footer-page-edit {
+    position: relative;
+    text-align: center;
+    margin: MAX(6vmin, 32px) 0 0 0;
+}
+
 
 /* 7.4. Read more
 /* ---------------------------------------------------------- */
@@ -1714,7 +1731,7 @@ iframe.instagram-media + script + :not([id]) {
     text-align: center;
     font-style: italic;
     font-size: smaller;
-    margin: MAX(12vmin, 64px) 0 0 0;
+    margin: MAX(6vmin, 32px) 0 0 0;
 }
 
 .has-cover:not(.home-template) .gh-head-subtext {
