@@ -15,7 +15,7 @@ When you install the Kubernetes management platform of your choice, there are ce
 
 These hardware recommendations provide a great help and starting point, but they don’t tell you anything about the actual performance of your hardware. We never seem to question the hardware’s performance. Possibly because we trust modern hardware to perform well enough, or trust the cloud provider and follow their recommendations (for an example, see [aws recommendations](https://aws.amazon.com/intel/#Instance_Types)).
 
-However, the actual performance might differ depending on the CPU's brand, frequency, and other specifications. For example, if a platform provider suggests setting up two CPU cores and two GB of RAM, those exactly same resources could perform differently depending on different CPU brands and types.
+However, the actual performance might differ depending on the CPU's brand, frequency, and other specifications. For example, if a platform provider suggests setting up two CPU cores and two GB of RAM, those exactly same resources could perform differently depending on the CPU brand and type.
 
 Most likely, as you are reading this article, you already have your cluster up and running. So you are not really exploring other hardware options, but you rather want to ensure that your existing hardware is performing at the expected level. In this particular article, our focus is storage in the context of **Kubernetes** itself. You may have different stateful applications like MySQL, but those are beyond the scope of this article.
 
