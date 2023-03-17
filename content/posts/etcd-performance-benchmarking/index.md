@@ -35,6 +35,7 @@ Such messages are indicators that etcd is not performing well and based on [etcd
 - CPU starvation
 
 ## Benchmarking via etcd metrics
+
 For real time monitoring and debugging, you can use etcd metrics. etcd [reports](https://etcd.io/docs/v3.4/metrics/) some **metrics** to [Prometheus](https://prometheus.io/) that can help you distinguish between the previous cases:
 
 - **wal\_fsync\_duration\_seconds**
