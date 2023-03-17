@@ -4,7 +4,7 @@ title: "Etcd Performance Benchmarking"
 date: 2023-03-10T17:13:12+01:00
 featured: false
 tags: ["d2iq", "etcd", "kubernetes"]
-excerpt: make sure your etcd server running on reliable storage
+excerpt: Ensure your etcd server is running on reliable storage
 feature_image: feature.png
 ---
 
