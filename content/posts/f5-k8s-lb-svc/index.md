@@ -25,10 +25,11 @@ In this blog we will see how to configure an on-premise Kubernetes cluster to in
 6. If using the CAPI steps then a CAPI bootstrap/management cluster and configurations to deploy a cluster. Refer [DKP](https://docs.d2iq.com/dkp/latest/infrastructure-quick-start-guides) documentation for more details.
 7. This uses `docker.io/f5networks/f5-ipam-controller:0.1.5` & `docker.io/f5networks/k8s-bigip-ctlr:2.9.1` images. Download, retag and push the images to a local registry and change the deployment spec to point to a local image registry for airgapped environments.
 
->Versions used to test:
->- BIG-IP: 16.1.3.1 Build 0.0.11 Point Release 1
->- AS3: v3.39.0
->- BIG-IP-CTLR: 2.9.1
+This blog used the following versions to test:
+
+* BIG-IP: 16.1.3.1 Build 0.0.11 Point Release 1
+* AS3: v3.39.0
+* BIG-IP-CTLR: 2.9.1
 
 ## Steps to Integrate a Kuberntes Cluster with F5 BIG-IP
 Here are the steps to be performed for a kubernetes cluster that is to be integrated with F5 Big IP to provision services of type LoadBalancer. 
