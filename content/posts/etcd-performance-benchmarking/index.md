@@ -70,7 +70,7 @@ make install
 export PATH=/usr/local/bin:$PATH  
 fio --rw=write --ioengine=sync --fdatasync=1 --directory=test-dir --size=22m --bs=2300 --name=mytest  
   ```
-The following output is an example from an etcd node of a D2iQ cluster running on an AWS ec2 instance type of `m5.xlarge`. Check the 99th percentile of `fdatasync`!
+The following output is an example from an etcd node of a D2iQ cluster running on an AWS ec2 instance of type `m5.xlarge`. Check the 99th percentile of `fdatasync`!
 
  ```bash 
  fsync/fdatasync/sync_file_range:
