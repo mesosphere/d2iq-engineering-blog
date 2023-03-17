@@ -11,7 +11,7 @@ feature_image: feature.png
 
 # Is your etcd fast enough?
 
-When you install the Kubernetes management platform of your choice, there are certain minimal hardware requirements you need to meet. At D2iQ, for example, we have [this requirements](https://docs.d2iq.com/dkp/2.4/resource-requirements).
+When you install the Kubernetes management platform of your choice, there are certain minimal hardware requirements you need to meet. At D2iQ, for example, we have [these requirements](https://docs.d2iq.com/dkp/2.4/resource-requirements).
 
 These hardware recommendations provide a great help and starting point, but they don’t tell you anything about the actual performance of your hardware. We never seem to question the hardware’s performance. Possibly because we trust modern hardware to perform well enough, or trust the cloud provider and follow their recommendations (i.e. [aws recommendations](https://aws.amazon.com/intel/#Instance_Types)).
 
