@@ -36,7 +36,7 @@ Such messages are indicators that etcd is not performing well and based on [etcd
 
 ## Benchmarking via etcd metrics
 
-For real time monitoring and debugging, you can use etcd metrics. etcd [reports](https://etcd.io/docs/v3.4/metrics/) some **metrics** to [Prometheus](https://prometheus.io/) that can help you distinguish between the previous cases:
+For real time monitoring and debugging, you can use etcd metrics. etcd reports [**metrics**](https://etcd.io/docs/v3.4/metrics/) to [Prometheus](https://prometheus.io/) that can help you distinguish between the previous cases:
 
 - **wal\_fsync\_duration\_seconds**
 - **backend\_commit\_duration\_seconds**
@@ -74,10 +74,10 @@ The following output is an example from an etcd node of a D2iQ cluster running o
 
  ```bash 
  fsync/fdatasync/sync_file_range:
-   sync (usec): min=534, max=15766, avg=1273.08, stdev=1084.70
+   ...
    sync percentiles (usec):
    |...,
-   | 99.00th=[ 6376], 99.50th=[ 9634], 99.90th=[15795], 99.95th=[15795],
+   | 99.00th=[ 6376], 99.50th=[ 9138], 99.90th=[13721], ...
 ``` 
 
-You can see that the 99th percentile is 6376 or about 6.3ms of latency, which is an acceptable latency.
+You can see that the 99th percentile is 9138 or about 9.2ms of latency, which is an acceptable latency.
