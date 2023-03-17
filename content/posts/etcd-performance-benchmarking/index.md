@@ -45,6 +45,7 @@ The first metric is reported before applying changes to a disk, and the second o
 As the [etcd documentation suggests](https://etcd.io/docs/v3.3/faq/#what-does-the-etcd-warning-apply-entries-took-too-long-mean), the 99th percentile duration should be less than **25 ms** for storage to be considered fast enough.
 
 ## Benchmarking via Fio
+
 If you are running etcd on Linux machines, another way to benchmark your storage performance is to use [Fio](https://github.com/axboe/fio), a very popular package to simulate I/O workload.
 
 **Step 1: Install required packages**
