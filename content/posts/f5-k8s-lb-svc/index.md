@@ -34,7 +34,7 @@ This blog used the following versions to test:
 ## Steps to Integrate a Kuberntes cluster with F5 BIG-IP
 Here are the steps to be performed for a kubernetes cluster that is to be integrated with F5 Big IP to provision services of type LoadBalancer. 
 
-There are two options based on whether F5 controllers are to be directly deployed to the target cluster or deployed via ClusterResourceSets for a CAPI provisioned cluster either at cluter creation time or after the cluster has been deployed.
+There are two options based on whether F5 controllers are to be directly deployed to the target cluster, or deployed via [`ClusterResourceSets`](https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-resource-set.html) for a [CAPI](https://cluster-api.sigs.k8s.io/) provisioned cluster either at cluster creation time or after the cluster has been deployed.
 
 <br/>
 
