@@ -17,13 +17,13 @@ In this blog we will see how to configure an on-premise Kubernetes cluster to in
 # Integrating a Kubernetes cluster with F5
 
 ## Requirements
-1. Pre-configured F5 BIG cluster 
-2. F5 Partition that will be managed by this automation along with credentials for a service account that has admin permissions for the given partition
-3. AS3 3.39 or newer installed on the F5 cluster
-4. IP's availble to be used as VIPs
-5. Working Kubernetes cluster with PV Storage configured
+1. Pre-configured [F5 BIG](https://www.f5.com/products/big-ip-services/local-traffic-manager) cluster 
+2. F5 [Partition](https://techdocs.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html) that will be managed by this automation along with credentials for a service account that has admin permissions for the given partition
+3. [AS3](https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/) 3.39 or newer installed on the F5 cluster
+4. IP's availble to be used as VIPs for [Virtual Server](https://techdocs.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-11-6-0/2.html) instances
+5. Working Kubernetes cluster with [PV](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) Storage configured
 6. If using the CAPI steps then a CAPI bootstrap/management cluster and configurations to deploy a cluster. Refer [DKP](https://docs.d2iq.com/dkp/latest/infrastructure-quick-start-guides) documentation for more details.
-7. This uses `docker.io/f5networks/f5-ipam-controller:0.1.5` & `docker.io/f5networks/k8s-bigip-ctlr:2.9.1` images. Download, retag and push the images to a local registry and change the deployment spec to point to a local image registry for airgapped environments.
+7. This uses `docker.io/f5networks/f5-ipam-controller:0.1.5` for [FIC](https://github.com/F5Networks/f5-ipam-controller) & `docker.io/f5networks/k8s-bigip-ctlr:2.9.1` for [CIS](https://github.com/F5Networks/k8s-bigip-ctlr) capabilities. Download, retag and push the images to a local registry and change the deployment spec to point to a local image registry for airgapped environments.
 
 This blog used the following versions to test:
 
