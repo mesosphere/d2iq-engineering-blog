@@ -4,7 +4,7 @@ title: "Auto Provisioning Kubernetes LoadBalancer Services with F5"
 date: 2022-11-17T00:35:56-05:00
 featured: false
 tags: [loadbalancer]
-excerpt: Learn how to configure a kubernetes cluster to provision a service of type LoadBalancer with F5 BIG-IP 
+excerpt: Learn how to configure a Kubernetes cluster to provision a service of type LoadBalancer with F5 BIG-IP 
 feature_image: feature.png
 ---
 
