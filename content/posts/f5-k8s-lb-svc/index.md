@@ -31,17 +31,14 @@ This blog used the following versions to test:
 * AS3: v3.39.0
 * BIG-IP-CTLR: 2.9.1
 
-## Steps to Integrate a Kuberntes cluster with F5 BIG-IP
+## Steps to Integrate a Kubernetes Cluster With F5 BIG-IP
 There are two options based on whether F5 controllers are to be directly deployed to the target cluster, or deployed via [`ClusterResourceSets`](https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-resource-set.html) for a [CAPI](https://cluster-api.sigs.k8s.io/) provisioned cluster either at cluster creation time or after the cluster has been deployed.
 
-<br/>
 
 ### Option 1: Directly deploy F5 Controllers to a Kubernetes Cluster
-<br/>
 
 #### Step 1: Deploy F5 Big IP Container Ingress Services (CIS)
 
-<br/>
 
 ##### - Add helm repo
 ```
@@ -92,7 +89,6 @@ kubectl create secret generic f5-bigip-ctlr-login -n kube-system --from-literal=
 
 helm install -f f5-${CLUSTER_NAME}-values.yaml f5ctlr f5-stable/f5-bigip-ctlr --version 0.0.21
 ```
-<br/>
 
 ### Step 2: Deploy F5 IPAM Controller (FIC)
 
@@ -152,13 +148,10 @@ EOF
 
 helm install -f f5-ipam-${CLUSTER_NAME}-values.yaml f5-ipam  f5-ipam-stable/f5-ipam-controller --version 0.0.1
 ```
-<br/>
-<br/>
 
 ### Option 2: Deploy Automatically via CAPI 
 >Note: If deploying to a CAPI provisioned Kubernetes Cluster like [DKP](https://docs.d2iq.com/dkp/latest/infrastructure-quick-start-guides) instead of running the install command manually, the above can be packaged into a CAPI ClusterResourceSet by doing the following and incorporated into the cluster deployment process.
 
-<br/>
 
 #### Pre-step
 Create a directory with the name of the cluster and move to that directory so that all the artifacts are generated there
@@ -173,7 +166,6 @@ If not already done generate CAPI cluster manifest.
 
 #### Step 1: Deploy F5 Big IP Container Ingress Services (CIS)
 
-<br/>
 
 >Note: Ensure that KUBECONFIG is pointing to the bootstrap/management cluster that is managing the lifecycle of the target cluster to which the F5 controllers are being deployed
 
