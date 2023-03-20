@@ -2,19 +2,19 @@
 authors: ["arbhoj"]
 title: "Auto Provisioning Kubernetes LoadBalancer Services with F5"
 date: 2023-03-20T00:35:56+01:00
-tags: ["loadbalancer", "f5"]
-excerpt: Learn how to configure a Kubernetes cluster to provision a service of type LoadBalancer with F5 BIG-IP 
+tags: ["load-balancer", "f5"]
+excerpt: Learn how to configure a Kubernetes cluster to provision a service of type LoadBalancer with F5 BIG-IP
 feature_image: feature.png
 ---
 
-When deploying Kubernetes clusters in the cloud (AWS, Azure, GCP etc.) a Kubernetes service of type [LoadBalancer](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) is by default provisioned automatically by the appropriate [cloud controller manager](https://kubernetes.io/docs/concepts/architecture/cloud-controller/) using the native load-balancer service (e.g. [ELB](https://aws.amazon.com/elasticloadbalancing/) on AWS). It's not the same for on-premise clusters, which require additional components to be deployed/configured to get this functionality. There are a few Kubernetes native options like [metallb](https://metallb.universe.tf/) and [kube-vip](https://kube-vip.io/). However, for production clusters and clusters that process heavy traffic, an external load-balancer might be a better choice. [F5 BIG-IP LTM](https://www.f5.com/products/big-ip-services/local-traffic-manager) is one of the most widely used load-balancers in the industry today and the best thing is that it integrates really nicely with Kubernetes. 
+When deploying Kubernetes clusters in the cloud (AWS, Azure, GCP etc.) a Kubernetes service of type [LoadBalancer](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) is by default provisioned automatically by the appropriate [cloud controller manager](https://kubernetes.io/docs/concepts/architecture/cloud-controller/) using the native load-balancer service (e.g. [ELB](https://aws.amazon.com/elasticloadbalancing/) on AWS). It's not the same for on-premise clusters, which require additional components to be deployed/configured to get this functionality. There are a few Kubernetes native options like [metallb](https://metallb.universe.tf/) and [kube-vip](https://kube-vip.io/). However, for production clusters and clusters that process heavy traffic, an external load-balancer might be a better choice. [F5 BIG-IP LTM](https://www.f5.com/products/big-ip-services/local-traffic-manager) is one of the most widely used load-balancers in the industry today and the best thing is that it integrates really nicely with Kubernetes.
 
 In this blog we will see how to configure an on-premise Kubernetes cluster to integrate with [F5 BIG-IP LTM](https://www.f5.com/products/big-ip-services/local-traffic-manager) to provision a service of type `LoadBalancer`.
 
 # Integrating a Kubernetes cluster with F5
 
 ## Requirements
-1. Pre-configured [F5 BIG](https://www.f5.com/products/big-ip-services/local-traffic-manager) cluster 
+1. Pre-configured [F5 BIG](https://www.f5.com/products/big-ip-services/local-traffic-manager) cluster
 2. F5 [Partition](https://techdocs.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-user-account-administration-12-0-0/3.html) that will be managed by this automation along with credentials for a service account that has admin permissions for the given partition
 3. [AS3](https://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/) 3.39 or newer installed on the F5 cluster
 4. IP's availble to be used as VIPs for [Virtual Server](https://techdocs.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/ltm-basics-11-6-0/2.html) instances
@@ -59,7 +59,7 @@ namespace: kube-system
 args:
   bigip_url: ${BIG_IP_URL}
   bigip_partition: ${BIG_IP_PARTITION}
-  log_level: info  
+  log_level: info
   pool_member_type: nodeport
   insecure: true
   custom-resource-mode: true
@@ -82,7 +82,7 @@ export F5_USER=f5-user
 export F5_PASSWD=f5-password
 export KUBECONFIG=kubeconfig-file-path
 
-kubectl create secret generic f5-bigip-ctlr-login -n kube-system --from-literal=username=${F5_USER} --from-literal=password=${F5_PASSWD} 
+kubectl create secret generic f5-bigip-ctlr-login -n kube-system --from-literal=username=${F5_USER} --from-literal=password=${F5_PASSWD}
 
 helm install -f f5-${CLUSTER_NAME}-values.yaml f5ctlr f5-stable/f5-bigip-ctlr --version 0.0.21
 ```
@@ -146,7 +146,7 @@ EOF
 helm install -f f5-ipam-${CLUSTER_NAME}-values.yaml f5-ipam  f5-ipam-stable/f5-ipam-controller --version 0.0.1
 ```
 
-### Option 2: Deploy Automatically via CAPI 
+### Option 2: Deploy Automatically via CAPI
 >Note: If deploying to a CAPI provisioned Kubernetes Cluster like [DKP](https://docs.d2iq.com/dkp/latest/infrastructure-quick-start-guides) instead of running the install command manually, the above can be packaged into a CAPI ClusterResourceSet by doing the following and incorporated into the cluster deployment process.
 
 
@@ -159,7 +159,7 @@ mkdir $CLUSTER_NAME && cd $CLUSTER_NAME
 ```
 
 If not already done generate CAPI cluster manifest.
->Hint: Use [DKP](https://docs.d2iq.com/dkp/latest/infrastructure-quick-start-guides) to easily generate one  
+>Hint: Use [DKP](https://docs.d2iq.com/dkp/latest/infrastructure-quick-start-guides) to easily generate one
 
 #### Step 1: Deploy F5 Big IP Container Ingress Services (CIS)
 
@@ -247,4 +247,4 @@ curl http://144.217.53.169 #This should respond with the nginx default page
 
 So, we now have an on-premise Kubernets cluster tightly integrated with F5 BIG-IP that will react to the lifecycle of services of type LoadBalancer created in the cluster (optionally configured to only do this for certain namespaces).
 
-In this blog we saw the options to provision a Kubernetes services of type LoadBalancer in an on-premise cluster and how easy it is to configure a cluster to do this using F5 BIG-IP.   
+In this blog we saw the options to provision a Kubernetes services of type LoadBalancer in an on-premise cluster and how easy it is to configure a cluster to do this using F5 BIG-IP.
