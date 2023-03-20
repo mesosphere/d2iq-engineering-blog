@@ -1,14 +1,11 @@
 ---
-authors: ["ADD AUTHOR NAME"]
+authors: ["arbhoj"]
 title: "Auto Provisioning Kubernetes LoadBalancer Services with F5"
-date: 2022-11-17T00:35:56-05:00
-featured: false
-tags: [loadbalancer]
+date: 2023-03-20T00:35:56+01:00
+tags: ["loadbalancer", "f5"]
 excerpt: Learn how to configure a Kubernetes cluster to provision a service of type LoadBalancer with F5 BIG-IP 
 feature_image: feature.png
 ---
-
-# Options to provision LoadBalancer Services in an on-premise Kubernetes cluster
 
 When deploying Kubernetes clusters in the cloud (AWS, Azure, GCP etc.) a Kubernetes service of type [LoadBalancer](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer) is by default provisioned automatically by the appropriate [cloud controller manager](https://kubernetes.io/docs/concepts/architecture/cloud-controller/) using the native load-balancer service (e.g. [ELB](https://aws.amazon.com/elasticloadbalancing/) on AWS). It's not the same for on-premise clusters, which require additional components to be deployed/configured to get this functionality. There are a few Kubernetes native options like [metallb](https://metallb.universe.tf/) and [kube-vip](https://kube-vip.io/). However, for production clusters and clusters that process heavy traffic, an external load-balancer might be a better choice. [F5 BIG-IP LTM](https://www.f5.com/products/big-ip-services/local-traffic-manager) is one of the most widely used load-balancers in the industry today and the best thing is that it integrates really nicely with Kubernetes. 
 
