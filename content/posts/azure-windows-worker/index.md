@@ -4,14 +4,14 @@ title: "Run DKP with Windows worker nodes on Azure"
 date: 2023-03-22T12:00:00+01:00
 featured: false
 tags: ["Azure", "Kubernetes", "DKP", "Windows"]
-excerpt: "Learn how to add Windows worker node pool to Azure based DKP cluster" 
+excerpt: "Learn how to add a Windows worker node pool to an Azure-based DKP cluster" 
 feature_image: feature.png
 ---
 
 ## What is DKP?
 
 The D2iQ Kubernetes Platform (DKP) makes your operational life easier. Instead of wasting time researching the CNCF landscape for the right tools to solve your enterprise requirements, and struggling with the implementation and lifecycle, you can use a fully curated, integrated, and supported Day 2 ready, out-of-the-box platform.
-DKP supported CAPI infrastructures provide an easy to use infrastructure-as-code approach that eliminates the headaches around the complexity of the development and lifecycle challenges of Kubernetes. DKP supports the following infrastructure providers out of the box:
+DKP-supported CAPI infrastructures provide an easy to use infrastructure-as-code approach that eliminates the headaches around the complexity of the development and lifecycle challenges of Kubernetes. DKP supports the following infrastructure providers out of the box:
 
 * [AKS][capz]
 * [AWS][capa]
@@ -30,8 +30,8 @@ Note: All additional CAPI providers, which are not part of DKP, are not supporte
 
 ## What is CAPI?
 
-Kubernetes Cluster API (CAPI) is an official sub-project from Kubernetes. The goal of CAPI is to provide a modular framework for deployment and lifecycle management of Kubernetes clusters. At a glance, CAPI provides a declarative API and a toolset (for example `clusterctl`) to create and manage Kubernetes clusters as a Kubernetes object.
-A big benefit of CAPI is the large number of infrastructure providers (24+). This provider brings in all the required integrations for the infrastructure and handles the infrastructure as code lifecycle. You do not need to think about infrastructure topics like how virtual machines are provisioned or how to create a NAT gateway. Just define how many control plane and worker nodes, with flavor and operating system, and CAPI will deploy the cluster.
+Kubernetes Cluster API (CAPI) is an official subproject from Kubernetes. The goal of CAPI is to provide a modular framework for deployment and lifecycle management of Kubernetes clusters. At a glance, CAPI provides a declarative API and a toolset (for example `clusterctl`) to create and manage Kubernetes clusters as a Kubernetes object.
+A big benefit of CAPI is the large number of infrastructure providers (24+). This provider brings in all the required integrations for the infrastructure and handles the infrastructure as code lifecycle. You do not need to think about infrastructure topics like how virtual machines are provisioned or how to create a NAT gateway. Just define the number of control plane and worker nodes, their flavor and operating system, and CAPI will deploy the cluster.
 
 For more information, see the [official CAPI documentation][CAPI docs]
 
@@ -45,9 +45,9 @@ To start the deployment of your cluster on Azure, you need the following tools a
 * Azure account
 
 ## Create the base DKP cluster on Azure
-First you need a default DKP cluster on Azure with Linux control plane and worker nodes to run the Linux based core components.
-DKP is based on Cluster API and use the `CAPZ` provider for deployment and lifecycle of Kubernetes clusters on Azure. 
-All needed requirements and a detailed description you can find in the official DKP documentation [Azure quick start guide][dkp-azure-requirements]
+First you need a default DKP cluster on Azure with Linux control plane and worker nodes to run the Linux-based core components.
+DKP is based on Cluster API and uses the `CAPZ` provider for deployment and lifecycle of Kubernetes clusters on Azure. 
+You can find all needed requirements and a detailed description in the official DKP documentation [Azure quick start guide][dkp-azure-requirements]
 
 First, export these environment variables:
 ````
@@ -61,7 +61,7 @@ export AZURE_TENANT_ID_B64="$(echo -n "$AZURE_TENANT_ID" | base64 | tr -d '\n')"
 export AZURE_CLIENT_ID_B64="$(echo -n "$AZURE_CLIENT_ID" | base64 | tr -d '\n')"
 export AZURE_CLIENT_SECRET_B64="$(echo -n "$AZURE_CLIENT_SECRET" | base64 | tr -d '\n')"
 ````
-These environment variables include your Azure credentials to communicate with the Azure API. Fill in your `client id`, `tenant id`, `client secret` and `subscription id`. The last 4 variables convert your input to Base64 encoded strings, which will be handed over to DKP in the next steps.
+These environment variables include your Azure credentials to enable communication with the Azure API. Fill in your `client id`, `tenant id`, `client secret` and `subscription id`. The last 4 variables convert your input to Base64 encoded strings, which will be handed over to DKP in the next steps.
 
 Now, define your base cluster:
 ````
@@ -129,7 +129,7 @@ $ kubectl patch KubeadmControlPlane ${CLUSTER_NAME}-control-plane --type=merge -
 kubeadmcontrolplane.controlplane.cluster.x-k8s.io/myazurecluster-control-plane patched
 ````
 
-After this you can check the cluster status and wait until die cluster is build successfully.
+After this, check the cluster status and wait until the cluster is built successfully.
 ````
 $ dkp describe cluster -c ${CLUSTER_NAME}
 NAME                                                               READY  SEVERITY  REASON  SINCE  MESSAGE
@@ -146,7 +146,7 @@ Cluster/myazurecluster                                             True         
     └─Machine/myazurecluster-md-0-7484fdb796-mf9rj                 True                     4m41s      
 ````
 
-To communicate the with deployed cluster, download the generated kubeconfig. 
+To communicate with the deployed cluster, download the generated kubeconfig. 
 ````
 $ dkp get kubeconfig -c ${CLUSTER_NAME} > ${CLUSTER_NAME}.kubeconfig
 ````
@@ -166,7 +166,7 @@ myazurecluster-md-0-sppq8            Ready      <none>                 7m30s   v
 Now the base cluster is deployed.
 
 ### Patch node-feature-discovery
-Now patch the `node-feature-discovery-worker` DaemonSet to prevent the Linux based pods of this DaemonSet from starting on Windows workers.
+Now patch the `node-feature-discovery-worker` DaemonSet to prevent the Linux-based pods of this DaemonSet from starting on Windows workers.
 This issue can be solved by this patch command:
 
 ````
@@ -185,9 +185,9 @@ export AZURE_WINDOWS_NODE_MACHINE_TYPE="Standard_D8s_v3"
 export AZURE_SSH_PUBLIC_KEY_B64="$(base64 -i ${SSH_PUBLIC_KEY_FILE})"
 export AZURE_SSH_PUBLIC_KEY="$(cat ${SSH_PUBLIC_KEY_FILE})"
 ````
-> Please note that the 4 environment variables are in *ADDITION* to the already exported variable.
+> Please note that the 4 environment variables are in *ADDITION* to the already exported variables.
 
-Currently there is a version change of the Azure image urns. You need to use the Azure cli tool `az` to get the right version matching to your selected Kubernetes version and export them as variable. In this example Kubernetes version 1.23.12 is in use:
+Currently, there is a version change of the Azure image urns. You need to use the Azure cli tool `az` to get the right version matching to your selected Kubernetes version and export them as variable. In this example Kubernetes version 1.23.12 is in use:
 ````
 $ az vm image list --publisher cncf-upstream --all --sku windows-2022-containerd-gen1 --offer capi-windows -l ${AZURE_LOCATION}
 ...
@@ -204,7 +204,7 @@ $ az vm image list --publisher cncf-upstream --all --sku windows-2022-containerd
 $ export AZURE_URN_VERSION=123.12.20220922
 ````
 
-After the definition you can generate the nodepool manifest: 
+After the definition, generate the nodepool manifest: 
 ````
 cat <<EOF > windows-node-pool.yml
 ---
@@ -343,12 +343,12 @@ myazurecluster-md-0-dwmrr            Ready      <none>                 10m     v
 myazurecluster-md-0-sppq8            Ready      <none>                 9m52s   v1.23.12
 ````
 
-The Windows worker stuck in status `NotReady` because the existing `Calico` DaemonSet is just for Linux nodes. 
+The Windows worker is stuck in status `NotReady` because the existing `Calico` DaemonSet is just for Linux nodes. 
 So you need to deploy a Calico DaemonSet for Windows as well as a `Kube-Proxy` for Windows.
 
 ## Deploy Kube-Proxy to Windows nodes
 For successful network connectivity you need to deploy `Kube-Proxy` to the Windows worker nodes. 
-Kube-Proxy runs as a DaemonSet on all workers. You can easily deploy dedicated DaemonSet for the Windows workers:
+Kube-Proxy runs as a DaemonSet on all workers. You can easily deploy a dedicated DaemonSet for the Windows workers:
 
 ````
 cat <<EOF> kube-proxy-win.yml
@@ -417,7 +417,7 @@ kubectl apply --kubeconfig ${CLUSTER_NAME}.kubeconfig -f kube-proxy-win.yml
 
 ## Deploy Calico to Windows nodes
 The Calico DaemonSet for Windows needs some information of `kubeadm-config`. The ConfigMap is created in namespace `kube-system`.
-Calico runs in namespace `calico-system`. If you don't want to run Calico parts in both namespaces you can copy the ConfigMap to the namespace `calico-system`:
+Calico runs in namespace `calico-system`. If you don't want to run Calico parts in both namespaces, copy the ConfigMap to the namespace `calico-system`:
 
 ````
 $ kubectl get configmap kubeadm-config -n kube-system -o yaml --kubeconfig ${CLUSTER_NAME}.kubeconfig | sed 's/namespace: kube-system/namespace: calico-system/' | kubectl create --kubeconfig ${CLUSTER_NAME}.kubeconfig -f -
@@ -428,7 +428,7 @@ You have to pass some information to the DaemonSet. The following variables pars
 export KUBERNETES_SERVICE_CIDR=$(kubectl get cm kubeadm-config -n kube-system --kubeconfig ${CLUSTER_NAME}.kubeconfig  -o jsonpath='{.data.ClusterConfiguration}'|yq '.networking.serviceSubnet')
 ````
 
-After the successful copy process, you create the ConfigMaps and the DaemonSet for the Calico for Windows: 
+After the successful copy process, create the ConfigMaps and the DaemonSet for the Calico for Windows: 
 ````
 cat <<EOF > calico-windows.yml
 ---
@@ -706,7 +706,7 @@ configmap/calico-windows-config created
 daemonset.apps/calico-node-windows created
 ````
 
-Now you can check if the calico Pods are running on the Windows nodes and if the status of the worker nodes is now `Ready`.
+Now you can check if the calico Pods are running on the Windows nodes, and if the status of the worker nodes is now `Ready`.
 ````
 $ kubectl get po -n calico-system --kubeconfig ${CLUSTER_NAME}.kubeconfig -o wide
 NAME                                       READY   STATUS    RESTARTS   AGE   IP               NODE                                 NOMINATED NODE   READINESS GATES
@@ -804,7 +804,7 @@ service/iis          LoadBalancer   10.102.12.86   40.78.50.251   80:30911/TCP  
 service/kubernetes   ClusterIP      10.96.0.1      <none>         443/TCP        71m
 ````
 
-If the Pod is in state `Running` and the service `iis` got an external IP address via Azure Loadbalancer you can test the deployed webservice via browser or curl:
+If the Pod is in state `Running` and the service `iis` got an external IP address via Azure Loadbalancer, test the deployed webservice via browser or curl:
 
 ````
 curl http://40.78.50.251
@@ -842,12 +842,12 @@ a img {
 </html>
 ````
 
-The test was sucessful. The workload is started on the Windows nodes and service is accessable.
+The test was sucessful. The workload is running on the Windows nodes and the service is accessible.
 
 
 ## Attach to DKP Enterprise (optional)
 If you want to attach the cluster to DKP Enterprise you need to update the Application settings before you attach the cluster to DKP Enterprise.
-These changes make sure that components like Traefik or Gatekeeper are scheduled on Linux nodes only.
+These changes ensure that components like Traefik or Gatekeeper are scheduled on Linux nodes only.
 
 The following overrides are needed for the named `Cluster Applications` (via DKP UI/CLI):
 
