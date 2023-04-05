@@ -1,7 +1,7 @@
 ---
 authors: ["dkoshkin"]
 title: "Adopting existing clusters to use ClusterClass"
-date: 2023-03-06T15:24:31Z
+date: 2023-04-05T12:00:00+02:00
 featured: false
 tags: ["cluster api", "capi" ]
 excerpt: "Learn how to adopt your existing CAPI cluster to use ClusterClass."
