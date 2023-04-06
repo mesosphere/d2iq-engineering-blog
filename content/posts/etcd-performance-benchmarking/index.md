@@ -1,9 +1,9 @@
 ---
 authors: ["azhovan"]
 title: "Etcd Performance Benchmarking"
-date: 2023-03-10T17:13:12+01:00
+date: 2023-04-12T15:13:12+02:00
 featured: false
-tags: ["d2iq", "etcd", "kubernetes"]
+tags: ["etcd", "linux", "benchmarking", "prometheus", "kubernetes"]
 excerpt: Ensure your etcd server is running on reliable storage
 feature_image: feature.png
 ---
@@ -48,28 +48,36 @@ As the [etcd documentation suggests](https://etcd.io/docs/v3.3/faq/#what-does-th
 
 If you are running etcd on Linux machines, another way to benchmark your storage performance is to use [Fio](https://github.com/axboe/fio), a very popular package to simulate I/O workload.
 
-**Step 1: Install required packages**
+### Installation
 
-```bash 
-apt install -y gcc zlib1g-dev make git  
+**Ubuntu**
+
+```shell 
+sudo apt-get update
+sudo apt-get -y install fio
+ ```
+
+**Centos 7**
+
+```shell
+sudo yum update 
+sudo yum install fio  
 ```
 
-**Step 2: Clone the fio repo and install it**
-```bash 
-git clone git://git.kernel.dk/fio.git && cd fio
-./configure
-make 
-make install   
-  ```
+**openSUSE** and **SLE**
 
-**Step3: Configure fio**
+You can install Fio from the [official page here](https://software.opensuse.org/download/package?package=fio&project=benchmark)
 
-`test-dir` is a directory under the storage device you want to test
+**Other distributions**
+To install Fio on other operating systems, you may visit Fio [github page](https://github.com/axboe/fio#binary-packages) and select your binary from the list there.
 
+### Benchmarking
+
+Let's create a new directory and name it`test-dir` under the storage device you want to test. Then run the following command:
  ```bash 
-export PATH=/usr/local/bin:$PATH  
 fio --rw=write --ioengine=sync --fdatasync=1 --directory=test-dir --size=22m --bs=2300 --name=mytest  
   ```
+
 The following output is an example from an etcd node of a D2iQ cluster running on an AWS ec2 instance of type `m5.xlarge`. Check the 99th percentile of `fdatasync`!
 
  ```bash 
@@ -81,3 +89,5 @@ The following output is an example from an etcd node of a D2iQ cluster running o
 ``` 
 
 You can see that the 99th percentile is 9138 or about 9.2ms of latency, which is an acceptable latency.
+
+For more complex scenarios and also understand how each flag works checkout [Fio command line options](https://github.com/axboe/fio/blob/master/HOWTO.rst) guide.
