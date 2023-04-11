@@ -69,7 +69,7 @@ sudo yum install fio
 You can install Fio from the [official page here](https://software.opensuse.org/download/package?package=fio&project=benchmark).
 
 **Other distributions**
-To install Fio on other operating systems, you may visit Fio [github page](https://github.com/axboe/fio#binary-packages) and select your binary from the list there.
+To install Fio on other operating systems, visit Fio [github page](https://github.com/axboe/fio#binary-packages) and select your binary from the list.
 
 ### Benchmarking
 
