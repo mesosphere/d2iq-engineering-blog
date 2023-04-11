@@ -90,4 +90,4 @@ The following output is an example from an etcd node of a D2iQ cluster running o
 
 You can see that the 99th percentile is 9138 or about 9.2ms of latency, which is an acceptable latency.
 
-For more complex scenarios and also understand how each flag works checkout [Fio command line options](https://github.com/axboe/fio/blob/master/HOWTO.rst) guide.
+To understand how the different flags work or to explore other use cases, see the [Fio command line options](https://github.com/axboe/fio/blob/master/HOWTO.rst) guide.
