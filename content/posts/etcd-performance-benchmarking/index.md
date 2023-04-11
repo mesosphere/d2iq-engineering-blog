@@ -73,7 +73,7 @@ To install Fio on other operating systems, you may visit Fio [github page](https
 
 ### Benchmarking
 
-Let's create a new directory and name it`test-dir` under the storage device you want to test. Then run the following command:
+Let's create a new directory and name it `test-dir` under the storage device you want to test. Then run the following command:
  ```bash 
 fio --rw=write --ioengine=sync --fdatasync=1 --directory=test-dir --size=22m --bs=2300 --name=mytest  
   ```
