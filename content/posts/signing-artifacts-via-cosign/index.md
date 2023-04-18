@@ -38,7 +38,7 @@ There are three main challenges when using public/private key pairs to sign soft
 - Storage
 - Key Revocation
 
-Storing private keys somewhere safe is a big challenge, even for big companies that are prone to make mistakes, take [Samsung](https://www.securityweek.com/thousands-secret-keys-found-leaked-samsung-source-code/) for example. When a private key is compromised, re-distributing a new key to the users is a big deal of challenge.
+Storing private keys somewhere safe is a big challenge, even for big companies that are prone to make mistakes. When a private key is compromised, re-distributing a new key to the users is a big deal of challenge.
 
 ##  Why is Sigstore different?
 
