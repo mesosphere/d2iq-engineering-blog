@@ -1,10 +1,10 @@
 ---
 authors: ["azhovan"]
-title: "Signing Software Artifacts using Cosign"
-date: 2023-03-22T19:16:06+01:00
+title: "Digital Signature With Cosign"
+date: 2023-03-27T19:14:06+02:00
 featured: false
-tags: []
-excerpt: Digital Signature With Cosign
+tags: ["cosgin", "rekor", "fulcio", "sigstore", "openssf", "container", "helm", "github", "kubernetes"]
+excerpt: Signing Software Artifacts using Cosign
 ---
 
 # Software Digital Signature
@@ -60,7 +60,7 @@ Here are the steps that Cosign take in details when you want to sign a new artif
 **Signing Artifact**
 - Step 1): Cosign sends the user into an OIDC login flow and if authentication is successful, an OIDC ID token is returned.
 - Step 2): Cosign generates a private key in [memory](https://github.com/sigstore/cosign/blob/a8f57b66e8ad96ba13541dadc3bd47ae0c9a0c67/cmd/cosign/cli/sign/sign.go#L543).
-- Step 3): Cosign sends a request to [Fulcio](https://docs.sigstore.dev/fulcio/overview/), the Sigstore certificate authority, with the user's public key, private key and token\_id from the previous step.
+- Step 3): Cosign sends a request to [Fulcio](https://docs.sigstore.dev/fulcio/overview/), the Sigstore certificate authority, with the user's public key and token\_id from the previous step.
 - Step 4): Fulcio returns a short-lived code signing certificate containing the user's identity metadata (e.g. email) and public key to Cosign that is [valid for 10 minutes](https://github.com/sigstore/fulcio/blob/d54330c45f9c271fdf5b9d7eebe08284a700387f/pkg/ca/common.go#L43). 
 - Step 5): Cosign signs the artifact and generates a signature.
 - Step 6): Cosign adds a new record to [Rekor](https://docs.sigstore.dev/rekor/overview/), the Sigstore transparency log with the signature and certificate from previous steps.
