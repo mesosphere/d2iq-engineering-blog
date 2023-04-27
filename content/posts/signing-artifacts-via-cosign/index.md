@@ -1,7 +1,7 @@
 ---
 authors: ["azhovan"]
 title: "Digital Signature With Cosign"
-date: 2023-03-27T19:14:06+02:00
+date: 2023-04-26T12:00:00+02:00
 featured: false
 tags: ["cosgin", "rekor", "fulcio", "sigstore", "openssf", "container", "helm", "github", "kubernetes"]
 excerpt: Signing Software Artifacts using Cosign
