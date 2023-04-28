@@ -5,6 +5,7 @@ date: 2023-04-26T12:00:00+02:00
 featured: false
 tags: ["cosgin", "rekor", "fulcio", "sigstore", "openssf", "container", "helm", "github", "kubernetes"]
 excerpt: Signing Software Artifacts using Cosign
+feature_image: feature.png
 ---
 
 # Software Digital Signature
