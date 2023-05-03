@@ -347,7 +347,7 @@ cosign verify-blob --key cosign.pub main --signature=MEUCIEaTpRK/nsBLGvxg1aYy9hH
 
 ## Github Integrations
 
-You can generate public/private key pairs and store them directly on GitHub actions's secret. The benefit of this is to save these keys directly into your Github settings without being copied into your browser or terminal or disk.
+You can generate public/private key pairs and store them directly on GitHub actions's secret. The benefit of this is to save these keys directly into your Github settings without being copied into your browser, terminal, or disk.
 ```bash
 cosign generate-key-pair github://<owner>/<project>
 ```
