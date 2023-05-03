@@ -28,7 +28,7 @@ A software digital signature's scheme consists of the following mechanisms:
 
 - **Key creation** : a way to **generate** public/private key pairs
 - **Sign** : an algorithm to attach a signature to the software
-- **Verification** : a way to verify the signature with help of the public key.
+- **Verification** : a way to verify the signature with help of the public key
 
 Some commonly used schemes are ECDSA, RSA, etc.
 
