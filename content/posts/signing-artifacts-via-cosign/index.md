@@ -114,7 +114,7 @@ To create personal access token follow [Github documentation](https://docs.githu
 export PAT=Your_Token
 ```
 
-you can go ahead and sign in to Container registry by running following command (USERNAME is your username in github)
+Go ahead and sign in to the Container registry by running the following command (USERNAME is your username in github):
 
 ```bash
 echo $PAT | docker login ghcr.io -u USERNAME --password-stdin
