@@ -387,7 +387,7 @@ jobs:
           env:
             COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
 ```
-That is it!
+That's it!
 
 ## Kubernetes integration
 Cosign can use keys stored in Kubernetes Secrets to sign/verify signatures using following command:
