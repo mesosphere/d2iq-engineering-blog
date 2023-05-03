@@ -100,7 +100,7 @@ In this demo we use [docker](https://docs.docker.com/get-docker/) to create the 
 
 To install cosign you can also follow the steps in [official documentation](https://docs.sigstore.dev/cosign/installation/)based on your environment.
 
-Pre requisites
+**Prerequisites**
 
 In order to publish our container into the Github container registry we need to first authenticate against the Github Container registry. To do so you'll need an access token. You can use a personal access token(classic) or in short **PAT** to do the authentication. Each access token has a scope that is a list of permissions that you'll grant it. We need following permissions:
 
