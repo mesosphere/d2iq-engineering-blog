@@ -352,7 +352,7 @@ You can generate public/private key pairs and store them directly on GitHub acti
 cosign generate-key-pair github://<owner>/<project>
 ```
 
-This will create three actions secret `COSIGN_PASSWORD`, `COSIGN_PRIVATE_KEY`, `COSIGN_PUBLIC_KEY`
+This creates three action secrets `COSIGN_PASSWORD`, `COSIGN_PRIVATE_KEY`, `COSIGN_PUBLIC_KEY`
 
 ![github integration](gh_integration.png)
 
