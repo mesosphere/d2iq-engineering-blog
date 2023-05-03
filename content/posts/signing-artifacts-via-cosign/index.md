@@ -18,7 +18,7 @@ Cosign is one slice of the bigger umbrella [Sigstore, an ecosystem](https://www.
 
 ## What problem does it solve?
 
-Softwares widely consists of distributed artifacts and these artifacts are updated quite frequently. Companies and developers that build on top of these artifacts may expose their users to threats and vulnerabilities. This is where the [digital signature](https://en.wikipedia.org/wiki/Digital_signature) comes to the picture, and by its definition it is an scheme to help users to verify the legitimacy of the downloaded software.
+Software widely consists of distributed artifacts, which are updated quite frequently. Companies and developers that build on top of these artifacts might expose their users to threats and vulnerabilities. This is where the [digital signature](https://en.wikipedia.org/wiki/Digital_signature) comes into the picture. By definition, this is a scheme to help users verify the legitimacy of the downloaded software.
 
 Two major topics in digitally signing software artifacts are **integrity** and **authenticity**, respectfully ensuring that signed data has not been altered and originates from the signer. While these are quite important, this does not guarantee that the software delivered to the end user is still legitimate. We see why this is the case.
 
