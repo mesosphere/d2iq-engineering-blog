@@ -59,7 +59,7 @@ In a nutshell a **short-lived** certificate is generated and a transparency log 
 Here are the steps that Cosign take in details when you want to sign a new artifact:
 
 **Signing Artifact**
-- Step 1): Cosign sends the user into an OIDC login flow and if authentication is successful, an OIDC ID token is returned.
+- Step 1): Cosign sends the user into an OIDC login flow and, if authentication is successful, an OIDC ID token is returned.
 - Step 2): Cosign generates a private key in [memory](https://github.com/sigstore/cosign/blob/a8f57b66e8ad96ba13541dadc3bd47ae0c9a0c67/cmd/cosign/cli/sign/sign.go#L543).
 - Step 3): Cosign sends a request to [Fulcio](https://docs.sigstore.dev/fulcio/overview/), the Sigstore certificate authority, with the user's public key and token\_id from the previous step.
 - Step 4): Fulcio returns a short-lived code signing certificate containing the user's identity metadata (e.g. email) and public key to Cosign that is [valid for 10 minutes](https://github.com/sigstore/fulcio/blob/d54330c45f9c271fdf5b9d7eebe08284a700387f/pkg/ca/common.go#L43). 
