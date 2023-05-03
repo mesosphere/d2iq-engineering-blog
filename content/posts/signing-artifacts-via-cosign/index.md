@@ -79,7 +79,7 @@ The **second** option is the classic way, you can still use the private key to s
 
 ##  What does Sigstore sign?
 
-A wide range of software artifacts, OCI compliant artifacts, Git tags, Blobs, Tekton bundles, WASM, etc. for more details on this check the [documentation](https://docs.sigstore.dev/).
+A wide range of software artifacts, OCI compliant artifacts, Git tags, Blobs, Tekton bundles, WASM, and so on, for more details on this check the [documentation](https://docs.sigstore.dev/).
 
 ##  Examples
 
