@@ -94,7 +94,7 @@ A wide range of software artifacts, OCI compliant artifacts, Git tags, Blobs, Te
 
 In this section we create a container, sign it, and then verify its signature by using Cosign.
 
-To keep our example even more close to the real world scenario, we will publish our signed container image into the github OCI registry. We will also see how to sign container images using **github actions.**
+To keep our example close to a real world scenario, we publish our signed container image into the github OCI registry. We also see how to sign container images using **github actions.**
 
 In this demo we use [docker](https://docs.docker.com/get-docker/) to create the container, make sure you have it installed.
 
