@@ -175,7 +175,7 @@ Step3: Publishing the container
 docker push ghcr.io/azhovan/hello:latest
 ```
 
-when you publish a package for the first time, the default visibility is private, we don't need to change this for this demo.
+When you publish a package for the first time, the default visibility is private. We don't need to change the default for this demo.
 
 Step4: Signing the container
 
