@@ -98,7 +98,7 @@ To keep our example close to a real world scenario, we publish our signed contai
 
 In this demo we use [docker](https://docs.docker.com/get-docker/) to create the container, so make sure you have it installed.
 
-To install cosign you also can follow the steps in [official documentation](https://docs.sigstore.dev/cosign/installation/)based on your environment.
+To install cosign you can also follow the steps in [official documentation](https://docs.sigstore.dev/cosign/installation/)based on your environment.
 
 Pre requisites
 
