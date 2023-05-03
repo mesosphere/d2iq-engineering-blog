@@ -102,7 +102,7 @@ To install cosign you can also follow the steps in [official documentation](http
 
 **Prerequisites**
 
-In order to publish our container into the Github container registry we need to first authenticate against the Github Container registry. To do so you'll need an access token. You can use a personal access token(classic) or in short **PAT** to do the authentication. Each access token has a scope that is a list of permissions that you'll grant it. We need following permissions:
+To publish our container into the Github container registry, we need to first authenticate against the Github Container registry. To do so you'll need an access token. You can use a personal access token (classic) or in short **PAT** to do the authentication. Each access token has a scope that is a list of permissions that you'll grant it. We need following permissions:
 
 - read:packages
 - write:packages
