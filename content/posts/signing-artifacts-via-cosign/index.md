@@ -179,7 +179,7 @@ When you publish a package for the first time, the default visibility is private
 
 Step4: Signing the container
 
-Now that the container is in the Github container registry we are ready to sign our very container, and push that signature to the registry
+Now that the container is in the Github container registry, we are ready to sign our very container, and then push that signature to the registry.
 
 ```bash 
 cosign sign ghcr.io/azhovan/hello:latest 
