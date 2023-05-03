@@ -75,7 +75,7 @@ What matters in the verification process is:
 - Verify that Rekor signed the artifact with a specific timestamp for a specific identity.
 - Verify that the signature is valid, using the artifact and the user's public key. 
 
-The **second** option is the classic way, you can still use the private key to sign your software by providing it during the signing and use your public key to verify it. We will see these in action in next sections.
+The **second** option is the classic way, you can still use the private key to sign your software by providing it during the signing, and then use your public key to verify it. We will see these in action in next sections.
 
 ##  What does Sigstore sign?
 
