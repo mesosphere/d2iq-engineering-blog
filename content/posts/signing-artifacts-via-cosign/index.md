@@ -208,7 +208,7 @@ WARNING: "ghcr.io/azhovan/hello" appears to be a private repository, please conf
 Are you sure you would like to continue? [y/N]
 ```
 
-Now we should be able to see that a SHA has been added to the tag
+Now we should be able to see that an SHA has been added to the tag.
 
 ![github container registry](github_cr.png)
 
