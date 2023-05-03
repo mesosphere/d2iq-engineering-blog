@@ -10,7 +10,7 @@ feature_image: feature.png
 
 # Software Digital Signature
 
-In this article, we will explore signing artifacts such as containers, local files or OCI registry binaries etc, and we will see how your artifacts can be signed in Github actions and Kubernetes..
+In this article, we explore signing artifacts such as containers, local files or OCI registry binaries etc., and we see how your artifacts can be signed in Github actions and Kubernetes.
 
 ## Introduction
 
