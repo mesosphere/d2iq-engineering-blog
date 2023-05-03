@@ -108,7 +108,7 @@ To publish our container into the Github container registry, we need to first au
 - write:packages
 - delete:packages
 
-To create personal access token follow [Github documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)and when you generated one, save it in an environment variable:
+To create personal access token follow [Github documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token). When you generated one, save it in an environment variable:
 
 ```bash
 export PAT=Your_Token
