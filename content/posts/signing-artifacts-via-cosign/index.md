@@ -138,7 +138,7 @@ Now lets create the Dockerfile, it is fairly simple and enough for our demonstra
 vim Dockerfile 
 ```
 
-Copy and paste the following commands into the Dockerfile
+Copy and paste the following commands into the Dockerfile:
 
 ```bash
 FROM alpine
