@@ -64,7 +64,7 @@ Here are the steps that Cosign take in details when you want to sign a new artif
 - Step 3): Cosign sends a request to [Fulcio](https://docs.sigstore.dev/fulcio/overview/), the Sigstore certificate authority, with the user's public key and token\_id from the previous step.
 - Step 4): Fulcio returns a short-lived code signing certificate containing the user's identity metadata (e.g. email) and public key to Cosign that is [valid for 10 minutes](https://github.com/sigstore/fulcio/blob/d54330c45f9c271fdf5b9d7eebe08284a700387f/pkg/ca/common.go#L43). 
 - Step 5): Cosign signs the artifact and generates a signature.
-- Step 6): Cosign adds a new record to [Rekor](https://docs.sigstore.dev/rekor/overview/), the Sigstore transparency log with the signature and certificate from previous steps.
+- Step 6): Cosign adds a new record to [Rekor](https://docs.sigstore.dev/rekor/overview/), the Sigstore transparency log, with the signature and certificate from previous steps.
 - Step 7): Rekor returns back a bundle timestamped and signed with it's public key that contains the user public key and signature to the Cosign.
 Note that when you sign an artifact like a container, this information is attached to the artifact by Cosign. 
 
