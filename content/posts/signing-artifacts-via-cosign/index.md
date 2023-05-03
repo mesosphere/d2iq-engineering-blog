@@ -147,7 +147,7 @@ CMD ["echo", "Hello!"]
 
 Step2: Building the container
 
-To build the container in the same directory that Dockerfile exist, run following command
+To build the container in the same directory that Dockerfile exist, run following command:
 ```bash
 docker build -t hello .
 ```
