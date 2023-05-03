@@ -126,7 +126,7 @@ It is important to note that the container registry service is at **ghcr.io**; w
 
 Step1: Creating the container
 
-lets create a new directory called hello, and put our Dockerfile there. I use Ubuntu as my operating system so I will create this directory in the `/tmp` directory.
+Create a new directory called hello, and put our Dockerfile there. I use Ubuntu as my operating system so I will create this directory in the `/tmp` directory.
 
 ```bash 
 cd /tmp 
