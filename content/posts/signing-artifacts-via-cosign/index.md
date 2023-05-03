@@ -48,7 +48,7 @@ Instead of keys, Sigstore relies on identity. It is important because owner iden
 
 Sigstore has its own OIDC identity provider which is based on [Dex](https://github.com/dexidp/dex) and supports email-based OIDC providers Google, Github and Microsoft.
 
-Sigstore has a built in transparency logs service that records signed metadata to a ledger. Users can query this ledger and find useful information about the software they use. We will explore this in detail in next sections.
+Sigstore has a built in transparency logs service that records signed metadata to a ledger. Users can query the ledger and find useful information about the software they use. We explore this in detail in following sections.
 
 ##  How does Cosign work?
 
