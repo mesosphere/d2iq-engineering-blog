@@ -46,7 +46,7 @@ Storing private keys somewhere safe is a big challenge, even for big companies t
 
 Instead of keys, Sigstore relies on identity. This is important because owner identity remains the same, regardless if its private key has been compromised. This immediately removes the necessity of public key discovery and distribution!
 
-Sigstore has its own OIDC identity provider which is based on [Dex](https://github.com/dexidp/dex) and supports email-based OIDC providers Google, Github and Microsoft.
+Sigstore has its own OIDC identity provider which is based on [Dex](https://github.com/dexidp/dex) and supports email-based OIDC providers Google, Github, and Microsoft.
 
 Sigstore has a built in transparency logs service that records signed metadata to a ledger. Users can query the ledger and find useful information about the software they use. We explore this in detail in following sections.
 
