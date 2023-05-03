@@ -133,7 +133,7 @@ cd /tmp
 mkdir hello && cd hello 
 ```
 
-Now lets create the Dockerfile, it is fairly simple and enough for our demonstration too. Go ahead and use your editor of choice! (I use vim)
+Now lets create the Dockerfile, it is fairly simple and enough for our demonstration. Go ahead and use your editor of choice! (I use vim)
 ```bash
 vim Dockerfile 
 ```
