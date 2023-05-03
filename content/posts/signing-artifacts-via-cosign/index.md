@@ -26,7 +26,7 @@ Two major topics when digitally signing software artifacts are **integrity** and
 
 A software digital signature's scheme consists of the following mechanisms:
 
-- **Key creation** : a way to **generate** public/private key pairs.
+- **Key creation** : a way to **generate** public/private key pairs
 - **Sign** : an algorithm to attach a signature to the software
 - **Verification** : a way to verify the signature with help of the public key.
 
