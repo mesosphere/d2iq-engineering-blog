@@ -197,7 +197,7 @@ Retrieving signed certificate...
 By typing 'y', you attest that you grant (or have permission to grant) and agree to have this information stored permanently in transparency logs.
 Are you sure you would like to continue? [y/N]
 ```
-Type `y` and you will be navigated to the OIDC workflow we mentioned earlier. Sign in to sigstore using you github account
+Type `y` and you will be navigated to the OIDC workflow we mentioned earlier. Sign in to sigstore using you github account.
 
 ![oidc login flow](singin-oidc.png)
 
