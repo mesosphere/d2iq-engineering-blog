@@ -54,7 +54,7 @@ Sigstore has a built in transparency logs service that records signed metadata t
 
 There are two ways to use the Cosign signing mechanism. The recommended approach is what is called [keyless signing](https://docs.sigstore.dev/cosign/keyless/#overview).
 
-In a nutshell a **short-lived** certificate is generated and a transparency log is created in [Rekor](https://rekor.sigstore.dev/) server.
+In a nutshell a **short-lived** certificate is generated and a transparency log is created in the [Rekor](https://rekor.sigstore.dev/) server.
 
 Here are the steps that Cosign take in details when you want to sign a new artifact:
 
