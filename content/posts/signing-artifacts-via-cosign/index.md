@@ -122,7 +122,7 @@ echo $PAT | docker login ghcr.io -u USERNAME --password-stdin
 > Login Succeeded
 ```
 
-It is important to note that the container registry service is at **ghcr.io** , we will use this host later when we tag and publish our container.
+It is important to note that the container registry service is at **ghcr.io**; we use this host later when we tag and publish our container.
 
 Step1: Creating the container
 
