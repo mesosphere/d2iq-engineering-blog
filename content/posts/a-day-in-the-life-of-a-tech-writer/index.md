@@ -64,10 +64,10 @@ Let’s go back to our original question.
 
 Every Technical Writer works differently, and every company has their ways of doing things, but at D2iQ, I can roughly say that: 
 
-* We spend around 60% of our time researching, and reading.
-* We spend around 20% of time interviewing subject matter experts (SMEs) and department representatives - AKA asking questions like a 5-year-old - sometimes because the full picture is not clear, and sometimes because we want you to think from a different perspective.
-* We spend around 10% of time learning about the product - but not too much, or we would not be able to represent the NOT all-knowing customer.
-* We spend about 10% of time actually writing.
+* We spend around **60%** of our time researching, and reading.
+* We spend around **20%** of time interviewing subject matter experts (SMEs) and department representatives - AKA asking questions like a 5-year-old - sometimes because the full picture is not clear, and sometimes because we want you to think from a different perspective.
+* We spend around **10%** of time learning about the product - but not too much, or we would not be able to represent the NOT all-knowing customer.
+* We spend about **10%** of time actually writing.
 
 And we drink lots of coffee, tea, or any other caffeinated drink that will help us focus.
 
