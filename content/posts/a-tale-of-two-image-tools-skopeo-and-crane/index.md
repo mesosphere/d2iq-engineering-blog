@@ -15,7 +15,8 @@ All software that you deploy on [Kubernetes](https://k8s.io/) requires packaging
 
 A container image is a self-contained, executable bundle that contains everything required to run a piece of software in a well-defined runtime environment. The bundle contains one or more tar archives, plus a JSON manifest file that describes the software contained in the bundle and how to run it (e.g. what command to run to start the software).
 
-Let's jump straight in using one of the tools we're going to talk about, `crane`, and see what an image looks like by inspecting the manifest directly from a registry:
+Let's jump straight in using one of the tools we're going to talk about, [`crane`](https://github.com/google/go-containerregistry/blob/main/cmd/crane/doc/crane.md),
+and see what an image looks like by inspecting the manifest directly from a registry:
 
 ```shell
 $ crane manifest busybox:1.36 --platform linux/amd64
@@ -37,7 +38,8 @@ $ crane manifest busybox:1.36 --platform linux/amd64
 }
 ```
 
-Note that neither `crane` or `skopeo` require a running container runtime - they interact with registries via the well-defined APIs (see [OCI Distribution Spec](https://github.com/opencontainers/distribution-spec/blob/v1.0.1/spec.md) for more details).
+Note that neither `crane` nor [`skopeo`](https://github.com/containers/skopeo) require a running container runtime - they interact with registries via the well-defined APIs
+(see [OCI Distribution Spec](https://github.com/opencontainers/distribution-spec/blob/v1.0.1/spec.md) for more details).
 
 If we look at the manifest above, we see the following fields:
 
