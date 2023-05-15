@@ -3,19 +3,19 @@ authors: ["jdyson"]
 title: "A Tale of Two Container Image Tools: Skopeo and Crane"
 date: 2023-01-12T12:15:21Z
 featured: false
-tags: ["oci", "mages", "tools"]
+tags: ["oci", "images", "tools"]
 excerpt: |
   Working with container images is pretty much a fact of life in modern day infrastructure, especially with Kubernetes. Make your life easier by using tools such as skopeo and crane.
 feature_image: feature.png
 ---
 
-All software that you deploy on [Kubernetes](https://k8s.io/) requires packaging as container images. There are many tools to build container images (e.g. [Docker](https://www.docker.com/), [buildah](https://buildah.io/), etc). Once the images are built, they are pushed to an image registry, and referenced in [pod](https://kubernetes.io/docs/concepts/workloads/pods/) descriptors (generally inside higher level abstractions such as [`Deployments`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), [`Daemonsets`](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/), [`StatefulSets`](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/), etc) which describe how to launch the software you want to run. The kubelet launches your pods and containers via the container runtime interface (CRI), which pulls the container images from the relevant registry, configures the pods and containers as requested, and starts them running.
+All software that you deploy on [Kubernetes][kubernetes] requires packaging as container images. There are many tools to build container images (e.g. [Docker][docker], [buildah][buildah], etc). Once the images are built, they are pushed to an image registry, and referenced in [pod](https://kubernetes.io/docs/concepts/workloads/pods/) descriptors (generally inside higher level abstractions such as [`Deployments`][kubernetes deployments], [`Daemonsets`][daemonsets], [`StatefulSets`][statefulsets], etc) which describe how to launch the software you want to run. The kubelet launches your pods and containers via the container runtime interface (CRI), which pulls the container images from the relevant registry, configures the pods and containers as requested, and starts them running.
 
 ## What is a container image?
 
 A container image is a self-contained, executable bundle that contains everything required to run a piece of software in a well-defined runtime environment. The bundle contains one or more tar archives, plus a JSON manifest file that describes the software contained in the bundle and how to run it (e.g. what command to run to start the software).
 
-Let's jump straight in using one of the tools we're going to talk about, [`crane`](https://github.com/google/go-containerregistry/blob/main/cmd/crane/doc/crane.md),
+Let's jump straight in using one of the tools we're going to talk about, [`crane`][crane],
 and see what an image looks like by inspecting the manifest directly from a registry:
 
 ```shell
@@ -38,12 +38,12 @@ $ crane manifest busybox:1.36 --platform linux/amd64
 }
 ```
 
-Note that neither `crane` nor [`skopeo`](https://github.com/containers/skopeo) require a running container runtime - they interact with registries via the well-defined APIs
-(see [OCI Distribution Spec](https://github.com/opencontainers/distribution-spec/blob/v1.0.1/spec.md) for more details).
+Note that neither [`crane`][crane] nor [`skopeo`][skopeo] require a running container runtime - they interact with registries via the well-defined APIs
+(see [OCI Distribution Spec][oci distribution spec] for more details).
 
 If we look at the manifest above, we see the following fields:
 
-* `mediaType` This tells the container runtime the format of this manifest. In this case (and still used by the majority of images at this time), this is `application/vnd.docker.distribution.manifest.v2+json`, which means it represents [Docker Image Manifest V2](https://docs.docker.com/registry/spec/manifest-v2-2/). Note that an equivalent [OCI](https://opencontainers.org/) spec exists and would use the media type of `application/vnd.oci.image.manifest.v1+json`.
+* `mediaType` This tells the container runtime the format of this manifest. In this case (and still used by the majority of images at this time), this is `application/vnd.docker.distribution.manifest.v2+json`, which means it represents [Docker Image Manifest V2][docker image manifest]. Note that an equivalent [OCI][oci] spec exists and would use the media type of `application/vnd.oci.image.manifest.v1+json`.
 * `config` This holds a reference to the config layer of the image (we'll look at that below).
 * `layers` This holds references to the tarballs that make up the container filesystem. Container filesystems are constructed from layered tarballs. If you're familiar with `Dockerfile` used for building images, each instruction in the `Dockerfile` produces a new layer containing only the changed files from the layer below. In this case, the image only has a single layer, but it is very common for images to contain many layers.
 
@@ -149,29 +149,29 @@ drwxr-xr-x 0/0               0 2023-01-03 22:44 var/www/
 
 The output of the command above just shows the last few lines, but from that you can see that the referenced layer is literally just a gzipped tarball of a filesystem. Super simple!
 
-We've just used one of the tools, `crane`, to inspect images directly from the registry with no container runtime locally!
+We've just used one of the tools, [`crane`][crane], to inspect images directly from the registry with no container runtime locally!
 
 ## Cookbook
 
-Let's now show some of the operations that both `skopeo` and `crane` support when using the tools as CLIs.
+Let's now show some of the operations that both [`skopeo`][skopeo] and [`crane`][crane] support when using the tools as CLIs.
 
 ### Moving images between registries
 
-It is very common to move images between registries, whether that is because your clusters are running in air-gapped (i.e. disconnected) environments, to promote images between dev/test/staging/production registries, etc. If you're using an OCI registry such as [Harbor](https://goharbor.io/) then you can do this via [replication](https://goharbor.io/docs/2.7.0/administration/configuring-replication/), but if not, or if you just want to ad-hoc copying of images, then both `crane` and `skopeo` are really useful.
+It is very common to move images between registries, whether that is because your clusters are running in air-gapped (i.e. disconnected) environments, to promote images between dev/test/staging/production registries, etc. If you're using an OCI registry such as [Harbor][harbor] then you can do this via [replication][harbor replication], but if not, or if you just want to ad-hoc copying of images, then both [`crane`][crane] and [`skopeo`][skopeo] are really useful.
 
-If you want to follow along, first we'll create a temporary registry locally (you'll need a container runtime, we'll use [Docker](https://docker.com/)) so we can use that for this demo:
+If you want to follow along, first we'll create a temporary registry locally (you'll need a container runtime, we'll use [Docker][docker]) so we can use that for this demo:
 
 ```shell
 docker run --rm -d -p 5000:5000 registry:2
 ```
 
-We can use `crane` to check the registry is working:
+We can use [`crane`][crane] to check the registry is working:
 
 ```shell
 crane catalog localhost:5000
 ```
 
-Nothing will be returned as this is an empty registry. Now let's copy an image to our registry. With `crane` we can use:
+Nothing will be returned as this is an empty registry. Now let's copy an image to our registry. With [`crane`][crane] we can use:
 
 ```shell
 $ crane copy busybox:1.36 localhost:5000/library/busybox:1.36
@@ -230,15 +230,15 @@ Writing manifest to image destination
 Storing signatures
 ```
 
-While the format for the `skopeo` command is a bit more involved, `skopeo` uses the scheme (`docker://` in the case above) to support multiple source and destination formats. Take a look at the `skopeo` [README](https://github.com/containers/skopeo/) for details.
+While the format for the [`skopeo`][skopeo] command is a bit more involved, [`skopeo`][skopeo] uses the scheme (`docker://` in the case above) to support multiple source and destination formats. Take a look at the `skopeo` [README][skopeo readme] for details.
 
-Also note that `skopeo` by default will act on the image matching the OS/architecture of the host you're running `skopeo` on, whereas `crane` defaults to all platforms specified in the multi-arch image manifest (image index). To copy all architectures for an image with `skopeo`, specify the `--all` flag.
+Also note that [`skopeo`][skopeo] by default will act on the image matching the OS/architecture of the host you're running [`skopeo`][skopeo] on, whereas [`crane`][crane] defaults to all platforms specified in the multi-arch image manifest (image index). To copy all architectures for an image with [`skopeo`][skopeo], specify the `--all` flag.
 
 ### Delete an image from a registry
 
 This is especially useful during CI runs, to clean up temporary image builds from registries, or to clean up after failed releases (yes, it does happen!).
 
-Unfortunately `registry:2` (the [Docker registry](https://docs.docker.com/registry/) image) only supports deleting via digest rather than tag, so this command is a bit more complicated:
+Unfortunately `registry:2` (the [Docker registry][docker registry] image) only supports deleting via digest rather than tag, so this command is a bit more complicated:
 
 ```shell
 crane delete "localhost:5000/library/busybox:1.36@$(crane digest localhost:5000/library/busybox:1.36)"
@@ -255,17 +255,17 @@ $ crane delete "localhost:5000/library/busybox:1.36@$(crane digest localhost:500
 
 Depending on configuration, the registry would likely prune unreferenced blobs asnchronously to free up storage.
 
-To delete an image with `skopeo`, run:
+To delete an image with [`skopeo`][skopeo], run:
 
 ```shell
 skopeo delete docker://localhost:5000/library/busybox:1.36 --tls-verify=false
 ```
 
-`skopeo` handles the registry's lack of delete-by-tag support nicely by transparently sending the delete request with the required digest.
+[`skopeo`][skopeo] handles the registry's lack of delete-by-tag support nicely by transparently sending the delete request with the required digest.
 
 ### List images and tags in a registry
 
-To list images present in a registry, use `crane` (this is not supported by `skopeo`):
+To list images present in a registry, use [`crane`][crane] (this is not supported by [`skopeo`][skopeo]):
 
 ```shell
 $ crane catalog localhost:5000
@@ -319,8 +319,26 @@ Storing signatures
 
 ## The winning feature (for me at least...)
 
-While both `skopeo` and `crane` are great tools when used as CLI tools, `skopeo` cannot be used as a library (although there are lower level libraries in the https://github.com/containers GitHub org). `crane` on the other hand is very usable as a library, which as the creator of [`mindthegap`](https://github.com/mesosphere/mindthegap) (a tool to move image bundles specifically targeted for air-gapped use-cases) is a winning feature. Check out the awesome [godocs](https://pkg.go.dev/github.com/google/go-containerregistry@v0.12.1/pkg/crane) for crane.
+While both [`skopeo`][skopeo] and [`crane`][crane] are great tools when used as CLI tools, [`skopeo`][skopeo] cannot be used as a library (although there are lower level libraries in the <https://github.com/containers> GitHub org). [`crane`][crane] on the other hand is very usable as a library, which as the creator of [`mindthegap`][mindthegap] (a tool to move image bundles specifically targeted for air-gapped use-cases) is a winning feature. Check out the awesome [godocs][crane godocs] for [`crane`][crane].
 
 ## Summary
 
-Both `crane` and `skopeo` are Swiss army knives for working with image registries. This post covers some of the more common use cases, but both `crane` and `skopeo` support many more operations. However, as `crane` can be used as a library as well as a CLI, it is my go-to tool.
+Both [`crane`][crane] and [`skopeo`][skopeo] are Swiss army knives for working with image registries. This post covers some of the more common use cases, but both [`crane`][crane] and [`skopeo`][skopeo] support many more operations. However, as [`crane`][crane] can be used as a library as well as a CLI, it is my go-to tool.
+
+[kubernetes]: https://k8s.io/
+[docker]: https://www.docker.com/
+[buildah]: https://buildah.io/
+[kubernetes deployments]: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+[daemonsets]: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+[statefulsets]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+[crane]: https://github.com/google/go-containerregistry/blob/main/cmd/crane/doc/crane.md
+[skopeo]: https://github.com/containers/skopeo
+[oci distribution spec]: https://github.com/opencontainers/distribution-spec/blob/v1.0.1/spec.md
+[docker image manifest]: https://docs.docker.com/registry/spec/manifest-v2-2/
+[oci]: https://opencontainers.org/
+[harbor]: https://goharbor.io/
+[harbor replication]: https://goharbor.io/docs/2.7.0/administration/configuring-replication/
+[skopeo readme]: https://github.com/containers/skopeo/
+[docker registry]: https://docs.docker.com/registry/
+[mindthegap]: https://github.com/mesosphere/mindthegap
+[crane godocs]: https://pkg.go.dev/github.com/google/go-containerregistry@v0.12.1/pkg/crane
