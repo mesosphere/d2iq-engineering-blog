@@ -1,0 +1,4 @@
+{
+  "MD013": false,
+  "MD010": {"ignore_code_languages": ["go", "make"]}
+}
