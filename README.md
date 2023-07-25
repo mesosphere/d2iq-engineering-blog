@@ -25,15 +25,18 @@ Please follow the standard GitHub pull request process:
 1. [Fork the repository][forking]
 1. [Clone your forked repository][cloning a fork]
 1. [Add new content][add content] (also see [here](#add-a-new-post))
-1. [Open a pull reqeust][open pr]
+1. [Open a pull request][open pr]
 
 Follow the instructions below to create and preview your new content.
 
 ### Install required tools
 
-If you have [asdf][asdf] installed, then you can run `asdf install` to install all required tools.
+Using [Devbox][] is highly recommended. Follow [these instructions][devbox installation] to install [Devbox][] and
+install [direnv][] for shell integration - this is the simplest way to get started. 
 
-If you do not have [asdf][asdf] installed, then please manually install [hugo][hugo] following
+Alternatively, if you have [asdf][] installed, then you can run `asdf install` to install all required tools.
+
+If you do not have [asdf][] installed, then please manually install [hugo][] following
 [these instructions][hugo install].
 
 ### Add a new post
@@ -59,7 +62,6 @@ $ cat content/posts/a-new-post/index.md
 authors: ["ADD AUTHOR NAME"]
 title: "A New Post"
 date: 2022-08-24T16:31:50+01:00
-featured: false
 tags: []
 excerpt: ADD EXCERPT HERE
 feature_image: feature.png
@@ -104,7 +106,14 @@ Now you can edit the file `content/some/new/page/_index.md` to add your content.
 
 ### Preview your content locally
 
-For development use `-F` as it will show posts with future dates
+If you are using [Devbox][] then run:
+
+```shell
+devbox run serve
+```
+
+Alternatively, run [hugo][], passing `-D -F` to show drafts and posts with future publication dates (this is equivalent
+to the above Devbox command):
 
 ```shell
 hugo serve -D -F
@@ -116,7 +125,7 @@ you edit the content.
 ### Preview your content after deployment
 
 Once you have [added and pushed][add content] your content and [opened a pull reqeust][open pr], you will be able to
-preview thed deployment at
+preview the deployment at
 https://deploy-preview-\<PR NUMBER>--d2iq-engineering.netlify.app/.
 
 ## Hosting
@@ -136,3 +145,6 @@ The D2iQ engineering blog is currently hosted on [Netlify][netlify] but is front
 [netlify]: https://netlify.com/
 [cloudfront]: https://aws.amazon.com/cloudfront/
 [eng blog]: https://eng.d2iq.com/
+[Devbox]: https://www.jetpack.io/devbox/
+[devbox installation]: https://www.jetpack.io/devbox/docs/contributor-quickstart/#install-devbox
+[direnv]: https://direnv.net/
