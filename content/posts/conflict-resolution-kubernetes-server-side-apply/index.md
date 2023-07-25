@@ -26,17 +26,17 @@ One of the major factors in the success of Kubernetes is the architecture: a dec
 desired state, and asynchronous control loops that attempt to satisfy the users' desire by continually observing state
 and reconciling that with the desired state, doing whatever work is required to bring the two into alignment. These
 control loops then report the status back to the same API as the user used to specify their desired state. This model is
-applied by all components in the Kubernetes architecture, from the control plane components to custom controllers and
-operators.
+applied by all components in the Kubernetes architecture, from the control plane components to custom [controllers][]
+and [operators][].
 
 That means that one thing lies at the centre of the Kubernetes universe: the API server. Let's strip the API server back
 to its very basic functions; it receives requests, validates them, applies RBAC policies, and reads and writes to and
 from storage. Generally that data store is [etcd][].
 
-In the architecture described above, there are almost always concurrent writes to the API. [etcd][] generally handles
-that very well when those concurrent writes are against different resources. [etcd][] doesn't provide [transactions][]
-(as used in relational databases for pessimistic locking), so how does [Kubernetes][] handle concurrent conflicting
-writes to the same resource? We'll get to Server-Side Apply soon, promise!
+In the architecture described above, there are almost always concurrent writes to the API. [etcd][] handles that very
+well when those concurrent writes are against different resources. [etcd][] doesn't provide [transactions][] (as used in
+relational databases for pessimistic locking), so how does [Kubernetes][] handle concurrent conflicting writes to the
+same resource? We'll get to Server-Side Apply soon, promise!
 
 ## Conflicting creates
 
@@ -66,9 +66,9 @@ Error from server (AlreadyExists): error when creating "/tmp/ssa-blog-demo-rmmgy
 Error from server (AlreadyExists): error when creating "/tmp/ssa-blog-demo-rmmgyw/1.yaml": namespaces "ssa-blog-demo" already exists
 ```
 
-So we tried to create the same resource multiple times and only one succeeded - which makes total. If you run this, your
-output will be slightly different as a different one of the parallel creates will work. In this case, it was the 5th
-file as we can see when we read back from the API server:
+So we tried to create the same resource multiple times and only one succeeded - which makes total sense. If you run
+this, your output will be slightly different as a different one of the parallel creates will work. In this case, it was
+the 3rd file as we can see when we read back from the API server:
 
 ```bash
 $ kubectl get ns --show-labels ssa-blog-demo
@@ -76,7 +76,7 @@ NAME            STATUS   AGE     LABELS
 ssa-blog-demo   Active   2m44s   kubernetes.io/metadata.name=ssa-blog-demo,label3=3
 ```
 
-Notice the `number=3` label on line 3 above.
+Notice the `label3=3` label on line 3 above.
 
 So we can't create multiple resources with the same name. Good. Conflicting creates work exactly as expected.
 
@@ -96,7 +96,7 @@ $ NAME            STATUS   AGE     LABELS
 ssa-blog-demo     Active   7m39s   kubernetes.io/metadata.name=ssa-blog-demo,label2=2
 ```
 
-We applied multiple files at the same time and one succeeded, in this case setting the label `number=2`. Let's do it
+We applied multiple files at the same time and one succeeded, in this case setting the label `label2=2`. Let's do it
 again and see what happens:
 
 ```bash
@@ -462,3 +462,5 @@ for lists and maps, and [transferring ownership][].
 [Server-Side Apply]: https://kubernetes.io/docs/reference/using-api/server-side-apply/
 [merge strategies]: https://kubernetes.io/docs/reference/using-api/server-side-apply/#merge-strategy
 [transferring ownership]: https://kubernetes.io/docs/reference/using-api/server-side-apply/#transferring-ownership
+[controllers]: https://kubernetes.io/docs/concepts/architecture/controller/
+[operators]: https://kubernetes.io/docs/concepts/extend-kubernetes/operator/
