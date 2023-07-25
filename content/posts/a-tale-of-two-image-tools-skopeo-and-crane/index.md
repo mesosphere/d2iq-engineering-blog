@@ -2,7 +2,6 @@
 authors: ["jdyson"]
 title: "A Tale of Two Container Image Tools: Skopeo and Crane"
 date: 2023-01-12T12:15:21Z
-featured: false
 tags: ["oci", "images", "tools"]
 excerpt: |
   Working with container images is pretty much a fact of life in modern day infrastructure, especially with Kubernetes. Make your life easier by using tools such as skopeo and crane.

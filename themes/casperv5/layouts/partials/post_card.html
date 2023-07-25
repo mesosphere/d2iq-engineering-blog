@@ -31,9 +31,6 @@ which templates loop over to generate a list of posts.  */}}
             <a href="{{ "/blog/tags/" | relLangURL }}{{ $primaryTag | urlize }}">{{ $primaryTag }}</a>
           </span>
         {{ end }}
-        {{ if (eq .page.Params.featured true) }}
-          <span class="post-card-featured">{{ partial "icon" "fire" }} Featured</span>
-        {{ end }}
       </div>
       <h2 class="post-card-title">
         <a class="post-card-content-link" href="{{ .page.RelPermalink }}">{{ .page.Title }}</a>

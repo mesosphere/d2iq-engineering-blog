@@ -2,7 +2,6 @@
 authors: ["gvasquezvargas"]
 title: "A Day in the Life of a Technical Writer"
 date: 2023-05-17T12:00:00+02:00
-featured: false
 tags: ["writing", "content", "technical writing", "technical writer"]
 excerpt: "The Content Team produces customer-facing documentation. Learn about the everyday life of a Technical Writer in the tech industry."
 feature_image: feature.png

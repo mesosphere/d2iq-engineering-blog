@@ -2,7 +2,6 @@
 authors: ["azhovan"]
 title: "Etcd Performance Benchmarking"
 date: 2023-04-12T12:00:00+02:00
-featured: false
 tags: ["etcd", "linux", "benchmarking", "prometheus", "kubernetes"]
 excerpt: Ensure your etcd server is running on reliable storage
 feature_image: feature.png
