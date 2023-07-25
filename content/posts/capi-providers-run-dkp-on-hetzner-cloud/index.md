@@ -2,7 +2,6 @@
 authors: ["ksahm"]
 title: "CAPI Providers - Run DKP on Hetzner Cloud"
 date: 2022-11-15T09:12:53+02:00
-featured: false
 tags: ["cluster api", "capi", "kubernetes", "dkp", "hetzner", "multicluster"]
 excerpt: "Learn how to add the custom CAPI provider for Hetzner and create DKP clusters on top of Hetzner Cloud"
 feature_image: hetzner.png

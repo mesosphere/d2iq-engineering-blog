@@ -2,7 +2,6 @@
 authors: ["ksahm"]
 title: "Run DKP with Windows worker nodes on Azure"
 date: 2023-03-22T12:00:00+01:00
-featured: false
 tags: ["Azure", "Kubernetes", "DKP", "Windows"]
 excerpt: "Learn how to add a Windows worker node pool to an Azure-based DKP cluster" 
 feature_image: feature.png

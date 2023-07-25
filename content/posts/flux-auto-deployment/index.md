@@ -2,7 +2,6 @@
 authors: ["mstruebing"]
 title: "Automatic deployment updates with Flux"
 date: 2022-12-24T09:01:22+01:00
-featured: false
 tags: ["flux", "kubernetes", "gitops"]
 excerpt: Learn how to install Flux, deploy an application with it, and configure automatic updates whenever a new version is published.
 feature_image: feature.png

@@ -725,20 +725,6 @@ body:not(.gh-head-open) .gh-burger:hover .gh-burger-inner::after {
     }
 }
 
-.post-card-featured {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    padding-left: 18px;
-    color: var(--ghost-accent-color);
-}
-
-.post-card-featured svg {
-    position: absolute;
-    left: 0;
-}
-
 .post-card-title {
     margin: 0;
     font-size: 2.6rem;
@@ -1864,10 +1850,6 @@ html.dark-mode :is(.post-card-tags, .post-card-meta, .article-tag a, .byline-met
     color: color-mod(var(--color-secondary-text) l(-22%));
 }
 
-html.dark-mode .post-card-featured {
-    color: #fff;
-}
-
 html.dark-mode .post-card-title {
     color: #fff;
 }
@@ -2034,10 +2016,6 @@ html.dark-mode .footer-cta-title {
     
     html.auto-color :is(.post-card-tags, .post-card-meta, .article-tag a, .byline-meta-content) {
         color: color-mod(var(--color-secondary-text) l(-22%));
-    }
-    
-    html.auto-color .post-card-featured {
-        color: #fff;
     }
     
     html.auto-color .post-card-title {

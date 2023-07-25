@@ -13,9 +13,6 @@
               <a href="{{ "/blog/tags/" | relLangURL }}{{ $primaryTag | urlize }}">{{ $primaryTag }}</a>
             </span>
           {{ end }}
-          {{ if (eq .Params.featured true) }}
-            <span class="post-card-featured">{{ partial "icon" "fire" }} Featured</span>
-          {{ end }}
         </div>
 
         <h1 class="article-title">{{ .Page.Title }}</h1>

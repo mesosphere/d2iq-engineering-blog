@@ -2,7 +2,6 @@
 authors: ["jdyson"]
 title: "A Long Journey to Cross Platform Developer Tooling Utopia (For Now)"
 date: 2023-07-19T10:39:28+01:00
-featured: false
 tags: ["development"]
 feature_image: feature.webp
 excerpt: Streamlining the developer experience.
