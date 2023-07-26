@@ -10,12 +10,12 @@ tags: ["kubernetes", "api"]
 On the [Kubernetes][] website, Kubernetes is [described][k8s description] as:
 
 > a portable, extensible, open source platform for managing containerized workloads and services, that facilitates both
-> declarative configuration and automation
+> declarative configuration and automation.
 
 Most people know Kubernetes as a container orchestration platform, automating the deployment and running of workloads
 across fleets of machines. Since the inception of the project, Kubernetes adoption has exploded. Containerization is the
 new standard way to run workloads, driven in large part by Kubernetes. Kubernetes is not the only container
-orchestration platform out there, some notable others being [Nomad][] and [Docker Swarm][]. So what is it that sets
+orchestration platform out there, some notable others being [Nomad][] and [Docker Swarm][]. So, what is it that sets
 Kubernetes apart and has led to it becoming the most widely adopted container orchestration platform, ubiquitous across
 all major cloud providers and on-premises? Is it really the best technically and the most capable? Arguably not (take a
 look at the comparison on the [Nomad site][nomad comparison] - obviously biased, but actually pretty fair). So if there
@@ -31,7 +31,7 @@ and [operators][].
 
 That means that one thing lies at the centre of the Kubernetes universe: the API server. Let's strip the API server back
 to its very basic functions; it receives requests, validates them, applies RBAC policies, and reads and writes to and
-from storage. Generally that data store is [etcd][].
+from storage. Generally, that data store is [etcd][].
 
 In the architecture described above, there are almost always concurrent writes to the API. [etcd][] handles that very
 well when those concurrent writes are against different resources. [etcd][] doesn't provide [transactions][] (as used in
@@ -40,8 +40,8 @@ same resource? We'll get to Server-Side Apply soon, promise!
 
 ## Conflicting creates
 
-Let's try creating something in parallel and see what happens (this is going to use [GNU Parallel][] so install it if
-you want to try it out for yourself). We'll first create a number of YAML-formatted manifests for a namespace called
+Let's try creating something in parallel and see what happens. This is going to use [GNU Parallel][] so install it if
+you want to try it out for yourself. We'll first create a number of YAML-formatted manifests for a namespace called
 `ssa-blog-demo`, but with one difference: a different label in each file.
 
 ```bash
@@ -106,7 +106,7 @@ ssa-blog-demo   Active   10m     kubernetes.io/metadata.name=ssa-blog-demo,label
 
 We applied the same files again and we get a different label applied, previous state is overwritten. Now imagine if this
 happens in the real world: multiple API clients (users or controllers) updating fields in the API at the same time, the
-last one to apply wins. That leads to competition and races - who knows what the state should actually be in this case?
+last one to apply wins. That leads to competition and races - who knows what the state should actually be in this case.
 Overwriting changes from other API clients would lead to fighting for ownership of the resource and unnecessary work by
 controllers as the API resources continually change their desired state.
 
