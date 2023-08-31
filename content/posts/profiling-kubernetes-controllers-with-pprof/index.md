@@ -9,10 +9,10 @@ feature_image: feature.png
 
 # Analyzing Kubernetes controllers performance with pprof
 
-`pprof` is a Go standard library package which provides tooling for collecting and analyzing profiling data from Go applications. 
-Once a profile is collected from an application, it can be analyzed and visualized with the `go tool pprof` command. 
-A common technique for collecting profiles from Go applications is to import the [`"net/http/pprof"`][pprof] 
-package which will register endpoints on an existing HTTP server under the `/debug/pprof/` URL that can be used 
+`pprof` is a Go standard library package, which provides tooling for collecting and analyzing profiling data from Go applications.
+After a profile is collected from an application, it can be analyzed and visualized with the `go tool pprof` command.
+A common technique for collecting profiles from Go applications is to import the [net/http/pprof][pprof]
+package, which will register endpoints on an existing HTTP server under the `/debug/pprof/` URL. It can then be used
 to download live profiles from a running application.
 
 `pprof` can be easily integrated into your Kubernetes controllers to help gain deeper understanding of how a controller
@@ -20,7 +20,7 @@ is behaving at runtime with little performance overhead.
 
 ### What is a profile? 
 
-The Godoc for a [`Profile`][pprof profile] describes them as:
+The Godoc for a [Profile][pprof profile] describes them as:
 
 >A Profile is a collection of stack traces showing the call sequences that led to instances of a particular event, such as allocation.
 
@@ -57,7 +57,7 @@ at scale, collecting a `cpu` profile can help identify functions that are using 
 As of `controller-runtime` version v0.15.0, enabling the `pprof` server can be accomplished by specifying the `PprofBindAddress`
 option on the controller `manager`. Prior to v0.15.0, it was possible to enable profiling but required manually adding 
 each `pprof` endpoint to the existing metrics server via the 
-[`AddMetricsExtraHandler`][AddMetricsExtraHandler] method.
+[AddMetricsExtraHandler][AddMetricsExtraHandler] method.
 
 Enabling the `pprof` server on your controller(s) is as simple as this:
 
