@@ -1,9 +1,9 @@
 ---
 authors: ["cbuto"]
 title: "Profiling Kubernetes Controllers With pprof"
-date: 2023-08-23T16:53:33-04:00
+date: 2023-08-31T12:00:00-07:00
 tags: ["kubernetes", "pprof", "kubernetes controllers", "performance"]
-excerpt: Profiling Kubernetes controllers with pprof to help analyze and resolve performance issues
+excerpt: Analyze and resolve performance issues in Kubernetes controllers using pprof
 feature_image: feature.png
 ---
 
@@ -26,7 +26,7 @@ The Godoc for a [Profile][pprof profile] describes them as:
 
 In other words, a profile is a set of stack traces collected from a running Go application with some additional
 metadata attached to each stack trace which provides insight into how the application is running. This additional data
-might included things like memory allocation information or CPU timing of function calls.
+might include things like memory allocation information or CPU timing of function calls.
 
 There are a set of predefined profiles which cover most profiling use cases (heap, cpu, etc); however, it is possible 
 to write custom profiles if you have a specific use case that isn't covered in the builtin profiles.
@@ -43,14 +43,14 @@ mutex        - stack traces of holders of contended mutexes
 
 ## Profiling Kubernetes controllers
 
-Now that we know a little bit about `pprof` and profiling, we can look at why we might need this for Kubernetes controllers. Much like
+Now that you know a little bit about `pprof` and profiling, we can look at why you might need this for Kubernetes controllers. Much like
 any other application, Kubernetes controllers are prone to suffering from performance issues, running out of memory, etc.
 
-If your controller is being `OOMKilled`, instead of just simply increasing the memory limits and moving on, we can
+If your controller is being `OOMKilled`, instead of just simply increasing the memory limits and moving on, you can
 actually understand what is using up all the memory by collecting and analyzing `heap` or `goroutine` profiles. 
 
 Another example scenario where profiling might help is if a controller is suffering from performance issues when running
-at scale, collecting a `cpu` profile can help identify functions that are using the most CPU time.
+at scale; collecting a `cpu` profile can help identify functions that are using the most CPU time.
 
 ### Enabling `pprof` via controller-runtime
 
@@ -75,15 +75,15 @@ if err != nil {
 ```
 
 I'd recommend always enabling profiling on your Kubernetes controllers by default because you will never know when you need it to debug
-a performance issue until its too late. Keeping it disabled by default will prevent you from to easily debugging performance issues when they pop up because
+a performance issue until its too late. Keeping it disabled by default will prevent you from easily debugging performance issues when they pop up because
 enabling the `pprof` server will require restarting the pod.
 
 Note: The `pprof` endpoints expose sensitive information so they should always be bound to `127.0.0.1` 
-or kept private by other techniques (i.e. using [kube-rbac-proxy][kube-rbac-proxy])
+or kept private by other techniques i.e. using [kube-rbac-proxy][kube-rbac-proxy].
 
 ### Collecting and analyzing profiles
 
-Now that we have profiling enabled on our controllers, we can simply port-forward to the controller pod and collect profiles.
+Now that you have profiling enabled on your controllers, you can simply port-forward to the controller pod and collect profiles.
 
 ```bash
 kubectl port-forward pod/<pod> 8081:8081
