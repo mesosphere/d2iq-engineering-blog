@@ -106,19 +106,19 @@ spec:
       scheme: http
 ```
 
-To confirm that metrics are scraped by Prometheus visit the `https://<CLUSTER_DOMAIN>/dkp/prometheus/graph` and enter
-`my_app_requests_total` to the console to see the metrics.
+To confirm that metrics are scraped by Prometheus visit `https://<CLUSTER_DOMAIN>/dkp/prometheus/graph` and enter
+`my_app_requests_total` in the console to see the metrics.
 
 ## Alerting
 
 Alerting is the process of notifying users when a metric or set of metrics exceeds a predefined threshold. This can be
 used to proactively identify problems before they impact users. DKP comes with an [Alertmanager][] installation that can be
 used to receive alerts from Prometheus and send them to a variety of notification channels, such as email, Slack, or
-PagerDuty. Alertmanager itself is not creating any alerts but rather only propagates and routes information based on
+PagerDuty. Alertmanager itself is not creating any alerts, but rather only propagates and routes information based on
 routing rules. Alerts are created by Prometheus by continuously evaluating metrics values and creating alerts by calling
 the Alertmanager API.
 
-To create an alert definition use the `PrometheusRule` resource:
+To create an alert definition, use the `PrometheusRule` resource:
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
@@ -143,24 +143,24 @@ spec:
         severity: critical
 ```
 
-The Prometheus operator will apply this configuration to the default Prometheus which is configured to push alerts to
-Alertmanager. When the number of requests will go over 5 Prometheus will create a new alert by calling the Alertmanager
+The Prometheus operator will apply this configuration to the default Prometheus instance, which is configured to push alerts to
+Alertmanager. When the number of requests goes over 5, Prometheus will create a new alert by calling the Alertmanager
 HTTP API. The `PrometheusRule` can be created on DKP management or attached clusters.
 
 ## Multi-cluster monitoring and alerting
 
 The DKP metrics stack is configured by default to collect metrics across all managed clusters and have them available in
-the central management DKP cluster. For that purpose DKP comes with Thanos which is a tool that can be used to extend
+the central management DKP cluster. For that purpose, DKP comes with Thanos which is a tool that can be used to extend
 Prometheus's capabilities for collecting and storing metrics across multiple clusters. Thanos Query component can be
 used to query metrics from multiple Prometheus servers in a single place. This makes it possible to view and analyze
 metrics from all of the clusters in a single place.
 
-To make alerting possible on metrics from all clusters it is necessary to enable Thanos Ruler component. Thanos Ruler is
-a component of Thanos that can be used to evaluate Prometheus recording and alerting rules against a chosen query API
+To make alerting possible on metrics from all clusters, it is necessary to enable Thanos Ruler component. Thanos Ruler is
+a component of Thanos that can be used to evaluate Prometheus recording and alerting rules against a chosen query API,
 and then send the results directly to remote storage. It can be used to make alerting possible across multiple clusters
 by evaluating rules against a central query API that aggregates data from all of the clusters.
 
-In order to enable Ruler on the DKP management cluster add the following configmap:
+To enable Ruler on the DKP management cluster, add the following configmap:
 
 ```yaml
 apiVersion: v1
@@ -202,10 +202,10 @@ EOF
 ```
 
 The configuration above will deploy the Thanos Ruler on the DKP management cluster, it will expose its UI on the
-`https://<CLUSTER_DOMAIN>/dkp/ruler` URL and it will limit the rules only with `role: thanos-alerts` to be used by
-Ruler. The Ruler is configured same way as Prometheus using the `PrometheusRule` resource. Limiting the configuration to
+`https://<CLUSTER_DOMAIN>/dkp/ruler` URL, and it will limit the rules only with `role: thanos-alerts` to be used by
+Ruler. The Ruler is configured the same way as Prometheus using the `PrometheusRule` resource. Limiting the configuration to
 the specific label allows to select which configuration will be applied to the Prometheus and which will be applied to
-the Thanos Ruler. The exactly same `PrometheusRule` resources can now create alerts for data coming from multiple
+the Thanos Ruler. The exact same `PrometheusRule` resources can now create alerts for data coming from multiple
 clusters.
 
 The final result looks like this.
