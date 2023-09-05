@@ -13,15 +13,15 @@ process of collecting, storing, and analyzing metrics to identify problems and t
 developers can proactively identify and fix problems before they impact users.
 
 The D2iQ Kubernetes Platform (DKP) comes with monitoring stack components consisting of [Prometheus][], which collects
-metrics, [Grafana][], which can visualize and presents the metrics, [Alertmanager][], that handles acting on metrics and
-sending alerts to 3rd party service, and [Thanos][] that handles multi cluster functionality of [Prometheus][]. These
+metrics, [Grafana][], which can visualize and present the metrics, [Alertmanager][], which handles acting on metrics and
+sending alerts to 3rd party service, and [Thanos][] which handles multi-cluster functionality of [Prometheus][]. These
 components are configured to provide monitoring and alerting for applications launched on DKP.
 
 ## How to emit metrics from Go application
 
-To emit metrics from a Go application, you can use the Prometheus library. The [Prometheus library][] provides a number
-of functions that can be used to create and emit metrics. There are multiple types of metrics that application can emit.
-Type type of metrics defines how the Prometheus will interpret the data.
+To emit metrics from a Go application, use the [Prometheus library][], which provides a number
+of helpful functions. There are multiple types of metrics that application can emit.
+The type of metrics defines how the Prometheus will interpret the data.
 
 Prometheus has four types of metrics:
 
