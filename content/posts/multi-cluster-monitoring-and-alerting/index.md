@@ -31,10 +31,9 @@ Prometheus has four types of metrics:
   usage, the current CPU usage, and the number of concurrent connections.
 * *Histograms*: Histograms are used to track the distribution of values. They are typically used to track things like the
   response time of requests, the size of requests, and the number of errors.
-* *Summaries*: Summaries are similar to histograms, but they also track the quantiles of the distribution. This can be
-  useful for identifying outliers and understanding the tail of the distribution.
+* *Summaries*: Summaries are similar to histograms, but they also track the quantiles of the distribution. They are typically used to identify outliers and understand the tail of the distribution.
 
-An example Go application that would expose an `/increment` HTTP handler that would increase a counter metric would look
+An example Go application that would expose an `/increment` HTTP handler and increase a counter metric looks
 like this:
 
 ```go
