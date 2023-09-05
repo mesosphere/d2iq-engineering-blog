@@ -83,7 +83,7 @@ the resource. Based on this label, the default instance of Prometheus installed 
 configuration. The Prometheus operator is then allowed to run multiple Prometheus instances and the label selector is used to
 associate service monitors with a Prometheus instance.
 
-In the example below the `ServiceMonitor` instructs the DKP Prometheus to scrape data from the `Service` that matches the
+In the example below the `ServiceMonitor` instructs Prometheus to scrape data from the `Service` that matches the
 label `app: my-go-app` on port `http` and the `/metrics` path.
 
 ```yaml
