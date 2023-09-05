@@ -160,7 +160,7 @@ a component of Thanos that can be used to evaluate Prometheus recording and aler
 and then send the results directly to remote storage. It can be used to make alerting possible across multiple clusters
 by evaluating rules against a central query API that aggregates data from all of the clusters.
 
-In order to enable Ruler on DKP management cluster add the following configmap:
+In order to enable Ruler on the DKP management cluster add the following configmap:
 
 ```yaml
 apiVersion: v1
@@ -216,7 +216,7 @@ The final result looks like this.
 
 Multi-cluster monitoring is an important feature of the DKP platform because it allows you to monitor multiple Kubernetes
 clusters from a single pane of glass. This can help you to identify and troubleshoot problems that affect multiple
-clusters, and to plan for the capacity needs of your clusters. DKP gives administrators flexibility to define deploy
+clusters, and to plan for the capacity needs of your clusters. DKP gives administrators flexibility to define and deploy
 various monitoring and alerting configurations per cluster or in a single centralized location.
 
 [Prometheus]: https://prometheus.io
