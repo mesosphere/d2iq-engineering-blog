@@ -21,7 +21,7 @@ components are configured to provide monitoring and alerting for applications la
 
 To emit metrics from a Go application, use the [Prometheus library][], which provides a number
 of helpful functions. There are multiple types of metrics that applications can emit.
-The type of metrics defines how the Prometheus will interpret the data.
+The type of metrics defines how Prometheus will interpret the data.
 
 Prometheus has four types of metrics:
 
@@ -65,7 +65,7 @@ func main() {
 }
 ```
 
-For more details see the [prometheus tutorial](https://prometheus.io/docs/tutorials/instrumenting_http_server_in_go/) on
+For more details see the [Prometheus tutorial](https://prometheus.io/docs/tutorials/instrumenting_http_server_in_go/) on
 how to integrate the prometheus library and emit metrics.
 
 ## How to integrate metrics with DKP
@@ -74,14 +74,14 @@ Prometheus uses a pull model to collect metrics. This means that Prometheus acti
 rather than the targets pushing metrics to Prometheus. In the example above the prometheus handler only creates an HTTP
 handler on the `/metrics` path but it is not actively pushing collected metrics anywhere.
 
-When an application runs on Kubernetes cluster in a Pod it is usually exposed via `Service` resource that can expose
-Pods networking ports to the rest of the cluster. The Prometheus operator that comes with DKP exposes a custom resource types
+When an application runs  in a Pod on a Kubernetes cluster it is usually exposed via `Service` resource that can expose
+Pods networking ports to the rest of the cluster. The Prometheus operator that comes with DKP exposes custom resource types
 CRD `ServiceMonitor` and `PodMonitor` that should be used to configure prometheus instance to include a particular
-Kubernetes service into scraping targets from which prometheus will read the metrics data.
+Kubernetes service into scraping targets from which Prometheus will read the metrics data.
 
-When creating own `ServiceMonitor` it is necessary to include the `prometheus.kommander.d2iq.io/select: "true"` label on
-the resource. Based on this label the default instance of Prometheus installed on DKP will include the `ServiceMonitor`
-configuration. The Prometheus operator allows to run multiple Prometheus instances and the label selector is used to
+When creating a `ServiceMonitor`, it is necessary to include the `prometheus.kommander.d2iq.io/select: "true"` label on
+the resource. Based on this label, the default instance of Prometheus installed on DKP will include the `ServiceMonitor`
+configuration. The Prometheus operator is then allowed to run multiple Prometheus instances and the label selector is used to
 associate service monitors with a Prometheus instance.
 
 In the example below the `ServiceMonitor` instructs the DKP Prometheus to scrape data from the `Service` that matches the
