@@ -14,13 +14,13 @@ developers can proactively identify and fix problems before they impact users.
 
 The D2iQ Kubernetes Platform (DKP) comes with monitoring stack components consisting of [Prometheus][], which collects
 metrics, [Grafana][], which can visualize and present the metrics, [Alertmanager][], which handles acting on metrics and
-sending alerts to 3rd party service, and [Thanos][] which handles multi-cluster functionality of [Prometheus][]. These
+sending alerts to 3rd party services, and [Thanos][] which handles multi-cluster functionality of [Prometheus][]. These
 components are configured to provide monitoring and alerting for applications launched on DKP.
 
-## How to emit metrics from Go application
+## How to emit metrics from Go applications
 
 To emit metrics from a Go application, use the [Prometheus library][], which provides a number
-of helpful functions. There are multiple types of metrics that application can emit.
+of helpful functions. There are multiple types of metrics that applications can emit.
 The type of metrics defines how the Prometheus will interpret the data.
 
 Prometheus has four types of metrics:
@@ -34,7 +34,7 @@ Prometheus has four types of metrics:
 * *Summaries*: Summaries are similar to histograms, but they also track the quantiles of the distribution. This can be
   useful for identifying outliers and understanding the tail of the distribution.
 
-An example Go application that would expose `/increment` HTTP handler that would increase a counter metric would look
+An example Go application that would expose an `/increment` HTTP handler that would increase a counter metric would look
 like this:
 
 ```go
@@ -66,25 +66,25 @@ func main() {
 ```
 
 For more details see the [prometheus tutorial](https://prometheus.io/docs/tutorials/instrumenting_http_server_in_go/) on
-how to integrate prometheus library and emit metrics.
+how to integrate the prometheus library and emit metrics.
 
 ## How to integrate metrics with DKP
 
 Prometheus uses a pull model to collect metrics. This means that Prometheus actively fetches metrics from the targets,
-rather than the targets pushing metrics to Prometheus. In the example above the prometheus handler only creates a HTTP
-handler on the `/metrics` path but its not actively pushing collected metrics anywhere.
+rather than the targets pushing metrics to Prometheus. In the example above the prometheus handler only creates an HTTP
+handler on the `/metrics` path but it is not actively pushing collected metrics anywhere.
 
 When an application runs on Kubernetes cluster in a Pod it is usually exposed via `Service` resource that can expose
-Pods networking ports to rest of the cluster. The Prometheus operator that comes on DKP exposes a custom resource types
-CRD `ServiceMonitor` and `PodMonitor` that should be used to configure prometheus instance to include particular
+Pods networking ports to the rest of the cluster. The Prometheus operator that comes with DKP exposes a custom resource types
+CRD `ServiceMonitor` and `PodMonitor` that should be used to configure prometheus instance to include a particular
 Kubernetes service into scraping targets from which prometheus will read the metrics data.
 
 When creating own `ServiceMonitor` it is necessary to include the `prometheus.kommander.d2iq.io/select: "true"` label on
 the resource. Based on this label the default instance of Prometheus installed on DKP will include the `ServiceMonitor`
 configuration. The Prometheus operator allows to run multiple Prometheus instances and the label selector is used to
-associate service monitors with Prometheus instance.
+associate service monitors with a Prometheus instance.
 
-In the example bellow the `ServiceMonitor` instructs the DKP Prometheus to scrape data from `Service` that matches the
+In the example below the `ServiceMonitor` instructs the DKP Prometheus to scrape data from the `Service` that matches the
 label `app: my-go-app` on port `http` and the `/metrics` path.
 
 ```yaml
@@ -106,17 +106,17 @@ spec:
       scheme: http
 ```
 
-To confirm that metrics are scraped by prometheus visit the `https://<CLUSTER_DOMAIN>/dkp/prometheus/graph` and enter
+To confirm that metrics are scraped by Prometheus visit the `https://<CLUSTER_DOMAIN>/dkp/prometheus/graph` and enter
 `my_app_requests_total` to the console to see the metrics.
 
 ## Alerting
 
 Alerting is the process of notifying users when a metric or set of metrics exceeds a predefined threshold. This can be
-used to proactively identify problems before they impact users. DKP comes with [Alertmanager][] installation that can be
+used to proactively identify problems before they impact users. DKP comes with an [Alertmanager][] installation that can be
 used to receive alerts from Prometheus and send them to a variety of notification channels, such as email, Slack, or
 PagerDuty. Alertmanager itself is not creating any alerts but rather only propagates and routes information based on
 routing rules. Alerts are created by Prometheus by continuously evaluating metrics values and creating alerts by calling
-Alertmanager API.
+the Alertmanager API.
 
 To create an alert definition use the `PrometheusRule` resource:
 
@@ -143,8 +143,8 @@ spec:
         severity: critical
 ```
 
-The Prometheus operator will apply this configuration to default Prometheus which is configured to push alerts to
-Alertmanager. When the number of requests will go over 5 the Prometheus will create new alert by calling Alertmanager
+The Prometheus operator will apply this configuration to the default Prometheus which is configured to push alerts to
+Alertmanager. When the number of requests will go over 5 Prometheus will create a new alert by calling the Alertmanager
 HTTP API. The `PrometheusRule` can be created on DKP management or attached clusters.
 
 ## Multi-cluster monitoring and alerting
@@ -201,7 +201,7 @@ spec:
 EOF
 ```
 
-The configuration above will deploy the Thanos Ruler on the DKP Management cluster, it will expose its UI on the
+The configuration above will deploy the Thanos Ruler on the DKP management cluster, it will expose its UI on the
 `https://<CLUSTER_DOMAIN>/dkp/ruler` URL and it will limit the rules only with `role: thanos-alerts` to be used by
 Ruler. The Ruler is configured same way as Prometheus using the `PrometheusRule` resource. Limiting the configuration to
 the specific label allows to select which configuration will be applied to the Prometheus and which will be applied to
@@ -214,7 +214,7 @@ The final result looks like this.
 
 ## Conclusion
 
-Multi-cluster monitoring is an important feature of the DKP because it allows you to monitor multiple Kubernetes
+Multi-cluster monitoring is an important feature of the DKP platform because it allows you to monitor multiple Kubernetes
 clusters from a single pane of glass. This can help you to identify and troubleshoot problems that affect multiple
 clusters, and to plan for the capacity needs of your clusters. DKP gives administrators flexibility to define deploy
 various monitoring and alerting configurations per cluster or in a single centralized location.
