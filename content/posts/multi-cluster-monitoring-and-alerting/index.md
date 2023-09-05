@@ -1,7 +1,7 @@
 ---
 authors: ["mhrabovcin"]
 title: "Multi-cluster monitoring and alerting"
-date: 2023-09-05T12:22:45+02:00
+date: 2023-09-06T12:00:00+02:00
 tags: ["dkp", "multicluster", "monitoring", "alerting", "prometheus", "thanos"]
 excerpt: How to integrate metrics to a Go application and how to act on those metrics.
 feature_image: mitchel-boot-hOf9BaYUN88-unsplash.jpg
