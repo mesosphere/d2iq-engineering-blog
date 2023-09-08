@@ -11,17 +11,17 @@ The [Kubernetes API][] is really quite a beautiful thing: a RESTful API provided
 
 And it even allows for extension... via the API itself. If you're reading this, you probably already know that, but every time I remember this it still impresses me!
 
-The API resource used to declare API extensions is called [`CustomResourceDefinition`][CustomResourceDefinition] (`CRD` for short) and it is in the `apiextensions.k8s.io/v1` API group/version. When a `CRD` resource is created, the API server dynamically handles endpoints that follow the consistent API semantics as mentioned above. An API resource defined via a `CRD` feels just as native as the core Kubernetes APIs. The `CRD` defines the structure of the API resource for the API server to serve.
+The Kubernetes API resource used to declare API extensions is called [`CustomResourceDefinition`][CustomResourceDefinition] (`CRD` for short) and it is in the `apiextensions.k8s.io/v1` API group/version. When a `CRD` resource is created, the Kubernetes API server dynamically handles endpoints that follow the consistent API semantics as mentioned above. An API resource defined via a `CRD` feels just as native as the core Kubernetes APIs. The `CRD` defines the structure of the API resource for the Kubernetes API server to serve.
 
-The API server will ensure that any requests to create or update instances (we'll call this a `CustomResource` or `CR` for the remainder of this post to distinguish from the definition, `CRD` of the API itself) of the newly defined resource are valid: they contain only properties defined in the CRD and those properties contain valid values. Validation failures will cause the invalid request to be denied and failure messages will be returned to the client.
+The Kubernetes API server will ensure that any requests to create or update instances (we'll call this a `CustomResource` or `CR` for the remainder of this post to distinguish from the definition, `CRD` of the API itself) of the newly defined resource are valid: they contain only properties defined in the CRD and those properties contain valid values. Validation failures will cause the invalid request to be denied and failure messages returned to the client.
 
 There are a few ways to validate the contents when creating an instance of this CRD:
 
-- [OpenAPI schema][] validation, usually defined via comments in code and generated into CRD manifest via `controller-gen` (more details [below](#validating-properties-via-openapi-schema)). Validation via OpenAPI schema is performed in-process by the Kubernetes API server, directly returning errors to the client.
+- [OpenAPI schema][] validation, usually defined via comments in code and generated into YAML manifests via `controller-gen` (more details [below](#validating-properties-via-openapi-schema)). Validation via OpenAPI schema is performed in-process by the Kubernetes API server, directly returning errors to the client.
 - Webhook validation, defined in code and deployed as part of controller manager pod (not discussed in this article). Validation happens by the API server sending requests to webhooks configured via the API, aggregating failures, and returning these to the client.
-- [Common Expression Language][] validation, usually defined via comments in code and generated into CRD manifest via `controller-gen` (more details [below](#validating-properties-via-common-expression-language-cel)). Similar to OpenAPI schema validation, validation via CEL is performed in-process by the Kubernetes API server, directly returning errors to the client.
+- [Common Expression Language][] validation, usually defined via comments in code and generated into YAML manifests via `controller-gen` (more details [below](#validating-properties-via-common-expression-language-cel)). Similar to OpenAPI schema validation, validation via CEL is performed in-process by the Kubernetes API server, directly returning errors to the client.
 
-OpenAPI schema validation is the most basic as it only allows for validating types, formats, required, etc, and only can validate a single property in isolation. This is simple to understand, implement, and has the possibility of client-side  support by virtue of using the widely supported OpenAPI schema to define validation rules.
+OpenAPI schema validation is the most basic as it only allows for validating types, formats, required, etc, and only can validate a single property in isolation. This is simple to understand, implement, and has the possibility of client-side support by virtue of using the widely supported OpenAPI schema to define validation rules.
 
 [Webhook validation][] (also know as validating admission webhooks) is the most complex, requiring writing and deploying code, but with the complexity comes the most power: you can add any validation logic in your code, validate the whole resource, reach out to external systems... basically anything!
 
@@ -31,12 +31,12 @@ Let's work through an example, gradually adding validation rules. [Skip straight
 
 ## Demo project set up
 
-For quick setup, follow the [`kubebuilder`][kubebuilder] [installation][kubebuilder installation documentation][]. We will also be setting up a local cluster using [KinD][] so [install][KinD installation] that too if you don't have a cluster to run against.
+For quick setup, follow the [`kubebuilder`][kubebuilder] [installation documentation][kubebuilder installation documentation]. We will also be setting up a local cluster using [KinD][] so [install][KinD installation] that too if you don't have a cluster to run against.
 
 Let's create a project using `kubebuilder` (change any values you want to for your environment):
 
 ```bash
-kubebuilder init --domain example.com --owner 'Jimmi Dyson' --plugins=go/v4
+kubebuilder init --domain example.com
 ```
 
 And create an API definition, our first CRD:
@@ -180,7 +180,7 @@ CRDs support OpenAPI schema validation. We can use kubebuilder annotations to ad
 	Foo string `json:"foo,omitempty"`
 ```
 
-And regenerate the CRD manifests:
+Regenerate the CRD manifests:
 
 ```bash
 make manifests
@@ -324,7 +324,7 @@ Run `make manifests` and look at the generated CRD manifest (showing just the re
               rule: self.min <= self.current && self.current <= self.max
 ```
 
-Our build annotations above combined both OpenAPI validations to add minimum, maximum, and defaults so the `min`, `max`, and `current` properties, and add the CEL validation rules via the `x-kubernetes-validations` schema extension. This is used by the API server to run the specified validations.
+Our build annotations above combined both OpenAPI validations to add minimum, maximum, and defaults to the `min`, `max`, and `current` properties, and add the CEL validation rules via the `x-kubernetes-validations` schema extension. This is used by the API server to run the specified validations.
 
 Notice how we set the validation rule on the `PlaceholderSpec` object in our Go code. This sets the scope of the rule, i.e. the `self` variable in the CEL validation will be set to the value of the property that is annotated when the rule is evaluated. This allows for access to any properties below this point in the object, but not up. Be mindful of this when specifying your validation rules, and limit the scope as much as necessary by placing your validation rules at the appropriate level in your object.
 
