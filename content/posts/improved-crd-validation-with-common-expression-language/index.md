@@ -423,7 +423,7 @@ As CEL is becoming more widely used in Kubernetes (e.g. [validating admission po
 [CustomResourceDefinition]: https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/
 [kubebuilder]: https://book.kubebuilder.io/
 [kubebuilder installation documentation]: https://book.kubebuilder.io/quick-start#installation
-[KinD]: kind.sigs.k8s.io/
+[KinD]: https://kind.sigs.k8s.io/
 [KinD installation]: https://kind.sigs.k8s.io/docs/user/quick-start/#installation
 [validation rules]: https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#validation-rules
 [Common Expression Language]: https://github.com/google/cel-spec
