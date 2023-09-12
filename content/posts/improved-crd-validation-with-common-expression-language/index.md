@@ -3,7 +3,7 @@ authors: ["jdyson"]
 title: "Improved CRD Validation With Common Expression Language"
 date: 2023-09-07T12:49:39+01:00
 tags: ["kubernetes", "api"]
-excerpt: 
+excerpt: Common Expression Language validation rules for CRDs is now enabled by default in Kubernetes. Read on to find out how to use CEL to introduce complex validations without having to create your own validating webhooks in code.
 feature_image: feature.webp
 ---
 
