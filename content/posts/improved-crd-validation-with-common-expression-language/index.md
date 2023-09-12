@@ -18,10 +18,10 @@ The Kubernetes API server will ensure that any requests to create or update inst
 There are a few ways to validate the contents when creating an instance of this CRD:
 
 - [OpenAPI schema][] validation, usually defined via comments in code and generated into YAML manifests via `controller-gen` (more details [below](#validating-properties-via-openapi-schema)). Validation via OpenAPI schema is performed in-process by the Kubernetes API server, directly returning errors to the client.
-- Webhook validation, defined in code and deployed as part of controller manager pod (not discussed in this article). Validation happens by the API server sending requests to webhooks configured via the API, aggregating failures, and returning these to the client.
+- Webhook validation, defined in code and deployed as part of a controller manager pod (not discussed in this article). Validation happens by the API server sending requests to webhooks configured via the API, aggregating failures, and returning these to the client.
 - [Common Expression Language][] validation, usually defined via comments in code and generated into YAML manifests via `controller-gen` (more details [below](#validating-properties-via-common-expression-language-cel)). Similar to OpenAPI schema validation, validation via CEL is performed in-process by the Kubernetes API server, directly returning errors to the client.
 
-OpenAPI schema validation is the most basic as it only allows for validating types, formats, required, etc, and only can validate a single property in isolation. This is simple to understand, implement, and has the possibility of client-side support by virtue of using the widely supported OpenAPI schema to define validation rules.
+OpenAPI schema validation is the most basic as it only allows for validating types, formats, required, etc., and only can validate a single property in isolation. This is simple to understand, implement, and has the possibility of client-side support by virtue of using the widely supported OpenAPI schema to define validation rules.
 
 [Webhook validation][] (also know as validating admission webhooks) is the most complex, requiring writing and deploying code, but with the complexity comes the most power: you can add any validation logic in your code, validate the whole resource, reach out to external systems... basically anything!
 
@@ -250,7 +250,7 @@ As discussed above, OpenAPI schema validation is perfect for simple, single prop
 
 The [validation rules][] feature (via the `CustomResourceValidationExpressions` feature gate) moved to beta (and therefore enabled by default) in Kubernetes v1.25. Validation rules enable the use of CEL to validate custom resource values.
 
-CEL describes itself as implementing `common semantics for expression evaluation, enabling different applications to more easily interoperate.` It has a similar syntax to expressions in C, Java, JavaScript, and Go, which makes it easy for developers to understand and use.
+CEL describes itself as implementing `common semantics for expression evaluation, enabling different applications to more easily interoperate`. It has a similar syntax to expressions in C, Java, JavaScript, and Go, which makes it easy for developers to understand and use.
 
 We'll work through some examples below to try to highlight the benefits of using CEL for validation, but the major benefit is not having to maintain and deploy extra code for validations that can be expressed clearly and concisely via CEL. Note that CEL is really powerful and these examples are not exhaustive. Take a look at the [Kubernetes documentation][validation rules] for further reading.
 
