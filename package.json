@@ -3,7 +3,7 @@
     "@netlify/plugin-lighthouse": "^5.0.0",
     "autoprefixer": "^10.4.16",
     "netlify-plugin-hugo-cache-resources": "^0.2.1",
-    "postcss": "^8.4.29",
+    "postcss": "^8.4.30",
     "postcss-cli": "^10.0.0",
     "postcss-color-mod-function": "^3.0.3"
   }
