@@ -8,7 +8,7 @@ feature_image: mail.png
 ---
 
 > Note:
-> - DKP 2.6.0+ bumps CAPV to 1.6.0+ which supports [CAPI  In-Cluster IPAM](https://github.com/kubernetes-sigs/cluster-api-ipam-provider-in-cluster). An example is documented [here](https://github.com/arbhoj/CAPI-In-Cluster-IPAM). New implementations shoud use the new solution and existings implementations that are using the solution in this blog post should migrate to this by starting with an `InClusterIPPool` with unallocated addresses and slowly adding addresses back as they are freed up when doing upgrades. 
+> - DKP 2.6.0+ bumps CAPV to 1.6.0+ which supports [CAPI  In-Cluster IPAM](https://github.com/kubernetes-sigs/cluster-api-ipam-provider-in-cluster). An example is documented [here](https://github.com/arbhoj/CAPI-In-Cluster-IPAM). New implementations should use the new solution and existing implementations that are using the solution in this blog post should migrate to this by starting with an `InClusterIPPool` with unallocated addresses and slowly adding addresses back as they are freed up when doing upgrades. 
 > - If using this solution in a scenario where the CAPI resources were moved (e.g. `Self Managed Cluster`), the IPPool and other Custom resources that keep track of IP Allocations, `don't automatically move` to the cluster where the CAPI resources are being moved to. This could cause undesirable results if someone performs a cluster upgrade and the nodes being upgraded use pre-defined IPs. For this scenario, please follow the steps in the [Steps for Moving to Another Cluster](#steps-for-moving-to-another-cluster) section of this blog. 
 
 # Why is a predefined IP Address range required for nodes when building a Kubernetes cluster?
@@ -252,16 +252,16 @@ kubectl get nodes -o wide #Print the list of nodes along with their IPs
 ```
 
 ## Steps for Moving to Another Cluster
-ClusterAPI is designed to work in a “Management Cluster > Workload Cluster” topology which works well with DKP Enterprise. The solution discussed in this blog works well for that classic scenario.
+ClusterAPI is designed to work in a “Management Cluster > Workload Cluster” topology, which works well with DKP Enterprise. The solution discussed in this blog works well for that classic scenario.
 
-However, if using DKP Essentials with a Self Managed Cluster (or other scenarios where the CAPI resources were moved after the cluster build), the following extra steps need to be performed after moving capi resources, as the “IPPool.ipam.metal3.io” resource and other custom resources that keep track of allocated/unallocated IP Addresses are not moved automatically when the CAPI cluster resources are pivoted from the bootstrap cluster to the self managed workload cluster using the `dkp move capi-resources` command:
+However, if using DKP Essentials with a Self Managed Cluster (or other scenarios where the CAPI resources were moved after the cluster build), the following extra steps need to be performed after moving CAPI resources, as the “IPPool.ipam.metal3.io” resource and other custom resources that keep track of allocated/unallocated IP Addresses are not moved automatically when the CAPI cluster resources are pivoted from the bootstrap cluster to the self managed workload cluster using the `dkp move capi-resources` command:
 
-> The `important` point to understand here is that the capi controllers only request IPs from the IPPool when provisioning a new VM (i.e. when the VSphereMachine resource is created). Which could be when you are creating, upgrading or scaling the nodes. So, after moving the capi resources, start with an IPPool with unused IP addresses and then slowly add them back to the pool as they are released during an upgrade or delete cycle.  
+> The **important** point to understand here is that the CAPI controllers only request IPs from the IPPool when provisioning a new VM (i.e. when the VSphereMachine resource is created). Which could be when you are creating, upgrading or scaling the nodes. So, after moving the CAPI resources, start with an IPPool with unused IP addresses and then slowly add them back to the pool as they are released during an upgrade or delete cycle.  
 
 > Note: The following example is assuming that there were 6 IP’s (10.16.56.88-10.16.56.93) allocated/kept aside, for the Control Plane (i.e. 3 for initial deploy and 3 for upgrade, scaling, maintenance etc.). So only the first 3 were assigned to the Control Plane VMs (i.e. 10.16.56.88, 10.16.56.89, 10.16.56.90)
  
 
-Step 1: After the cluster is pivoted to the self managed workload cluster, deploy the IPAM manifests as defined in this [blog](#steps-to-deploy-capv-with-ipam) and then create the IPPool resource with IPs that are kept aside for the cluster but not allocated to any VM when building the cluster. To keep things simple create multiple ranged in the IPPool with a single IP in each range (this is not a hard requirement).
+Step 1: After the cluster is pivoted to the self managed workload cluster, deploy the IPAM manifests as defined in this [section](#steps-to-deploy-capv-with-ipam) and then create the IPPool resource with IPs that are kept aside for the cluster but not allocated to any VM when building the cluster. To keep things simple, create multiple ranges in the IPPool with a single IP in each range (this is not a hard requirement).
 
 ```
 e.g.:
@@ -289,7 +289,7 @@ spec:
 EOF
 ```
 
-Step 2: Perform activities like upgrade, updates (like node deletion), scaling etc. and update IPPool with any IP that was released. i.e. If any IP address is freed up as a result of this activity, add it as an individual IP to the list of IP addresses in the given pool. They will be used for the next upgrade/update activity that will require additional static IPs for the control plane. 
+Step 2: Perform activities like upgrade, updates (like node deletion), scaling etc., and update IPPool with any IP that was released, i.e. if any IP address is freed up as a result of this activity, add it as an individual IP to the list of IP addresses in the given pool. They will be used for the next upgrade/update activity that will require additional static IPs for the control plane.
 
 ```
 e.g.:
@@ -320,7 +320,7 @@ spec:
   dnsServers: [${DNS_SERVER}]
 EOF
 ```
-Following this process, over a period of the next upgrade or update cycles, all the IPs that were kept aside for the cluster will once again become a part of this pool. 
 
+Following this process, over a period of the next upgrade or update cycles, all the IPs that were kept aside for the cluster will once again become a part of this pool.
 
-Well. That's it. Hope you found this useful in setting up a vsphere environment.
+Well. That's it. Hope you found this useful in setting up a vSphere environment.
