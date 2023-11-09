@@ -264,7 +264,6 @@ However, if using DKP Essentials with a Self Managed Cluster (or other scenarios
 Step 1: After the cluster is pivoted to the self managed workload cluster, deploy the IPAM manifests as defined in this [section](#steps-to-deploy-capv-with-ipam) and then create the IPPool resource with IPs that are kept aside for the cluster but not allocated to any VM when building the cluster. To keep things simple, create multiple ranges in the IPPool with a single IP in each range (this is not a hard requirement).
 
 ```
-e.g.:
 kubectl apply -f - <<EOF
 apiVersion: ipam.metal3.io/v1alpha1
 kind: IPPool
