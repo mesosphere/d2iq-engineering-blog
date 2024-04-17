@@ -4,6 +4,9 @@
     "hugo@latest",
     "go@latest"
   ],
+  "env": {
+    "DEVBOX_COREPACK_ENABLED": "true"
+  },
   "shell": {
     "scripts": {
       "serve": [
