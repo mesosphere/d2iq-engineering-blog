@@ -34,11 +34,6 @@ Follow the instructions below to create and preview your new content.
 Using [Devbox][] is highly recommended. Follow [these instructions][devbox installation] to install [Devbox][] and
 install [direnv][] for shell integration - this is the simplest way to get started. 
 
-Alternatively, if you have [asdf][] installed, then you can run `asdf install` to install all required tools.
-
-If you do not have [asdf][] installed, then please manually install [hugo][] following
-[these instructions][hugo install].
-
 ### Add a new post
 
 To create a new post, run:
@@ -139,12 +134,11 @@ The D2iQ engineering blog is currently hosted on [Netlify][netlify] but is front
 [cloning a fork]: https://docs.github.com/en/get-started/quickstart/contributing-to-projects#cloning-a-fork
 [add content]: https://docs.github.com/en/get-started/quickstart/contributing-to-projects#making-and-pushing-changes
 [open pr]: https://docs.github.com/en/get-started/quickstart/contributing-to-projects#making-a-pull-request
-[asdf]: https://asdf-vm.com/
 [hugo]: https://gohugo.io/
 [hugo install]: https://gohugo.io/getting-started/installing
 [netlify]: https://netlify.com/
 [cloudfront]: https://aws.amazon.com/cloudfront/
 [eng blog]: https://eng.d2iq.com/
-[Devbox]: https://www.jetpack.io/devbox/
-[devbox installation]: https://www.jetpack.io/devbox/docs/contributor-quickstart/#install-devbox
+[Devbox]: https://www.jetify.com/devbox/
+[devbox installation]: https://www.jetify.com/devbox/docs/contributor-quickstart/#install-devbox
 [direnv]: https://direnv.net/

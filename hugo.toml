@@ -12,6 +12,8 @@ removePathAccents = true
 disableKinds = [ "taxonomy" ]
 ignoreErrors = ["error-disable-taxonomy"]
 
+capitalizelisttitles = false
+
 [security.exec]
   osEnv = ['.*']
 
