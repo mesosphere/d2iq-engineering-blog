@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@netlify/plugin-lighthouse": "^6.0.0",
+    "@netlify/plugin-lighthouse": "^6.0.1",
     "autoprefixer": "^10.4.20",
     "netlify-plugin-hugo-cache-resources": "^0.2.1",
     "postcss": "^8.4.47",
