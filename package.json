@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@netlify/plugin-lighthouse": "^6.0.3",
-    "autoprefixer": "^10.4.21",
+    "autoprefixer": "^10.4.22",
     "netlify-plugin-hugo-cache-resources": "^0.2.1",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
